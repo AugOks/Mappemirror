@@ -1,3 +1,4 @@
+//TODO: Write JavaDoc for this class.
 public class Vector2D {
 
 
@@ -7,16 +8,18 @@ public class Vector2D {
   /**
    * Constructor.
    * initializes the fields.
-   * @param X1 the X value for the 2D vector.
-   * @param X2  the Y value for the 2D vector.
+   *
+   * @param x2 the X value for the 2D vector.
+   * @param x3 the Y value for the 2D vector.
    */
-  public Vector2D(double X1, double X2){
-    this.x0 = X1;
-    this.x1 = X2;
+  public Vector2D(double x2, double x3) {
+    this.x0 = x2;
+    this.x1 = x3;
   }
 
   /**
    * Returns the X value of the vector.
+   *
    * @return The X value of the vector.
    */
   public double getX0() {
@@ -25,31 +28,34 @@ public class Vector2D {
 
   /**
    * Returns the Y value of the vector.
+   *
    * @return the Y value of the vector.
    */
   public double getX1() {
-    return  this.x1;
+    return this.x1;
   }
 
   /**
    * Adds together this vector and other vector then returns the combined vector.
+   *
    * @param otherVector the vector to be added to this vector.
    * @return this vector added to other vector.
    */
-  public Vector2D add(Vector2D otherVector){
-    Vector2D dummyVector = new Vector2D(1,2);
-    return dummyVector;
-    //TODO: Fix this.
+  public Vector2D add(Vector2D otherVector) {
+    this.x0 += otherVector.getX0();
+    this.x1 += otherVector.getX1();
+    return this;
   }
 
   /**
    * Subtracts otherVector from this Vector then returns this vector.
+   *
    * @param otherVector the vector to be subtracted from this vector.
    * @return other vector subtracted from this vector.
    */
-  public Vector2D subtract(Vector2D otherVector){
-    Vector2D DummyVector = new Vector2D(1,2);
-    return  DummyVector;
-    //TODO: Fix this.
+  public Vector2D subtract(Vector2D otherVector) {
+    this.x0 -= otherVector.getX0();
+    this.x1 -= otherVector.getX1();
+    return this;
   }
 }

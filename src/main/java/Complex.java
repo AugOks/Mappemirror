@@ -1,12 +1,18 @@
-public class Complex extends  Vector2D {
+//TODO: Write JavaDoc for this class.
+public class Complex extends Vector2D {
 
 
-  public Complex(double img, double reale){
-   super(img,reale);
+  public Complex(double img, double reale) {
+    super(img, reale);
   }
 
-  public Complex sqrt(){
-    Complex dummyComplex = new Complex(1,1);
+  /**
+   * finds the square root of a complex number.
+   *
+   * @return the square roof of the complex number.
+   */
+  public Complex sqrt() {
+    Complex dummyComplex = new Complex(1, 1);
     return dummyComplex;
   }
 }
