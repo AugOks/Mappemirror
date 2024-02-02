@@ -1,10 +1,8 @@
-public class Complex {
-  private double imaginary;
-  private double real;
+public class Complex extends  Vector2D {
+
 
   public Complex(double img, double reale){
-    this.imaginary = img;
-    this.real = reale;
+   super(img,reale);
   }
 
   public Complex sqrt(){
