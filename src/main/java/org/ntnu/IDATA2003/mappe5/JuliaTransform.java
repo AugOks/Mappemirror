@@ -1,9 +1,9 @@
 package org.ntnu.IDATA2003.mappe5;
 
 //TODO: Write JavaDoc for this class.
-public class JuliaTransform extends Transform2D {
-  Complex point;
-  int sign;
+public class JuliaTransform implements Transform2D {
+  Complex julia; //TODO find better name.
+  int sign; //This must be -1 or 1
 
   /**
    * Constructor.
@@ -12,7 +12,7 @@ public class JuliaTransform extends Transform2D {
    * @param sign the sign of the complex vector.
    */
   public JuliaTransform(Complex point, int sign) {
-    this.point = point;
+    this.julia = point;
     this.sign = sign;
   }
 
@@ -23,7 +23,9 @@ public class JuliaTransform extends Transform2D {
    * @return a transformed 2D vector.
    */
   public Vector2D transform(Vector2D point) {
-    return point;
-    //TODO: add body for transform.
+    this.julia.setX0(this.julia.getX0() - point.getX0());
+    this.julia.setY0(this.julia.getY0() - point.getY0() * sign);
+    return julia.sqrt();
+
   }
 }
