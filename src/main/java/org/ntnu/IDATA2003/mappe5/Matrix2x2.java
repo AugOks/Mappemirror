@@ -1,3 +1,5 @@
+package org.ntnu.IDATA2003.mappe5;
+
 //TODO: Write JavaDoc for this class.
 public class Matrix2x2 {
   private double a00; // The first tuple in the matrix.
