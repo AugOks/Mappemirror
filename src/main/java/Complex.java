@@ -14,5 +14,6 @@ public class Complex extends Vector2D {
   public Complex sqrt() {
     Complex dummyComplex = new Complex(1, 1);
     return dummyComplex;
+    //TODO: create square root of complex number method.
   }
 }

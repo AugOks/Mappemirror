@@ -27,13 +27,8 @@ public class Matrix2x2 {
    * @return the vector product of the matrix multiplication.
    */
   public Vector2D multiply(Vector2D vector) {
-    Vector2D matrixProduct;
-    double firstmulti = this.a00 * vector.getX0();
-    double secondMulti = this.a10 * vector.getX0();
-    double thirdMulti = this.a01 * vector.getX1();
-    double fourthMulti = this.a11 * vector.getX1();
-    matrixProduct = new Vector2D(firstmulti + secondMulti, thirdMulti + fourthMulti);
-    return matrixProduct;
+    return  vector;
+    //TODO Finish matrix multiplication method.
   }
 
 }

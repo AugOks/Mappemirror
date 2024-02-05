@@ -42,9 +42,8 @@ public class Vector2D {
    * @return this vector added to other vector.
    */
   public Vector2D add(Vector2D otherVector) {
-    this.x0 += otherVector.getX0();
-    this.x1 += otherVector.getX1();
-    return this;
+    return otherVector;
+    //TODO: Finish add method.
   }
 
   /**
@@ -54,6 +53,7 @@ public class Vector2D {
    * @return other vector subtracted from this vector.
    */
   public Vector2D subtract(Vector2D otherVector) {
-    
+    return otherVector;
+    //TODO: Finish Subtract method.
   }
 }
