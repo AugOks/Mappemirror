@@ -1,3 +1,5 @@
+package org.ntnu.IDATA2003.mappe5;
+
 //TODO: Write JavaDoc for this class.
 public class Complex extends Vector2D {
 

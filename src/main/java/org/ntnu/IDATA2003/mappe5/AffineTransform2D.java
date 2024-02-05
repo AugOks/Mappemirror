@@ -1,3 +1,5 @@
+package org.ntnu.IDATA2003.mappe5;
+
 //TODO: Write JavaDoc for this class.
 public class AffineTransform2D extends Transform2D {
   private Matrix2x2 matrix;
