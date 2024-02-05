@@ -54,8 +54,6 @@ public class Vector2D {
    * @return other vector subtracted from this vector.
    */
   public Vector2D subtract(Vector2D otherVector) {
-    this.x0 -= otherVector.getX0();
-    this.x1 -= otherVector.getX1();
-    return this;
+    
   }
 }
