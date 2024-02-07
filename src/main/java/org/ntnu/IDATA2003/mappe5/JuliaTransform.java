@@ -3,26 +3,35 @@ package org.ntnu.IDATA2003.mappe5;
 //TODO: Write JavaDoc for this class.
 public class JuliaTransform implements Transform2D {
   Complex julia; //TODO find better name.
-  int sign; //This must be -1 or 1
+  int sign; // the sign of the complex number. Determines if it is the Conjugate.
 
   /**
    * Constructor.
    *
-   * @param point a complex vector point.
-   * @param sign the sign of the complex vector.
+   * @param point a complex vector.
+   * @param sign the sign of the complex vector. Must be -1 or 1.
    */
   public JuliaTransform(Complex point, int sign) {
-    this.julia = point;
+
+    if (point == null ) {
+      throw new IllegalArgumentException("point is null");
+    }
+    if (!(sign == 1 || sign == -1)){
+      throw new IllegalArgumentException("Sign must be -1 or 1 ");
+    }
+
+    this.julia = new Complex(point.getX0(), point.getY0());
     this.sign = sign;
   }
 
   /**
-   * performs the julia transformation.
+   * Performs the julia transformation.
    *
    * @param point A point in a 2D vector space. //no idea if this is correct.
    * @return a transformed 2D vector.
    */
   public Vector2D transform(Vector2D point) {
+    //TODO: needs Junit testing.
     this.julia.setX0(this.julia.getX0() - point.getX0());
     this.julia.setY0(this.julia.getY0() - point.getY0() * sign);
     return julia.sqrt();

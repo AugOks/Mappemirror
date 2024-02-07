@@ -15,6 +15,7 @@ public class Complex extends Vector2D {
    * @return the square roof of the complex number.
    */
   public Complex sqrt() {
+    //TODO: needs junit testing.
     double x = this.getX0();
     double y = this.getY0();
     double sqrt = Math.sqrt(x * x + y * y);           //finds the length of the vector.

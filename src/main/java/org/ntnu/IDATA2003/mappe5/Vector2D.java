@@ -63,6 +63,7 @@ public class Vector2D {
    * @return this vector added to other vector.
    */
   public Vector2D add(Vector2D otherVector) {
+    //TODO: needs Junit testing
     this.x0 += otherVector.getX0();
     this.y0 += otherVector.getY0();
     return this;
@@ -75,6 +76,7 @@ public class Vector2D {
    * @return other vector subtracted from this vector.
    */
   public Vector2D subtract(Vector2D otherVector) {
+    //TODO: needs Junit testing
     this.x0 -= otherVector.getX0();
     this.y0 -= otherVector.getY0();
     return this;
