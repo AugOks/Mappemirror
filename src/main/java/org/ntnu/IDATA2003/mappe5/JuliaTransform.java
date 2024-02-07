@@ -8,19 +8,19 @@ public class JuliaTransform implements Transform2D {
   /**
    * Constructor.
    *
-   * @param point a complex vector.
+   * @param complex a complex vector.
    * @param sign the sign of the complex vector. Must be -1 or 1.
    */
-  public JuliaTransform(Complex point, int sign) {
+  public JuliaTransform(Complex complex, int sign) {
 
-    if (point == null ) {
-      throw new IllegalArgumentException("point is null");
+    if (complex == null ) {
+      throw new IllegalArgumentException("complex is null");
     }
     if (!(sign == 1 || sign == -1)){
       throw new IllegalArgumentException("Sign must be -1 or 1 ");
     }
 
-    this.julia = new Complex(point.getX0(), point.getY0());
+    this.julia = new Complex(complex.getX0(), complex.getY0());
     this.sign = sign;
   }
 
@@ -32,6 +32,9 @@ public class JuliaTransform implements Transform2D {
    */
   public Vector2D transform(Vector2D point) {
     //TODO: needs Junit testing.
+    if(point == null){
+      throw new IllegalArgumentException("Vector point cannot be null");
+    }
     this.julia.setX0(this.julia.getX0() - point.getX0());
     this.julia.setY0(this.julia.getY0() - point.getY0() * sign);
     return julia.sqrt();
