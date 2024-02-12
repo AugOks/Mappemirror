@@ -1,21 +1,24 @@
 package org.ntnu.IDATA2003.mappe5;
 import  java.lang.Math;
 
-//TODO: Write JavaDoc for this class.
+/**
+ * A class that represents a complex number.
+ * <p> The class extends the Vector2D class and consists of a real and imaginary number
+ * <p> Adds a method sqrt() to find the square root of a complex number.</p>
+ */
 public class Complex extends Vector2D {
-
 
   public Complex(double real, double imag) {
     super(real, imag);
   }
 
   /**
-   * finds the square root of a complex number.
+   * Finds the square root of a complex number.
    *
    * @return the square roof of the complex number.
    */
   public Complex sqrt() {
-    //TODO: needs junit testing.
+
     double x = this.getX0();
     double y = this.getY0();
     double sqrt = Math.sqrt(x * x + y * y);           //finds the length of the vector.
@@ -25,4 +28,5 @@ public class Complex extends Vector2D {
     this.setY0(secondOperation);
     return this;
   }
+
 }

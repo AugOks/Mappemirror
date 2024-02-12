@@ -1,0 +1,40 @@
+package org.ntnu.IDATA2003.mappe5;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
+
+//TODO: Write JavaDoc for this test class.
+//TODO: Ask Arne of we need to reference wolfram alpha.
+
+class ComplexTest {
+
+  /**
+   * Test the method {@link Complex#sqrt()}.
+   * This test is for a positive test of complex sqrt() with positive numbers.
+   * This test bases it correct results of wolfram alpha.
+   */
+
+  @Test
+  public void ComplexTestPositiveTestPositiveNumbers(){
+    Complex posTest = new Complex(1,1);
+    posTest.sqrt();
+    assertEquals(posTest.getX0(),1.09868411346781);
+    assertEquals(posTest.getY0(),0.4550898605622274 );
+  }
+
+  /**
+   * Test the method {@link Complex#sqrt()}.
+   * This test is for a positive test of complex sqrt() with negative numbers.
+   * This test bases it correct results of wolfram alpha.
+   */
+  @Test
+  public void ComplexTestPositiveTestNegativeNumbers(){
+    Complex posTest = new Complex(-1,-1);
+    posTest.sqrt();
+    assertEquals(posTest.getX0(),0.4550898605622274 );
+    assertEquals(posTest.getY0(),1.09868411346781);
+  }
+
+}
