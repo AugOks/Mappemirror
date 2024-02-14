@@ -1,8 +1,13 @@
 package org.ntnu.IDATA2003.mappe5;
 
-//TODO: Write JavaDoc for this class.
-public class Vector2D {
+//TODO: Write more JavaDoc for this class?
 
+/**
+ * Represents a vector in 2D space.
+ * This class currently does not have any constraints as any valid double number
+ * would be acceptable, perhaps an upper or lower bound is necessary at some point.
+ */
+public class Vector2D {
 
   private double x0;
   private double y0;
@@ -13,8 +18,12 @@ public class Vector2D {
    *
    * @param x1 the X value for the 2D vector.
    * @param y1 the Y value for the 2D vector.
+   * @throws ArithmeticException
    */
-  public Vector2D(double x1, double y1) {
+  public Vector2D(double x1, double y1)  {
+    if (Double.isNaN(x1) || Double.isNaN(y1)){
+      throw new ArithmeticException("one of the paramaters is not a number");
+    }
     this.x0 = x1;
     this.y0 = y1;
   }
@@ -61,9 +70,13 @@ public class Vector2D {
    *
    * @param otherVector the vector to be added to this vector.
    * @return this vector added to other vector.
+   * @throws IllegalArgumentException
    */
-  public Vector2D add(Vector2D otherVector) {
+  public Vector2D add(Vector2D otherVector)  {
     //TODO: needs Junit testing
+    if (otherVector == null){
+      throw new IllegalArgumentException("Vector is null");
+    }
     this.x0 += otherVector.getX0();
     this.y0 += otherVector.getY0();
     return this;
@@ -74,9 +87,13 @@ public class Vector2D {
    *
    * @param otherVector the vector to be subtracted from this vector.
    * @return other vector subtracted from this vector.
+   * @throws IllegalArgumentException
    */
-  public Vector2D subtract(Vector2D otherVector) {
+  public Vector2D sub(Vector2D otherVector) {
     //TODO: needs Junit testing
+    if (otherVector == null){
+      throw new IllegalArgumentException("Vector is null");
+    }
     this.x0 -= otherVector.getX0();
     this.y0 -= otherVector.getY0();
     return this;

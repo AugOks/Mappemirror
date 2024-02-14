@@ -6,7 +6,6 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
 //TODO: Write JavaDoc for this test class.
-//TODO: Ask Arne of we need to reference wolfram alpha.
 
 class ComplexTest {
 
@@ -35,6 +34,19 @@ class ComplexTest {
     posTest.sqrt();
     assertEquals(posTest.getX0(),0.4550898605622274 );
     assertEquals(posTest.getY0(),1.09868411346781);
+  }
+
+  /**
+   * Tests that the constructor performs as expected when giving it NaN values.
+   */
+  @Test
+  public void complexTestConstructorWithNaNValues(){
+    try{
+      Complex testComplex = new Complex(1/0,1/0);
+      fail();
+    }catch (ArithmeticException a){
+      assertTrue(true);
+    }
   }
 
 }

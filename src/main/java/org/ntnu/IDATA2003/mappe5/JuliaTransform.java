@@ -10,6 +10,7 @@ public class JuliaTransform implements Transform2D {
    *
    * @param complex a complex vector.
    * @param sign the sign of the complex vector. Must be -1 or 1.
+   * @throws IllegalArgumentException
    */
   public JuliaTransform(Complex complex, int sign) {
 
@@ -29,9 +30,9 @@ public class JuliaTransform implements Transform2D {
    *
    * @param point A point in a 2D vector space. //no idea if this is correct.
    * @return a transformed 2D vector.
+   * @throws IllegalArgumentException
    */
   public Vector2D transform(Vector2D point) {
-    //TODO: needs Junit testing.
     if(point == null){
       throw new IllegalArgumentException("Vector point cannot be null");
     }

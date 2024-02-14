@@ -8,7 +8,13 @@ import  java.lang.Math;
  */
 public class Complex extends Vector2D {
 
-  public Complex(double real, double imag) {
+  /**
+   *
+   * @param real the real number of the complex value
+   * @param imag the imaginary number of the complex value
+   * @throws ArithmeticException
+   */
+  public Complex(double real, double imag)  {
     super(real, imag);
   }
 
@@ -18,10 +24,9 @@ public class Complex extends Vector2D {
    * @return the square roof of the complex number.
    */
   public Complex sqrt() {
-
     double x = this.getX0();
     double y = this.getY0();
-    double sqrt = Math.sqrt(x * x + y * y);           //finds the length of the vector.
+    double sqrt = Math.sqrt(x * x + y * y);//finds the length of the vector.
     double firstOperation =  Math.sqrt(0.5*(sqrt + x));//finds the real number of the vector.
     double secondOperation = Math.sqrt(0.5*(sqrt - x)); //finds the imaginary number for the vector.
     this.setX0(firstOperation);

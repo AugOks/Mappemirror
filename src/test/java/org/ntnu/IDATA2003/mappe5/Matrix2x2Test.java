@@ -26,5 +26,36 @@ class Matrix2x2Test {
 
   }
 
+  /**
+   * Tests that the matrix multiplication method performs as expected when a
+   * null object is passed to the method
+   */
+
+  @Test
+  public  void testMatrixMultiplicationWithNullObject(){
+    Matrix2x2 testMatrix = new Matrix2x2(1,2,3,4);
+    Vector2D testVector = null;
+    try {
+      testMatrix.multiply(testVector);
+      fail();
+    }catch (IllegalArgumentException e){
+      assertTrue(true);
+    }
+  }
+
+  /**
+   * Tests that the matrix2x2 constructor performs as expected when passed NaN values.
+   */
+  @Test
+  public  void testMatrixConstructorWithNaNValues(){
+    try {
+      Matrix2x2 matrixTest = new Matrix2x2(1 / 0, 1 / 0, 1 / 0, 1 / 0);
+      fail();
+    }catch (ArithmeticException a){
+      assertTrue(true);
+    }
+  }
+
+
 
 }
