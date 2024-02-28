@@ -106,15 +106,13 @@ public class ChaosCanvas {
   }
 
   /**
-   * Takes in X and Y coordinates and returns the pixel position of those coordinates.
+   * Takes in a Vector2D containing coordinates and returns the pixel position of those coordinates.
    *
-   * @param x0 the X value of the coordinates.
-   * @param y0 the Y value of the coordinates.
+   * @param coordinates the coordinates of the pixel as a Vector2D.
    * @return the indices of the pixel as an int array.
    */
-  public int[] transformCoordsToIndices(double x0, double y0){
+  public int[] transformCoordsToIndices(Vector2D coordinates){
     int[] xy = new int[2];
-    Vector2D coordinates = new Vector2D( x0, y0);
     Vector2D indices = this.transformCoordsToIndices.transform(coordinates);
     xy[0] = (int) Math.round(indices.getX0());
     xy[1] = (int) Math.round(indices.getY0());
