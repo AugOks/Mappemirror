@@ -67,7 +67,10 @@ public class ChaosCanvas {
    * @param point the coordinates of the pixel to put.
    */
   public void putPixel(Vector2D point){
-    ;
+    int [] indices = transformCoordsToIndices(point);
+    this.canvas[indices[0]][indices[1]] = 1;
+    System.out.println(indices[0]);
+
   }
 
   /**
@@ -76,6 +79,7 @@ public class ChaosCanvas {
    * @return the 2-dimensional int array of the canvas.
    */
   public int[][] getCanvasArray(){
+
     return this.canvas;
   }
 
@@ -83,7 +87,8 @@ public class ChaosCanvas {
    * Creates a canvas based on the width and height.
    *
    */
-  public void makeCanvas(){
+  private void makeCanvas(){
+
     this.canvas = new int[this.height][this.width];
   }
 
@@ -116,6 +121,7 @@ public class ChaosCanvas {
     Vector2D indices = this.transformCoordsToIndices.transform(coordinates);
     xy[0] = (int) Math.round(indices.getX0());
     xy[1] = (int) Math.round(indices.getY0());
+
     return xy;
   }
   /**
@@ -125,6 +131,7 @@ public class ChaosCanvas {
    * @param coords the coordinates to be set.
    */
   public  void setMaxCoords(Vector2D coords){
+
     this.maxCoords = coords;
   }
   /**
@@ -134,6 +141,7 @@ public class ChaosCanvas {
    * @param coords the coordinates to be set.
    */
   public void setMinCoords(Vector2D coords){
+
     this.minCoords = coords;
   }
 

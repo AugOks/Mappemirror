@@ -32,6 +32,7 @@ public class ChaosGameDescription {
    * @return max coords
    */
   public Vector2D getMaxCoords(){
+
     return this.maxCoords;
   }
 
@@ -40,7 +41,15 @@ public class ChaosGameDescription {
    * @return min coords
    */
   public Vector2D getMinCoords() {
+
     return this.minCoords;
+  }
+
+  public Transform2D getTransform(int index){
+    if (index < 0){
+      throw new IndexOutOfBoundsException("index cannot be negative");
+    }
+     return this.transforms.get(index);
   }
 
   /**
@@ -54,7 +63,7 @@ public class ChaosGameDescription {
   }
 
   /**
-   * Sets the max coordiantes of the transform?
+   * Sets the max coordinates of the transform?
    * TODO: fix javadoc
    *
    * @param coords the coordinates to be set.
