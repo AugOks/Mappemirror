@@ -38,9 +38,9 @@ public class JuliaTransform implements Transform2D {
     if (point == null) {
       throw new IllegalArgumentException("Vector point cannot be null");
     }
-    this.julia.setX0(this.julia.getX0() - point.getX0());
-    this.julia.setY0(this.julia.getY0() - point.getY0() * sign);
-    return julia.sqrt();
-
+    Vector2D vector =  this.julia.sub(point);
+    Complex complex = new Complex(vector.getX0(), vector.getY0());
+    complex =  complex.sqrt();
+    return  complex;
   }
 }

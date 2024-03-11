@@ -13,6 +13,8 @@ public class ChaosCanvas {
   private Vector2D maxCoords;
   private AffineTransform2D transformCoordsToIndices;
 
+
+
   /**
    * Creates an instance of the chaos game itself.
    *
@@ -60,7 +62,14 @@ public class ChaosCanvas {
     //TODO: Fix this method.
     return 0;
   }
-
+  //TODO: Javadoc
+  public int getWidth() {
+    return width;
+  }
+//TODO: Javadoc
+  public int getHeight() {
+    return height;
+  }
   /**
    * Puts a pixel at a given point coordinates on the canvas.
    *
@@ -69,7 +78,7 @@ public class ChaosCanvas {
   public void putPixel(Vector2D point){
     int [] indices = transformCoordsToIndices(point);
     this.canvas[indices[0]][indices[1]] = 1;
-    System.out.println(indices[0]);
+    System.out.println(indices[0] + "index x");
 
   }
 
@@ -118,9 +127,11 @@ public class ChaosCanvas {
    */
   public int[] transformCoordsToIndices(Vector2D coordinates){
     int[] xy = new int[2];
+    System.out.println(coordinates.getX0() + "coords");
     Vector2D indices = this.transformCoordsToIndices.transform(coordinates);
     xy[0] = (int) Math.round(indices.getX0());
     xy[1] = (int) Math.round(indices.getY0());
+    System.out.println(xy[0] + "index");
 
     return xy;
   }

@@ -77,10 +77,11 @@ public class Vector2D {
     if (otherVector == null) {
       throw new IllegalArgumentException("Vector is null");
     }
-    this.x0 += otherVector.getX0();
-    this.y0 += otherVector.getY0();
-    return this;
 
+    double xValue = this.x0 + otherVector.getX0();
+    double yValue = this.y0 + otherVector.getY0();
+    Vector2D returnVector = new Vector2D(xValue, yValue);
+    return returnVector;
   }
 
   /**
@@ -95,9 +96,10 @@ public class Vector2D {
     if (otherVector == null) {
       throw new IllegalArgumentException("Vector is null");
     }
-    this.x0 -= otherVector.getX0();
-    this.y0 -= otherVector.getY0();
-    return this;
+    double xValue = this.x0 - otherVector.getX0();
+    double yValue = this.y0 - otherVector.getY0();
+    Vector2D returnVector = new Vector2D(xValue, yValue);
+    return returnVector;
 
   }
 }

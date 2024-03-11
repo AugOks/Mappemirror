@@ -28,9 +28,9 @@ public class Complex extends Vector2D {
     double firstOperation = Math.sqrt(0.5 * (sqrt + x));//finds the real number of the vector.
     double secondOperation = Math.sqrt(
         0.5 * (sqrt - x)); //finds the imaginary number for the vector.
-    this.setX0(firstOperation);
-    this.setY0(secondOperation);
-    return this;
+    Complex returnComplex = new Complex(firstOperation, secondOperation);
+
+    return returnComplex;
   }
 
 }
