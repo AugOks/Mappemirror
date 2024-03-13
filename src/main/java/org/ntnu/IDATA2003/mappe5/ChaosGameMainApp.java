@@ -18,12 +18,12 @@ public class ChaosGameMainApp {
     transformList.add(firstTransf);
     transformList.add(secondTransf);
     transformList.add(thirdTransf);
-    Vector2D minCoords = new Vector2D(0,0);
-    Vector2D maxCoords = new Vector2D(1,1);
+    Vector2D minCoords = new Vector2D(1,1);
+    Vector2D maxCoords = new Vector2D(100,100);
     ChaosGameDescription  description = new ChaosGameDescription(transformList, minCoords,maxCoords);
 
-    ChaosGame mainGame = new ChaosGame(description, 150, 150);
-    mainGame.runSteps(20);
+    ChaosGame mainGame = new ChaosGame(description, 40, 40);
+    mainGame.runSteps(1000);
 
   }
 }

@@ -14,7 +14,6 @@ public class ChaosCanvas {
   private AffineTransform2D transformCoordsToIndices;
 
 
-
   /**
    * Creates an instance of the chaos game itself.
    *
@@ -76,12 +75,13 @@ public class ChaosCanvas {
    * @param point the coordinates of the pixel to put.
    */
   public void putPixel(Vector2D point){
-    int [] indices = transformCoordsToIndices(point);
-    if(indices[0] > 0 && indices[0] < this.width && indices[1] > 0 && indices[1] < this.height ) {
-      this.canvas[indices[0]][indices[1]] = 1;
-      System.out.println(indices[0] + "index x");
+    Vector2D ijCoords = transformCoordsToIndices.transform(point);
+    int i = (int) Math.round(ijCoords.getX0());
+    int j = (int) Math.round(ijCoords.getY0());
+    //System.out.println(ijCoords.getX0()+"/"+i+"   "+ ijCoords.getY0()+"/"+j);
+    if(i > 0 && i < this.height && j > 0 && j < this.width) {
+      this.canvas[i][j] = 1;
     }
-
   }
 
   /**
@@ -108,13 +108,13 @@ public class ChaosCanvas {
    * (i,j) = A*(x0,y0) + b
    */
   private void setCoordsToIndices(){
-    double Ab1 = (this.height-1)/(this.minCoords.getY0() - this.maxCoords.getY0());
-    double Ac1 = (this.width -1)/(this.maxCoords.getX0() - this.minCoords.getX0());
+    double Ab1 = (this.width -1) / (this.minCoords.getY0() - this.maxCoords.getY0());
+    double Ac1 = (this.height-1) / (this.maxCoords.getX0() - this.minCoords.getX0());
     Matrix2x2 matrixA = new Matrix2x2(0,Ab1,Ac1,0);
 
-    double Bx = ((this.height-1)*this.maxCoords.getY0()) / (this.maxCoords.getY0() -
+    double Bx = ((this.width -1) * this.maxCoords.getY0()) / (this.maxCoords.getY0() -
         this.minCoords.getY0());
-    double By = ((this.width -1) *this.minCoords.getX0()) / (this.minCoords.getX0() -
+    double By = ((this.height-1) * this.minCoords.getX0()) / (this.minCoords.getX0() -
         this.maxCoords.getX0());
     Vector2D vectorB = new Vector2D(Bx, By);
 

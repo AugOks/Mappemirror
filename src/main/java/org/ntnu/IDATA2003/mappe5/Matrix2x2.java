@@ -5,7 +5,7 @@ package org.ntnu.IDATA2003.mappe5;
 
 /**
  * Represents a 2x2 matrix containing 4 double values.
- * Currently does not have any constraints, perhaps a lower and/or upper bound is necessary.
+ * Currently, does not have any constraints, perhaps a lower and/or upper bound is necessary.
  */
 public class Matrix2x2 {
   private double a; // The first tuple in the matrix.
@@ -43,8 +43,8 @@ public class Matrix2x2 {
     }
     Vector2D matrixProduct;
     double firstMulti = this.a * vector.getX0();
-    double secondMulti = this.c * vector.getX0();
-    double thirdMulti = this.b * vector.getY0();
+    double secondMulti = this.b * vector.getY0();
+    double thirdMulti = this.c * vector.getX0();
     double fourthMulti = this.d * vector.getY0();
     matrixProduct = new Vector2D(firstMulti + secondMulti, thirdMulti + fourthMulti);
     return matrixProduct;

@@ -1,17 +1,28 @@
 package org.ntnu.IDATA2003.mappe5;
 
+import java.io.BufferedReader;
+import java.util.Arrays;
 import java.util.Random;
+import java.util.ArrayList;
 
 public class ChaosGame {
   private ChaosCanvas canvas;
   private ChaosGameDescription description;
   private Vector2D currentPoint;
   private Random random;
-  private int[] maxCoords;
 
+  /**
+   *  Creates an instance of ChaosGame and initializes fields with values.
+   * @param description The description of the fractal to be made.
+   * @param width The canvas width.
+   * @param height The canvas height.
+   */
   public ChaosGame(ChaosGameDescription description, int width, int height){
     if (description == null){
       throw new IllegalArgumentException("Description cannot be null");
+    }
+    if (width < 1 || height < 1){
+      throw new IllegalArgumentException("The canvas cannot have size smaller than 1x1");
     }
     this.random = new Random();
     this.description = description;
@@ -39,22 +50,33 @@ public class ChaosGame {
    */
   public void runSteps(int steps){
     for (int i = 0; i <= steps-1; i++) {
-      int dice = this.random.nextInt(2);    // throws a die for a random number
+      int dice = this.random.nextInt(2)+1;    // throws a die for a random number
       Transform2D transf = this.description.getTransform(dice); // gets a random transform based on die
       Vector2D point = transf.transform(this.currentPoint); // transforms current position.
       canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
+      //System.out.println(point.getX0()+" "+ point.getY0());
       this.currentPoint = point; //Sets the current pont to the result of the transformation
     }
     int indexi = this.canvas.getWidth();
     int indexj =  this.canvas.getHeight();
-    int [][] canvas = this.canvas.getCanvasArray();
-    for(int i = 0; i < indexj-100; i++){
-      System.out.println();
-      for(int j = 0; j < indexi-100; j++){
-        System.out.print(canvas[i][j]);
+    int[][] canvas = this.canvas.getCanvasArray();
+    ArrayList<String> canvasConsole = new ArrayList<>();
+    String line="";
+    for(int i = 0; i < indexj; i++){
+      for(int j = 0; j < indexi; j++){
+        if(canvas[i][j]==0){
+          line += "-";
+        } else{
+          line+="X";
+        }
       }
-
+      canvasConsole.add(line);
+      line="";
     }
+    for (String s : canvasConsole) {
+      System.out.println(s);
+    }
+
 
   }
   private void setDescription(ChaosGameDescription description){

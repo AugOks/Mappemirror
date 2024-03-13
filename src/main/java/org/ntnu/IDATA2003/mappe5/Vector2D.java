@@ -35,6 +35,7 @@ public class Vector2D {
    * @return The X value of the vector.
    */
   public double getX0() {
+
     return this.x0;
   }
 
@@ -44,6 +45,7 @@ public class Vector2D {
    * @param x the value to set this x to.
    */
   protected void setX0(double x) {
+
     this.x0 = x;
   }
 
@@ -53,6 +55,7 @@ public class Vector2D {
    * @return the Y value of the vector.
    */
   public double getY0() {
+
     return this.y0;
   }
 
@@ -62,6 +65,7 @@ public class Vector2D {
    * @param y the value to set this Y to.
    */
   protected void setY0(double y) {
+
     this.y0 = y;
   }
 
