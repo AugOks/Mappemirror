@@ -39,7 +39,7 @@ public class ChaosGame {
    */
   public void runSteps(int steps){
     for (int i = 0; i <= steps-1; i++) {
-      int dice = this.random.nextInt(4);    // throws a die for a random number
+      int dice = this.random.nextInt(2);    // throws a die for a random number
       Transform2D transf = this.description.getTransform(dice); // gets a random transform based on die
       Vector2D point = transf.transform(this.currentPoint); // transforms current position.
       canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
@@ -48,9 +48,9 @@ public class ChaosGame {
     int indexi = this.canvas.getWidth();
     int indexj =  this.canvas.getHeight();
     int [][] canvas = this.canvas.getCanvasArray();
-    for(int i = 0; i < indexj-1; i++){
+    for(int i = 0; i < indexj-100; i++){
       System.out.println();
-      for(int j = 0; j < indexi-1; i++){
+      for(int j = 0; j < indexi-100; j++){
         System.out.print(canvas[i][j]);
       }
 

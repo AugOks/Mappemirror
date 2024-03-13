@@ -36,7 +36,6 @@ public class AffineTransform2D implements Transform2D {
       throw new IllegalArgumentException("Vector point is null");
     }
     Vector2D vectorNew =  this.matrix.multiply(point);
-    vectorNew.add(this.vector);
-    return  vectorNew;
+    return vectorNew.add(this.vector);
   }
 }

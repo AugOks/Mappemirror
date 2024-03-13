@@ -77,8 +77,10 @@ public class ChaosCanvas {
    */
   public void putPixel(Vector2D point){
     int [] indices = transformCoordsToIndices(point);
-    this.canvas[indices[0]][indices[1]] = 1;
-    System.out.println(indices[0] + "index x");
+    if(indices[0] > 0 && indices[0] < this.width && indices[1] > 0 && indices[1] < this.height ) {
+      this.canvas[indices[0]][indices[1]] = 1;
+      System.out.println(indices[0] + "index x");
+    }
 
   }
 
@@ -103,7 +105,7 @@ public class ChaosCanvas {
 
   /**
    * Transforms the x,y coordinates of the fractal to indices for a two-dimensional array.
-   * (i,j) = A*(x0,y0) + B
+   * (i,j) = A*(x0,y0) + b
    */
   private void setCoordsToIndices(){
     double Ab1 = (this.height-1)/(this.minCoords.getY0() - this.maxCoords.getY0());
