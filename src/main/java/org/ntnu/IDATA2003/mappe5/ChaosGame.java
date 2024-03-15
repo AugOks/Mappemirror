@@ -17,7 +17,7 @@ public class ChaosGame {
    * @param width The canvas width.
    * @param height The canvas height.
    */
-  public ChaosGame(ChaosGameDescription description, int width, int height){
+  public ChaosGame(ChaosGameDescription description, int height, int width){
     if (description == null){
       throw new IllegalArgumentException("Description cannot be null");
     }
@@ -26,9 +26,9 @@ public class ChaosGame {
     }
     this.random = new Random();
     this.description = description;
-    Vector2D maxCoords = new Vector2D(width, height);
-    Vector2D minCoords = new Vector2D(0,0);
-    this.canvas = new ChaosCanvas(width, height, minCoords, maxCoords);
+    Vector2D maxCoords = this.description.getMaxCoords();
+    Vector2D minCoords = this.description.getMinCoords();
+    this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
     this.currentPoint = minCoords;
 
   }
@@ -49,21 +49,21 @@ public class ChaosGame {
    * @param steps the amount of steps to be run before halting
    */
   public void runSteps(int steps){
-    for (int i = 0; i <= steps-1; i++) {
-      int dice = this.random.nextInt(2)+1;    // throws a die for a random number
+    for (int i = 0; i < steps; i++) {
+      int dice = this.random.nextInt(3);    // throws a die for a random number
       Transform2D transf = this.description.getTransform(dice); // gets a random transform based on die
       Vector2D point = transf.transform(this.currentPoint); // transforms current position.
       canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
       //System.out.println(point.getX0()+" "+ point.getY0());
       this.currentPoint = point; //Sets the current pont to the result of the transformation
     }
-    int indexi = this.canvas.getWidth();
-    int indexj =  this.canvas.getHeight();
+    int indexi = this.canvas.getHeight();
+    int indexj =  this.canvas.getWidth();
     int[][] canvas = this.canvas.getCanvasArray();
     ArrayList<String> canvasConsole = new ArrayList<>();
     String line="";
-    for(int i = 0; i < indexj; i++){
-      for(int j = 0; j < indexi; j++){
+    for(int i = 0; i < indexi; i++){
+      for(int j = 0; j < indexj; j++){
         if(canvas[i][j]==0){
           line += "-";
         } else{
