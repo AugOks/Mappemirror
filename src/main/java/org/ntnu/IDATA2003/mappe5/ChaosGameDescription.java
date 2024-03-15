@@ -1,21 +1,19 @@
 package org.ntnu.IDATA2003.mappe5;
 import java.util.List;
 
-//TODO add javadoc for this class
 /**
- * bla bla bla.
+ * Description creates the information for ChaosGame important for initializing the canvas and the transformations used.
  */
 
 public class ChaosGameDescription {
-
 
   private Vector2D minCoords;
   private Vector2D maxCoords;
   private List<Transform2D> transforms;
 
- //TODO write better javadoc her too
 
   /**
+   * Create an instance of a ChaosGameDescription with a list of transformations and min/mas coords of the canvas.
    *
    * @param transforms a list of transformations from transform2D
    * @param minCoords a 2D vector of the minimum coordinates
@@ -45,39 +43,57 @@ public class ChaosGameDescription {
     return this.minCoords;
   }
 
+  /**
+   * Returns the transformation corresponding to the given index.
+   *
+   * @param index representing the transformation wanted.
+   * @return the transformation corresponding to the given index.
+   */
   public Transform2D getTransform(int index){
-    if (index < 0){
-      throw new IndexOutOfBoundsException("index cannot be negative");
+    if (index < 0 || index > this.getTransformSize() ){
+      throw new IndexOutOfBoundsException("index cannot be negative or larger than the amount " +
+          "transforms.");
     }
      return this.transforms.get(index);
   }
 
   /**
-   * Sets the min coordinates of the transform?
-   * TODO: fix this javadoc.
+   * Returns the amount of transforms this description holds onto.
    *
-   * @param coords the coordinates to be set.
+   * @return the amount of transforms as an int.
    */
-  public void setMinCoords(Vector2D coords){
-    this.minCoords = coords;
+  public int getTransformSize(){
+
+    return this.transforms.size();
   }
 
   /**
-   * Sets the max coordinates of the transform?
-   * TODO: fix javadoc
+   * Sets the min coordinates of the canvas.
    *
-   * @param coords the coordinates to be set.
+   * @param minCoords the coordinates to be set.
    */
-  public  void setMaxCoords(Vector2D coords){
-    this.maxCoords = coords;
+  public void setMinCoords(Vector2D minCoords){
+
+    this.minCoords = minCoords;
   }
 
   /**
-   * Sets the transforms of the chaos games.
+   * Sets the max coordinates of the canvas.
    *
-   * @param transforms the transforms to be set.
+   * @param maxCoords the coordinates to be set.
+   */
+  public  void setMaxCoords(Vector2D maxCoords){
+
+    this.maxCoords = maxCoords;
+  }
+
+  /**
+   * Sets a list of transformations of the chaos games.
+   *
+   * @param transforms the transformations available.
    */
   public  void setTransforms(List<Transform2D> transforms){
+
     this.transforms = transforms;
   }
 }

@@ -1,18 +1,21 @@
 package org.ntnu.IDATA2003.mappe5;
 
-import java.io.BufferedReader;
-import java.util.Arrays;
+/**
+ * The chaos game controls the main logic of the application.
+ * It's responsible for creating a instance of the description and canvas needed.
+ */
+
 import java.util.Random;
-import java.util.ArrayList;
 
 public class ChaosGame {
-  private ChaosCanvas canvas;
+  private ChaosCanvas canvas; // The canvas for the fractals in the app.
   private ChaosGameDescription description;
   private Vector2D currentPoint;
   private Random random;
 
   /**
-   *  Creates an instance of ChaosGame and initializes fields with values.
+   * Creates an instance of ChaosGame and initializes fields with values.
+   *
    * @param description The description of the fractal to be made.
    * @param width The canvas width.
    * @param height The canvas height.
@@ -25,7 +28,7 @@ public class ChaosGame {
       throw new IllegalArgumentException("The canvas cannot have size smaller than 1x1");
     }
     this.random = new Random();
-    this.description = description;
+    this.setDescription(description);
     Vector2D maxCoords = this.description.getMaxCoords();
     Vector2D minCoords = this.description.getMinCoords();
     this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
@@ -50,47 +53,19 @@ public class ChaosGame {
    */
   public void runSteps(int steps){
     for (int i = 0; i < steps; i++) {
-      int dice = this.random.nextInt(3);    // throws a die for a random number
-      Transform2D transf = this.description.getTransform(dice); // gets a random transform based on die
-      Vector2D point = transf.transform(this.currentPoint); // transforms current position.
+      int dice = this.random.nextInt(this.description.getTransformSize());    // throws a die for a random number
+      Transform2D transform = this.description.getTransform(dice); // gets a random transform based on die
+      Vector2D point = transform.transform(this.currentPoint); // transforms current position.
       canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
-      //System.out.println(point.getX0()+" "+ point.getY0());
       this.currentPoint = point; //Sets the current pont to the result of the transformation
     }
-    int indexi = this.canvas.getHeight();
-    int indexj =  this.canvas.getWidth();
-    int[][] canvas = this.canvas.getCanvasArray();
-    ArrayList<String> canvasConsole = new ArrayList<>();
-    String line="";
-    for(int i = 0; i < indexi; i++){
-      for(int j = 0; j < indexj; j++){
-        if(canvas[i][j]==0){
-          line += "-";
-        } else{
-          line+="X";
-        }
-      }
-      canvasConsole.add(line);
-      line="";
-    }
-    for (String s : canvasConsole) {
-      System.out.println(s);
-    }
-
-
   }
-  private void setDescription(ChaosGameDescription description){
+  public void setDescription(ChaosGameDescription description){
 
     this.description = description;
   }
 
-  /* TODO: consider removing or refactoring.
-  private void setCanvas(int height, int width){
-
-    Vector2D minCoords= new Vector2D(0, 0);
-    Vector2D maxCoords = new Vector2D(width, height);
-    this.canvas = new ChaosCanvas(width, height,minCoords, maxCoords );
 
 
-  }*/
+
 }

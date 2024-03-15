@@ -63,10 +63,12 @@ public class ChaosCanvas {
   }
   //TODO: Javadoc
   public int getWidth() {
+
     return width;
   }
 //TODO: Javadoc
   public int getHeight() {
+
     return height;
   }
   /**
@@ -78,7 +80,7 @@ public class ChaosCanvas {
     Vector2D ijCoords = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
-    System.out.println(ijCoords.getX0()+" / "+i+"   "+ ijCoords.getY0()+" / "+j);
+    //System.out.println(ijCoords.getX0()+" / "+i+"   "+ ijCoords.getY0()+" / "+j);
     if(i > 0 && i < this.height && j > 0 && j < this.width) {
       this.canvas[i][j] = 1;
 
