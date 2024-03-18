@@ -39,9 +39,9 @@ try (BufferedReader reader = Files.newBufferedReader(pathOfFile)) {
        String[] textDelimit = text.split("#");
        fileContent.add(textDelimit[0]);
      }
-     minimumCoords = this.getVector(fileContent.get(1));
+     minimumCoords = this.getVectorFromFileContents(fileContent.get(1));
 
-     maximumCoords =  this.getVector(fileContent.get(2));
+     maximumCoords =  this.getVectorFromFileContents(fileContent.get(2));
 
      String typeOfTransf = fileContent.get(0).replaceAll("\\s", "");
      if (typeOfTransf.equals("Affine2D")){
@@ -79,8 +79,8 @@ try (BufferedReader reader = Files.newBufferedReader(pathOfFile)) {
      }
 
      affineTransf.add(new AffineTransform2D(
-         new Matrix2x2(MV.get(0),MV.get(1), MV.get(2), MV.get(3)),
-         new Vector2D(MV.get(4), MV.get(5))));
+         new Matrix2x2(MV.get(0),MV.get(1), MV.get(2), MV.get(3)), // first four values contain the matrix
+         new Vector2D(MV.get(4), MV.get(5))));  // last two values contain the vector.
      MV.clear();
    }
    return affineTransf;
@@ -92,7 +92,7 @@ try (BufferedReader reader = Files.newBufferedReader(pathOfFile)) {
    * @return A vector2D containing the values from the string.
    */
 
- private Vector2D getVector(String content){
+ private Vector2D getVectorFromFileContents(String content){
    double x = 0;
    double y = 0;
    String [] maxCoords = content.split(",");
