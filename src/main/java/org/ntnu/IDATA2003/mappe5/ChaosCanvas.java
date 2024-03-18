@@ -6,16 +6,15 @@ package org.ntnu.IDATA2003.mappe5;
 
 public class ChaosCanvas {
 
-  private int[][] canvas;
-  private int width;
-  private int height;
-  private Vector2D minCoords;
-  private Vector2D maxCoords;
-  private AffineTransform2D transformCoordsToIndices;
-
+  private int[][] canvas; //The canvas of the game.
+  private int width; //The width of the canvas.
+  private int height; //The height of the canvas.
+  private Vector2D minCoords; //The minimum coordinates of the canvas.
+  private Vector2D maxCoords; //The maximum coordinates of the canvas.
+  private AffineTransform2D transformCoordsToIndices; //The transformation from coordinates to indices.
 
   /**
-   * Creates an instance of the chaos game itself.
+   * Creates an instance of the canvas in chaos game.
    *
    * @param width The width of the canvas.
    * @param height The height of the canvas.
@@ -29,7 +28,6 @@ public class ChaosCanvas {
     setMinCoords(minCoords);
     setCoordsToIndices();
     makeCanvas();
-
   }
 
   /**
@@ -44,6 +42,7 @@ public class ChaosCanvas {
 
   /**
    * Sets the height of the canvas.
+   *
    * @param height height of canvas
    */
   private void setHeight(int height){
@@ -61,16 +60,27 @@ public class ChaosCanvas {
     //TODO: Fix this method.
     return 0;
   }
-  //TODO: Javadoc
+
+  /**
+   * Returns the width of the canvas.
+   *
+   * @return width of canvas.
+   */
   public int getWidth() {
 
     return width;
   }
-//TODO: Javadoc
+
+  /**
+   * Returns the height of the canvas.
+   *
+   * @return height of canvas.
+   */
   public int getHeight() {
 
     return height;
   }
+
   /**
    * Puts a pixel at a given point coordinates on the canvas.
    *
@@ -80,7 +90,7 @@ public class ChaosCanvas {
     Vector2D ijCoords = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
-    //System.out.println(ijCoords.getX0()+" / "+i+"   "+ ijCoords.getY0()+" / "+j);
+    //System.out.println(i + " i /"+ ijCoords.getX0()+ " and "+ j + " j/ "+ijCoords.getY0());
     if(i > 0 && i < this.height && j > 0 && j < this.width) {
       this.canvas[i][j] = 1;
 
@@ -99,7 +109,6 @@ public class ChaosCanvas {
 
   /**
    * Creates a canvas based on the width and height.
-   *
    */
   private void makeCanvas(){
 
@@ -125,6 +134,7 @@ public class ChaosCanvas {
   }
 
   /**
+   * TODO question if we should remove this method.
    * Takes in a Vector2D containing coordinates and returns the pixel position of those coordinates.
    *
    * @param coordinates the coordinates of the pixel as a Vector2D.

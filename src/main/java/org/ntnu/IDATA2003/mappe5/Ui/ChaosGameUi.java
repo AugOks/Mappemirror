@@ -3,7 +3,6 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 
 import java.util.ArrayList;
 import org.ntnu.IDATA2003.mappe5.ChaosGame;
-import org.ntnu.IDATA2003.mappe5.ChaosGameDescription;
 
 public class ChaosGameUi {
 
@@ -14,14 +13,14 @@ public class ChaosGameUi {
   private final static int QUIT=3;
 
   //TODO this should be defined on how large the users screen is.
-  private static final int height = 40;
-  private static final int width =40;
+  private static final int height = 200;
+  private static final int width =200;
   public ChaosGameUi(){
     this.controller = new ChaosGameController(this);
   }
+
 /**
  * The main Application screen. Starts the application and gets user input.
- *
  */
   public void start() {
     boolean finished = false;
@@ -33,7 +32,6 @@ public class ChaosGameUi {
           break;
         case MANDELBROT:
           this.printFractal(menuChoice);
-          System.out.println("Mandelbrot fractal coming soon near you...");
           break;
         case QUIT:
           System.out.println("* Thank you for using Chaos Game *");
@@ -64,7 +62,7 @@ public class ChaosGameUi {
     for(int i = 0; i < index_i; i++){
       for(int j = 0; j < index_j; j++){
         if(canvas[i][j]==0){
-          line += " ";
+          line += "-";
         } else{
           line+="X";
         }
@@ -76,11 +74,12 @@ public class ChaosGameUi {
       System.out.println(s);
     }
   }
+
   public void printFractal(int menuChoice){
     System.out.println("How many steps to run?");
     int steps = this.controller.parseInput();
     if(menuChoice==1) {
-      this.mainGame = new ChaosGame(controller.createSierpinksi(), height,width);
+      this.mainGame = new ChaosGame(controller.createSierpinksi(), height, width);
     }
     if (menuChoice==2){
       this.mainGame = new ChaosGame(controller.createMandelbrot(), height, width);
@@ -89,7 +88,9 @@ public class ChaosGameUi {
     printCanvas();
 
   }
-  public  void  testReadfile(){
+  public  void  testfilesfile(){
+
     this.controller.createMandelbrot();
+
   }
 }

@@ -10,6 +10,7 @@ public class ChaosGameDescription {
   private Vector2D minCoords;
   private Vector2D maxCoords;
   private List<Transform2D> transforms;
+  private String name;
 
 
   /**
@@ -19,10 +20,31 @@ public class ChaosGameDescription {
    * @param minCoords a 2D vector of the minimum coordinates
    * @param maxCoords a 2D vector of the maximum coordinates
    */
-  public ChaosGameDescription(List<Transform2D> transforms,Vector2D minCoords, Vector2D maxCoords ){
+  public ChaosGameDescription(List<Transform2D> transforms,Vector2D minCoords, Vector2D maxCoords, String name ){
     setTransforms(transforms);
     setMaxCoords(maxCoords);
     setMinCoords(minCoords);
+    setName(name);
+
+  }
+
+  /**
+   * sets the name of the Fractal if one is applicable.
+   * @param name
+   */
+  private void setName(String name) {
+    if (name == null ){
+      name = "";
+    }
+    this.name = name;
+  }
+
+  /**
+   * Returns the name of the fractal if one exists.
+   * @return
+   */
+  public String getName(){
+    return this.name;
   }
 
   /**
@@ -55,6 +77,14 @@ public class ChaosGameDescription {
           "transforms.");
     }
      return this.transforms.get(index);
+  }
+
+  /**
+   * Returns all transforms in memory.
+   * @return all transforms.
+   */
+  public List<Transform2D> getAllTransforms(){
+    return this.transforms;
   }
 
   /**

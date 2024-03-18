@@ -9,7 +9,6 @@ public class ChaosGameMainApp {
   public static void main(String[] args) {
     ChaosGameUi gameUi = new ChaosGameUi();
     gameUi.start();
-    gameUi.testReadfile();
   }
 
 }

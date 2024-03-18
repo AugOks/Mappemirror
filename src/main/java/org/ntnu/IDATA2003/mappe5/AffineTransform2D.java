@@ -23,12 +23,21 @@ public class AffineTransform2D implements Transform2D {
     this.vector = vectorV;
   }
 
+  public Matrix2x2 getMatrix(){
+    return matrix;
+  }
+  public Vector2D getVector(){
+    return vector;
+  }
+  @Override
+  public String transformToString(){
+    return this.matrix.matrixToString() + ", " + vector.toString();
+  }
   /**
    * Performs an Affine transformation to the matrix and the vector.
    *
    * @param point A point in a 2D vector space. //no idea if this is correct.
    * @return a vector point in 2D space.
-   * @throws IllegalArgumentException
    */
   @Override
   public Vector2D transform(Vector2D point) {
@@ -39,4 +48,5 @@ public class AffineTransform2D implements Transform2D {
     return vectorNew.add(this.vector);
 
   }
+
 }

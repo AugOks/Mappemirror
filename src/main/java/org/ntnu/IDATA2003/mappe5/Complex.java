@@ -10,7 +10,6 @@ public class Complex extends Vector2D {
   /**
    * @param real the real number of the complex value
    * @param imag the imaginary number of the complex value
-   * @throws ArithmeticException
    */
   public Complex(double real, double imag) {
     super(real, imag);
@@ -28,9 +27,16 @@ public class Complex extends Vector2D {
     double firstOperation = Math.sqrt(0.5 * (sqrt + x));//finds the real number of the vector.
     double secondOperation = Math.sqrt(
         0.5 * (sqrt - x)); //finds the imaginary number for the vector.
-    Complex returnComplex = new Complex(firstOperation, secondOperation);
 
-    return returnComplex;
+    return new Complex(firstOperation, secondOperation);
+  }
+
+  /**
+   * Sets the Y0 value (imaginary value) of the vector.
+   * @param y1 the Y0 value of the vector.
+   */
+  public void setY0(double y1) {
+    super.setY0(y1);
   }
 
 }

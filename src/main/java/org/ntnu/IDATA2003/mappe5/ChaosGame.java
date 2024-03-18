@@ -2,7 +2,7 @@ package org.ntnu.IDATA2003.mappe5;
 
 /**
  * The chaos game controls the main logic of the application.
- * It's responsible for creating a instance of the description and canvas needed.
+ * It's responsible for creating an instance of the description and canvas needed.
  */
 
 import java.util.Random;
@@ -32,7 +32,7 @@ public class ChaosGame {
     Vector2D maxCoords = this.description.getMaxCoords();
     Vector2D minCoords = this.description.getMinCoords();
     this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
-    this.currentPoint = minCoords;
+    this.currentPoint = new Vector2D(0,0);
 
   }
 

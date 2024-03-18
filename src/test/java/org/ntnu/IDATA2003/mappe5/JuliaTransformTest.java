@@ -43,12 +43,12 @@ class JuliaTransformTest {
   public void testJuliaTransformWithPositiveArgumentsNegativeNumbers() {
     Complex complexTest = new Complex(2, 2);
 
-    JuliaTransform juliaTest = new JuliaTransform(complexTest, 1);
+    JuliaTransform juliaTest = new JuliaTransform(complexTest, -1);
     Vector2D testVector = new Vector2D(3, 3);
 
     testVector = juliaTest.transform(testVector);
     assertEquals(0.4550898605622274, testVector.getX0());
-    assertEquals(1.09868411346781, testVector.getY0());
+    assertEquals(-1.09868411346781, testVector.getY0());
   }
 
   /**
