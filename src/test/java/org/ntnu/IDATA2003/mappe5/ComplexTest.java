@@ -19,9 +19,9 @@ class ComplexTest {
   @Test
   public void ComplexTestPositiveTestPositiveNumbers() {
     Complex posTest = new Complex(1, 1);
-    posTest.sqrt();
-    assertEquals(posTest.getX0(), 1.09868411346781);
-    assertEquals(posTest.getY0(), 0.4550898605622274);
+    Complex resultTest = posTest.sqrt();
+    assertEquals(resultTest.getX0(), 1.09868411346781);
+    assertEquals(resultTest.getY0(), 0.4550898605622274);
   }
 
   /**
@@ -32,9 +32,9 @@ class ComplexTest {
   @Test
   public void ComplexTestPositiveTestNegativeNumbers() {
     Complex posTest = new Complex(-1, -1);
-    posTest.sqrt();
-    assertEquals(posTest.getX0(), 0.4550898605622274);
-    assertEquals(posTest.getY0(), 1.09868411346781);
+    Complex resultTest =  posTest.sqrt();
+    assertEquals(resultTest.getX0(), 0.455,0.001);
+    assertEquals(resultTest.getY0(), -1.098,0.001);
   }
 
   /**

@@ -13,8 +13,8 @@ public class ChaosGameUi {
   private final static int QUIT=3;
 
   //TODO this should be defined on how large the users screen is.
-  private static final int height = 200;
-  private static final int width =200;
+  private static final int height = 30;
+  private static final int width =70;
   public ChaosGameUi(){
     this.controller = new ChaosGameController(this);
   }

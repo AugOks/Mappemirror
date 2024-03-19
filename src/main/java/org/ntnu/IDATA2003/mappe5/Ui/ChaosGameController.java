@@ -30,7 +30,6 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the sierpinski fractal.
    */
   public ChaosGameDescription createSierpinksi() {
-
    ChaosGameDescription sierpinksi =  this.handler.readFromFile("sierpinski");
    handler.writeToFile(sierpinksi);
    return  sierpinksi;
@@ -73,8 +72,6 @@ public class ChaosGameController {
     }
     return userInputInt;
   }
-  public void writeTofile(){
-    handler.writeAllGamesToFile();
-  }
+
 
 }
