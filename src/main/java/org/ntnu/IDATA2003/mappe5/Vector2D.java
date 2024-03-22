@@ -67,6 +67,7 @@ public class Vector2D {
   }
 
   public String toString() {
+
     return this.x0 + ", " + this.y0;
   }
 

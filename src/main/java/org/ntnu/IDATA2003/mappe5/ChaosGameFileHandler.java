@@ -3,6 +3,9 @@ package org.ntnu.IDATA2003.mappe5;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -28,11 +31,19 @@ public class ChaosGameFileHandler {
   /**
    * Reads in the contents of a given file.
    *
-   * @param fractal the URI of the given file of the right fractal.
+   * @param fractal the name of the file without exstension.
    * @return the contents of the file as a chaosGameDescription object.
+   * @throws  IllegalArgumentException if no file with the given fractal name could be found.
+   * @throws NumberFormatException if parsing doubles from string failed.
    */
-  public ChaosGameDescription readFromFile(String fractal) {
-    Path pathOfFile = Path.of(fractal + ".txt");
+  public ChaosGameDescription readFromFile(String fractal)  {
+    URL url = getClass().getClassLoader().getResource(fractal + ".txt");
+    Path pathOfFile = null;
+    try {
+      pathOfFile = Path.of(url.toURI());
+    } catch (URISyntaxException e) {
+      throw new RuntimeException(e);
+    }
     ArrayList<String> fileContent = new ArrayList<>();
     ArrayList<Transform2D> transforms = new ArrayList<>();
     Vector2D minimumCoords = new Vector2D(0, 0);
@@ -40,7 +51,7 @@ public class ChaosGameFileHandler {
 
     try (BufferedReader reader = Files.newBufferedReader(pathOfFile)) {
       String text;
-
+      //TODO add check for file contents
       while ((text = reader.readLine()) != null) {  //Removes comments if any on each line of the values.
         String[] textDelimit = text.split("#");
         fileContent.add(textDelimit[0]);
@@ -50,9 +61,11 @@ public class ChaosGameFileHandler {
       transforms.addAll(this.getTransformsFromFileContents(fileContent));
 
     } catch (IOException e) {
-      System.out.println("error while reading file\n" + e.getMessage());
+      throw new IllegalArgumentException("File with this name could not be found " + e.getMessage());
     } catch (NumberFormatException e) {
-      System.out.println("double could not be parsed " + e.getMessage());
+      throw new NumberFormatException("Could not parse doubles from string ");
+    }catch (IndexOutOfBoundsException e){
+      //TODO do something here
     }
 
     ChaosGameDescription game = new ChaosGameDescription(transforms, minimumCoords, maximumCoords,
@@ -85,46 +98,37 @@ public class ChaosGameFileHandler {
    */
   public void writeToFile(ChaosGameDescription description) {
     Path pathOfFile;
-    if (description.getName() != null || !description.getName().isBlank() || !description.getName().isEmpty()) {
+    if(description == null ){
+      throw new IllegalArgumentException("one of the values in the description is null");
+    }
+
+    if ( !description.getName().isBlank() ) {
       pathOfFile = Path.of(description.getName() + "out.txt");
     } else {
       Random rand = new Random();
-      rand.nextInt(100);                              //Generates a random name to give to the nameless fractal.
+      rand.nextInt(100);       //Generates a random name to give to the nameless fractal.
       pathOfFile = Path.of("fractal" + rand + ".txt");
     }
     try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
 
       List<String> chaosGameInfo = this.getChaosGameInfoAsString(description);
-      String transformsAsStrings = this.writeAllTransformsToString(description);
 
       output.write(
-          chaosGameInfo.get(1) + chaosGameInfo.get(2) + chaosGameInfo.get(3) + transformsAsStrings);
+          chaosGameInfo.get(1) + chaosGameInfo.get(2) + chaosGameInfo.get(3) + chaosGameInfo.get(4));
 
     } catch (IOException e) {
-      System.out.println("Failed to write to file " + e.getMessage());
+
     }
 
   }
 
   /**
-   * Takes a @ChaosGameDescription, gets all the transforms and parses them to a string depending on which type of
-   * transform is relevant.
+   * Takes a @ChaosGameDescription, gets all the transforms and parses them to a string depending
+   * on which type of transform is relevant.
    * @param description The chaos game description to be
    * @return
    */
-  private String writeAllTransformsToString(ChaosGameDescription description){
-    String transformsAsStrings = "";
-    List<String> chaosGameInfo = this.getChaosGameInfoAsString(description);
 
-    if (chaosGameInfo.get(0).equals("Affine2D")) {
-      transformsAsStrings = this.writeAffineToString(description.getAllTransforms());
-    }
-    else if (chaosGameInfo.get(0).equals("Julia")) {
-      transformsAsStrings = description.getTransform(0).transformToString() +
-                            " # real and imaginary part of constant c";
-    }
-    return transformsAsStrings;
-  }
 
   /**
    * Turns the information of the chaosgame description into writable strings and returns it.
@@ -139,6 +143,7 @@ public class ChaosGameFileHandler {
    * @return
    */
   private ArrayList<String> getChaosGameInfoAsString(ChaosGameDescription description) {
+    //TODO use stringbuilder instead.
     ArrayList<String> transformInfo = new ArrayList<>();
     String transform = description.getTransform(0).getClass().getSimpleName().replaceAll("Transform", "");
     String compare = new String(transform);
@@ -151,6 +156,16 @@ public class ChaosGameFileHandler {
     transformInfo.add(transform);
     transformInfo.add(minCoords);
     transformInfo.add(maxCoords);
+    String transformsAsStrings = "";
+
+    if (compare.equals("Affine2D")) {
+      transformsAsStrings = this.writeAffineToString(description.getAllTransforms());
+    }
+    else if (compare.equals("Julia")) {
+      transformsAsStrings = description.getTransform(0).transformToString() +
+          " # real and imaginary part of constant c";
+    }
+    transformInfo.add(transformsAsStrings);
     return transformInfo;
   }
 
@@ -177,9 +192,10 @@ public class ChaosGameFileHandler {
    * @param fileContent the content of the file.
    * @return a list of affine transforms.
    */
-  private List<AffineTransform2D> parseAffineTransforms(ArrayList<String> fileContent) {
+  public List<AffineTransform2D> parseAffineTransforms(ArrayList<String> fileContent) {
     ArrayList<Double> transfValues
         = new ArrayList<>();              //Matrix value, shortened for legibility
+    //TODO: make sure fileContent has the right content
     List<AffineTransform2D> affineTransf = new ArrayList<>();
     for (int i = 3; i < fileContent.size(); i++) {
       String[] transforms = fileContent.get(i).split(",");

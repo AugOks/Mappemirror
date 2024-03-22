@@ -12,6 +12,7 @@ public class Complex extends Vector2D {
    * @param imag the imaginary number of the complex value
    */
   public Complex(double real, double imag) {
+
     super(real, imag);
   }
 
@@ -34,10 +35,11 @@ public class Complex extends Vector2D {
   /**
    * Sets the Y0 value (imaginary value) of the vector.
    *
-   * @param y1 the Y0 value of the vector.
+   * @param y0 the Y0 value of the vector.
    */
-  public void setY0(double y1) {
-    super.setY0(y1);
+  public void setY0(double y0) {
+
+    super.setY0(y0);
   }
 
 }

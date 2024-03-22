@@ -58,6 +58,9 @@ public class ChaosCanvas {
    * @param width the width of the canvas.
    */
   private void setWidth(int width) {
+    if(width < 0 ){
+      throw new IllegalArgumentException("width cannot be less than 0");
+    }
     this.width = width;
   }
 
@@ -77,6 +80,9 @@ public class ChaosCanvas {
    * @param height height of canvas
    */
   private void setHeight(int height) {
+    if(height < 0 ){ //TODO: Should have a lower bound.
+      throw new IllegalArgumentException("height cannot be less than 0");
+    }
     this.height = height;
   }
 
@@ -90,7 +96,10 @@ public class ChaosCanvas {
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
     //System.out.println(i + " i  and "+ j + " j");
-    //if(i >= 0 && i < this.height && j >= 0 && j < this.width) {
+    if (i < 0 || i > this.height || j < 0 || j > this.width) {
+      throw new IndexOutOfBoundsException("When transforming coords to indices an invalid indices" +
+          "was returned.");
+    }
     this.canvas[i][j] = 1;
 
   }
@@ -101,7 +110,8 @@ public class ChaosCanvas {
    * @return the 2-dimensional int array of the canvas.
    */
   public int[][] getCanvasArray() {
-    return this.canvas;
+
+    return this.canvas.clone();
   }
 
   /**
@@ -172,7 +182,6 @@ public class ChaosCanvas {
    * Clears the canvas.
    */
   public void clear() {
-    //TODO implement this method
-    ;
+    this.makeCanvas();
   }
 }

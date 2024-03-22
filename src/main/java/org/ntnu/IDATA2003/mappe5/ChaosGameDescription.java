@@ -67,7 +67,9 @@ public class ChaosGameDescription {
    * @param maxCoords the coordinates to be set.
    */
   public void setMaxCoords(Vector2D maxCoords) {
-
+    if (maxCoords == null) {
+      throw new IllegalArgumentException("Max coordinates cannot be null");
+    }
     this.maxCoords = maxCoords;
   }
 
@@ -87,7 +89,9 @@ public class ChaosGameDescription {
    * @param minCoords the coordinates to be set.
    */
   public void setMinCoords(Vector2D minCoords) {
-
+    if (minCoords == null) {
+      throw new IllegalArgumentException("MinCoords cannot be null");
+    }
     this.minCoords = minCoords;
   }
 
@@ -96,9 +100,10 @@ public class ChaosGameDescription {
    *
    * @param index representing the transformation wanted.
    * @return the transformation corresponding to the given index.
+   * @throws IndexOutOfBoundsException if the index is negative or larger than the amount of transforms.
    */
   public Transform2D getTransform(int index) {
-    if (index < 0 || index > this.getTransformSize()) {
+    if (index < 0 || index >= this.getTransformSize()) {
       throw new IndexOutOfBoundsException("index cannot be negative or larger than the amount " +
                                           "transforms.");
     }
@@ -134,8 +139,8 @@ public class ChaosGameDescription {
   public void setTransforms(List<Transform2D> transforms) {
     if (transforms == null) {
       throw new IllegalArgumentException("Transforms list cannot be null");
-    } else {
-      this.transforms = transforms;
     }
+    this.transforms = transforms;
+
   }
 }

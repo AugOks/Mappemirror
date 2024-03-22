@@ -9,8 +9,8 @@ import java.util.Random;
  */
 public class ChaosGame {
   private ChaosCanvas canvas; // The canvas for the fractals in the app.
-  private ChaosGameDescription description;
-  private Vector2D currentPoint;
+  private ChaosGameDescription description; //The description of the chaosGame.
+  private Vector2D currentPoint; //The current point
   private Random random;
 
   /**
@@ -33,6 +33,8 @@ public class ChaosGame {
     Vector2D maxCoords = this.description.getMaxCoords();
     Vector2D minCoords = this.description.getMinCoords();
     this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
+
+    //TODO consider to make this an parameter, so user can change the starting point
     this.currentPoint = new Vector2D(0, 0);
 
   }
@@ -49,6 +51,8 @@ public class ChaosGame {
 
   /**
    * Tells the game how many steps to run before halting.
+   * Starts by transforming the current point using one of the transformations,
+   * Then it places the transformed point on the canvas and sets the current point to the result.
    *
    * @param steps the amount of steps to be run before halting
    */

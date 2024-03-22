@@ -2,9 +2,15 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 
 import static java.lang.Integer.parseInt;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import org.ntnu.IDATA2003.mappe5.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.ChaosGameFileHandler;
+import org.ntnu.IDATA2003.mappe5.Complex;
+import org.ntnu.IDATA2003.mappe5.JuliaTransform;
+import org.ntnu.IDATA2003.mappe5.Transform2D;
+import org.ntnu.IDATA2003.mappe5.Vector2D;
 
 public class ChaosGameController {
 
@@ -23,7 +29,7 @@ public class ChaosGameController {
    */
   public ChaosGameDescription createSierpinksi() {
     ChaosGameDescription sierpinksi = this.handler.readFromFile("sierpinski");
-    handler.writeToFile(sierpinksi);
+
     return sierpinksi;
   }
 
@@ -33,20 +39,33 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the mandelbrot fractal.
    */
   public ChaosGameDescription createJulia() {
-    /*
-    Vector2D minCoords = new Vector2D(-1.6, -1.0);
-    Vector2D maxCoords = new Vector2D(1.6, 1.0);
-    Complex c = new Complex(-0.74543, 0.11301);
-    List<Transform2D> transformList = new ArrayList<>();
-    transformList.add(new JuliaTransform(c,1));
-    transformList.add(new JuliaTransform(c,-1));
-    ChaosGameDescription julia = new ChaosGameDescription(transformList, minCoords, maxCoords, "julia");
 
-     */
     ChaosGameDescription julia = this.handler.readFromFile("juliaset");
-    handler.writeToFile(julia);
+
     return julia;
 
   }
+  /**
+   * Sets the description for the sierpinski fractal.
+   *
+   * @return ChaosGameDescription for the sierpinski fractal.
+   */
 
+  public ChaosGameDescription createBarnsleyFern() {
+    ChaosGameDescription barnsleyFern = this.handler.readFromFile("barnsley-fern");
+    return barnsleyFern;
+  }
+
+  public ChaosGameDescription createUserDefinedJulia(String name, Vector2D minCoords, Vector2D maxCoords, Complex complex){
+    List<Transform2D> transform2DList = new ArrayList<>();
+
+    transform2DList.add(new JuliaTransform(complex, 1));
+    transform2DList.add(new JuliaTransform(complex, -1));
+    return new ChaosGameDescription(transform2DList, minCoords, maxCoords, name);
+  }
+
+  public ChaosGameDescription createuserDefinedAffine(String name,Vector2D minCoords, Vector2D maxCoords,
+                                                      List<Transform2D> transforms){
+    return  new ChaosGameDescription(transforms, minCoords, maxCoords, name);
+  }
 }

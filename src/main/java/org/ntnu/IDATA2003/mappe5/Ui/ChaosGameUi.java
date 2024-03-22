@@ -4,8 +4,16 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 import static java.lang.Integer.parseInt;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Vector;
+import org.ntnu.IDATA2003.mappe5.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.Transform2D;
 import org.ntnu.IDATA2003.mappe5.ChaosGame;
+import org.ntnu.IDATA2003.mappe5.ChaosGameDescription;
+import org.ntnu.IDATA2003.mappe5.Complex;
+import org.ntnu.IDATA2003.mappe5.Vector2D;
+import org.ntnu.IDATA2003.mappe5.TransformsParser;
 
 /**
  * This class is the user interface for the Chaos Game application.
@@ -18,16 +26,23 @@ public class ChaosGameUi {
   /**
    * Constants for the menu options.
    *
-   * <p> SIERPINSKI is the Sierpinski triangle.
-   * <p> JULIASET is the Julia set.
-   * <p> QUIT is to quit the application.
-   * <p> height and width are the dimensions of the canvas.
-   * <p> controller is the controller for the Chaos Game.
-   * <p> mainGame is the instance of the Chaos Game.
+   * <ul>
+   * <li> SIERPINSKI is the Sierpinski triangle.</li>
+   * <li> JULIASET is the Julia set.</li>
+   * <li> BARNSLEY_FERN is the barnsley fern.</li>
+   * <li> QUIT is to quit the application.</li>
+   * <li> height and width are the dimensions of the canvas.</li>
+   * <li> controller is the controller for the Chaos Game.</li>
+   * <li> mainGame is the instance of the Chaos Game.</li>
+   * </ul>
    */
   private final static int SIERPINSKI = 1;
   private final static int JULIASET = 2;
-  private final static int QUIT = 3;
+  private final static int BARNSLEY_FERN =3;
+
+  private final static int USER_AFFINE = 4;
+  private final static int USER_JULIA =5;
+  private final static int QUIT = 6;
   private static final int height = 50;
   private static final int width = 150;
   private final ChaosGameController controller;
@@ -38,7 +53,9 @@ public class ChaosGameUi {
   }
 
   /**
-   * The main Application screen. Starts the application and gets user input.
+   * The main Application screen.
+   * Starts the application and gets user input.
+   *
    */
   public void start() {
     boolean finished = false;
@@ -52,13 +69,22 @@ public class ChaosGameUi {
         case JULIASET:
           this.printFractal(menuChoice);
           break;
+        case BARNSLEY_FERN:
+          this.printFractal(menuChoice);
+          break;
+        case USER_AFFINE:
+          this.printFractal(menuChoice);
+          break;
+        case USER_JULIA:
+          this.printFractal(menuChoice);
+          break;
         case QUIT:
           System.out.println("* Thank you for using Chaos Game *");
           finished = true;
           break;
 
         default:
-          System.out.println("Invalid choice - Please pick a number from the menu;)");
+          System.out.println("Invalid choice - Please pick a number from the menu");
       }
     }
   }
@@ -67,7 +93,10 @@ public class ChaosGameUi {
     System.out.println("Pick an option");
     System.out.println("1. Sierpinski triangle");
     System.out.println("2. Julia set");
-    System.out.println("3. Quit");
+    System.out.println("3. Barnsley fern");
+    System.out.println("4. make your own Julia transform");
+    System.out.println("5. make your own Affine transform");
+    System.out.println("6. Quit");
 
     return this.parseInput();
   }
@@ -77,19 +106,19 @@ public class ChaosGameUi {
     int index_j = mainGame.getCanvas().getWidth();
     int[][] canvas = mainGame.getCanvas().getCanvasArray();
     ArrayList<String> canvasConsole = new ArrayList<>();
-    String line = "";
+    StringBuilder line = new StringBuilder();
 
     //TODO refactor this to use StringBuilder
     for (int i = 0; i < index_i; i++) {
       for (int j = 0; j < index_j; j++) {
         if (canvas[i][j] == 0) {
-          line += "-";
+          line.append("-");
         } else {
-          line += "X";
+          line.append("X");
         }
       }
-      canvasConsole.add(line);
-      line = "";
+      canvasConsole.add(line.toString());
+      line = new StringBuilder();
     }
     for (String s : canvasConsole) {
       System.out.println(s);
@@ -103,7 +132,7 @@ public class ChaosGameUi {
    * @param menuChoice the fractal the user wants to print.
    */
   public void printFractal(int menuChoice) {
-    System.out.println("How many steps to run?");
+    System.out.println("How many steps to run? (10000+ for best results)");
     int steps = this.parseInput();
     if (menuChoice == 1) {
       this.mainGame = new ChaosGame(controller.createSierpinksi(), height, width);
@@ -111,9 +140,95 @@ public class ChaosGameUi {
     if (menuChoice == 2) {
       this.mainGame = new ChaosGame(controller.createJulia(), height, width);
     }
+    if (menuChoice == 3){
+      this.mainGame = new ChaosGame(controller.createBarnsleyFern(), height, width);
+    }
+    if(menuChoice == 4){
+      this.mainGame = new ChaosGame(this.userDefinedJulia(), height, width);
+    }
+    if(menuChoice == 5){
+      this.mainGame = new ChaosGame(this.userDefinedAffineTransform(), height, width);
+    }
     this.mainGame.runSteps(steps);
     printCanvas();
 
+  }
+
+  public ChaosGameDescription userDefinedJulia(){
+    Scanner scanner = new Scanner(System.in);
+    System.out.println("name of the transform: ");
+    String name = scanner.nextLine();
+
+    System.out.println("min coords x value: ");
+    double minCoordsX = scanner.nextDouble();
+    System.out.println("min coords y value: ");
+    double minCoordsY = scanner.nextDouble();
+    Vector2D minCoords = new Vector2D(minCoordsX, minCoordsY);
+
+    System.out.println("max coords x value: ");
+    double maxCoordsX = scanner.nextDouble();
+    System.out.println("max coords y value: ");
+    double maxCoordsY = scanner.nextDouble();
+    Vector2D maxCoords = new Vector2D(maxCoordsX, maxCoordsY);
+
+    System.out.println("Constant C real number: ");
+    double real = scanner.nextDouble();
+    System.out.println("constant c Imaginary number: ");
+    double imag = scanner.nextDouble();
+    Complex complex = new Complex(real, imag);
+
+    return controller.createUserDefinedJulia(name, minCoords,maxCoords,complex);
+  }
+
+  public ChaosGameDescription userDefinedAffineTransform(){
+    //TODO add gards for input
+
+    Scanner scanner = new Scanner(System.in);
+    List<AffineTransform2D> transformList = new ArrayList<>();
+
+    System.out.println("Name of the transform: ");
+    String name = scanner.nextLine();
+    System.out.println("Min coords x value: ");
+    double minCoordsX = scanner.nextDouble();
+    System.out.println("Min coords y value: ");
+    double minCoordsY = scanner.nextDouble();
+    Vector2D minCoords = new Vector2D(minCoordsX, minCoordsY);
+
+    System.out.println("Max coords x value: ");
+    double maxCoordsX = scanner.nextDouble();
+    System.out.println("Max coords y value: ");
+    double maxCoordsY = scanner.nextDouble();
+    Vector2D maxCoords = new Vector2D(maxCoordsX, maxCoordsY);
+
+    boolean finisched = false;
+    int index=1;
+    ArrayList<String> dirtyArrayList=new ArrayList<>();
+
+    while(!finisched){
+      Scanner scannerWhile = new Scanner(System.in);
+      System.out.println("Matrix for transform "+index+" : ");
+      String matrix = scannerWhile.nextLine();
+
+      System.out.println("Vector for transform "+index+" : ");
+      String vector = scannerWhile.nextLine();
+      dirtyArrayList.add(matrix +"," + vector);
+
+      System.out.println("Want another transformation? [yes/No]");
+      String newTransform = scannerWhile.nextLine();
+
+      if(newTransform.equalsIgnoreCase("no")){
+        finisched=true;
+      } else if(newTransform.equalsIgnoreCase("yes")){
+        index++;
+      } else{
+        System.out.println("Incorrect value, try again");
+        //TODO add an additional while loop so it dont ask for value of matrix and vector again
+      }
+    }
+    TransformsParser parser = new TransformsParser();
+    List<Transform2D> transforms = parser.parseAffineTransforms(dirtyArrayList);
+
+    return controller.createuserDefinedAffine(name, minCoords,maxCoords,transforms);
   }
 
   /**
