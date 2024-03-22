@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-//TODO: Write JavaDoc for this test class.
 
 /**
  * This class tests the JuliaTransform class.

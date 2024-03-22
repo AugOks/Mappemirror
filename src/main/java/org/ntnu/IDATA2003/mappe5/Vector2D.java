@@ -66,9 +66,10 @@ public class Vector2D {
     this.y0 = x1;
   }
 
-  public String toString(){
-    return this.x0 +  ", " + this.y0;
+  public String toString() {
+    return this.x0 + ", " + this.y0;
   }
+
   /**
    * Adds together two vectors then returns the product.
    *
@@ -99,7 +100,8 @@ public class Vector2D {
     return new Vector2D(xValue, yValue);
 
   }
-  public void scalar(int n){
+
+  public void scalar(int n) {
     this.y0 = this.y0 * n;
     this.x0 = this.x0 * n;
   }

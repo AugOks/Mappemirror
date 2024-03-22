@@ -25,7 +25,7 @@ public class Complex extends Vector2D {
     double y = this.getY0();
     double sqrt = Math.sqrt(x * x + y * y);//finds the length of the vector.
     double firstOperation = Math.sqrt(0.5 * (sqrt + x));//finds the real number of the vector.
-    double secondOperation = Math.signum(y)*Math.sqrt(
+    double secondOperation = Math.signum(y) * Math.sqrt(
         0.5 * (sqrt - x)); //finds the imaginary number for the vector.
 
     return new Complex(firstOperation, secondOperation);
@@ -33,6 +33,7 @@ public class Complex extends Vector2D {
 
   /**
    * Sets the Y0 value (imaginary value) of the vector.
+   *
    * @param y1 the Y0 value of the vector.
    */
   public void setY0(double y1) {

@@ -1,12 +1,12 @@
 package org.ntnu.IDATA2003.mappe5;
 
+import java.util.Random;
+
+
 /**
  * The chaos game controls the main logic of the application.
  * It's responsible for creating an instance of the description and canvas needed.
  */
-
-import java.util.Random;
-
 public class ChaosGame {
   private ChaosCanvas canvas; // The canvas for the fractals in the app.
   private ChaosGameDescription description;
@@ -17,14 +17,15 @@ public class ChaosGame {
    * Creates an instance of ChaosGame and initializes fields with values.
    *
    * @param description The description of the fractal to be made.
-   * @param width The canvas width.
-   * @param height The canvas height.
+   * @param width       The canvas width.
+   * @param height      The canvas height.
    */
-  public ChaosGame(ChaosGameDescription description, int height, int width){
-    if (description == null){
+
+  public ChaosGame(ChaosGameDescription description, int height, int width) {
+    if (description == null) {
       throw new IllegalArgumentException("Description cannot be null");
     }
-    if (width < 1 || height < 1){
+    if (width < 1 || height < 1) {
       throw new IllegalArgumentException("The canvas cannot have size smaller than 1x1");
     }
     this.random = new Random();
@@ -32,7 +33,7 @@ public class ChaosGame {
     Vector2D maxCoords = this.description.getMaxCoords();
     Vector2D minCoords = this.description.getMinCoords();
     this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
-    this.currentPoint = new Vector2D(0,0);
+    this.currentPoint = new Vector2D(0, 0);
 
   }
 
@@ -41,7 +42,7 @@ public class ChaosGame {
    *
    * @return the canvas of the game.
    */
-  public ChaosCanvas getCanvas(){
+  public ChaosCanvas getCanvas() {
 
     return canvas;
   }
@@ -51,21 +52,22 @@ public class ChaosGame {
    *
    * @param steps the amount of steps to be run before halting
    */
-  public void runSteps(int steps){
+  public void runSteps(int steps) {
     for (int i = 0; i < steps; i++) {
-      int dice = this.random.nextInt(this.description.getTransformSize());    // throws a die for a random number
-      Transform2D transform = this.description.getTransform(dice); // gets a random transform based on die
+      int dice = this.random.nextInt(
+          this.description.getTransformSize());    // throws a die for a random number
+      Transform2D transform = this.description.getTransform(
+          dice); // gets a random transform based on die
       Vector2D point = transform.transform(this.currentPoint); // transforms current position.
       canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
       this.currentPoint = point; //Sets the current pont to the result of the transformation
     }
   }
-  public void setDescription(ChaosGameDescription description){
+
+  public void setDescription(ChaosGameDescription description) {
 
     this.description = description;
   }
-
-
 
 
 }
