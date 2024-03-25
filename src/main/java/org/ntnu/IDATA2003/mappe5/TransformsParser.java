@@ -11,11 +11,12 @@ public class TransformsParser {
    * @param fileContent the content of the file.
    * @return a list of affine transforms.
    */
-  //TODO FIX ME
-  public List<Transform2D> parseAffineTransforms(ArrayList<String> fileContent) {
+  public List<Transform2D> parseAffineTransforms(List<String> fileContent) {
+    if (fileContent == null || fileContent.get(2) == null){
+      throw new IllegalArgumentException("This file is missing content. Could not parse");
+    }
     ArrayList<Double> transfValues
         = new ArrayList<>();              //Matrix value, shortened for legibility
-    //TODO: make sure fileContent has the right content
     List<Transform2D> affineTransf = new ArrayList<>();
     for (int i = 0; i < fileContent.size(); i++) {
       String[] transforms = fileContent.get(i).split(",");
@@ -37,7 +38,7 @@ public class TransformsParser {
    * @param dirtyString the string to be cleaned of spaces.
    * @return the clean string.
    */
-  private String cleanString(String dirtyString){
+  public String cleanString(String dirtyString){
     return dirtyString.replaceAll("\\s", "");
   }
 
@@ -47,9 +48,15 @@ public class TransformsParser {
    * @return the list of Julia transforms.
    */
   public List<JuliaTransform> parseJuliaTransforms(String juliaComplex) {
+    if (juliaComplex == null || juliaComplex.isBlank()){
+      throw new IllegalArgumentException("string must have contents");
+    }
     ArrayList<JuliaTransform> transforms = new ArrayList<>();
     juliaComplex = cleanString(juliaComplex);
     String[] juliaValues = juliaComplex.split(",");
+    if (juliaValues.length != 2){
+      throw new IllegalArgumentException("Invalid number of values in the string");
+    }
     double real = Double.parseDouble(juliaValues[0]);
     double imag = Double.parseDouble(juliaValues[1]);
 
@@ -65,12 +72,18 @@ public class TransformsParser {
    * @param content the string to be parsed.
    * @return A vector2D containing the values from the string.
    */
-  public Vector2D getVectorFromFileContents(String content) {
-
+  public Vector2D getVectorFromString(String content) {
+    if(content == null || content.isBlank()){
+      throw new IllegalArgumentException("Vector string must have content");
+    }
     String[] maxCoords = content.split(",");
+    if (maxCoords.length != 2){
+      throw new IllegalArgumentException("Too many values in vector string");
+    }
     double x = Double.parseDouble(maxCoords[0]);
     double y = Double.parseDouble(maxCoords[1]);
     return new Vector2D(x, y);
 
   }
+
 }
