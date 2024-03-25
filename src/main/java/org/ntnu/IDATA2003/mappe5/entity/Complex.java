@@ -1,13 +1,15 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.entity;
 
 /**
  * A class that represents a complex number.
- * <p> The class extends the Vector2D class and consists of a real and imaginary number
- * <p> Adds a method sqrt() to find the square root of a complex number.</p>
+ * <p>The class extends the Vector2D class and consists of a real and imaginary number
+ * <p>Adds a method sqrt() to find the square root of a complex number.</p>
  */
 public class Complex extends Vector2D {
 
   /**
+   * Constructor.
+   *
    * @param real the real number of the complex value
    * @param imag the imaginary number of the complex value
    */

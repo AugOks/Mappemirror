@@ -1,11 +1,10 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
-
 
 
 /**
@@ -36,9 +35,9 @@ class ComplexTest {
   @Test
   public void ComplexTestPositiveTestNegativeNumbers() {
     Complex posTest = new Complex(-1, -1);
-    Complex resultTest =  posTest.sqrt();
-    assertEquals(resultTest.getX0(), 0.455,0.001);
-    assertEquals(resultTest.getY0(), -1.098,0.001);
+    Complex resultTest = posTest.sqrt();
+    assertEquals(resultTest.getX0(), 0.455, 0.001);
+    assertEquals(resultTest.getY0(), -1.098, 0.001);
   }
 
   /**

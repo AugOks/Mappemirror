@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.entity;
 
 /**
  * A class that represents a julia transformation in 2D space.

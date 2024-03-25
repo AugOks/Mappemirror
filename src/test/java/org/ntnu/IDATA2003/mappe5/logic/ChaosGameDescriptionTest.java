@@ -1,15 +1,16 @@
 package org.ntnu.IDATA2003.mappe5.logic;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.ntnu.IDATA2003.mappe5.AffineTransform2D;
-import org.ntnu.IDATA2003.mappe5.ChaosGameDescription;
-import org.ntnu.IDATA2003.mappe5.Matrix2x2;
-import org.ntnu.IDATA2003.mappe5.Transform2D;
-import org.ntnu.IDATA2003.mappe5.Vector2D;
+import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
+import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 class ChaosGameDescriptionTest {
 
@@ -25,7 +26,7 @@ class ChaosGameDescriptionTest {
     transforms.add(new AffineTransform2D(matrix, minCoords));
     transforms.add(new AffineTransform2D(matrix, maxCoords));
     ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-                                                                         maxCoords, "test");
+        maxCoords, "test");
 
     assertNotNull(chaosGameDescription);
     assertEquals(chaosGameDescription.getMinCoords(), minCoords);
@@ -47,7 +48,7 @@ class ChaosGameDescriptionTest {
     Vector2D maxCoords = new Vector2D(2, 2);
     ;
     assertThrows(IllegalArgumentException.class,
-                 () -> new ChaosGameDescription(null, minCoords, maxCoords, "test"));
+        () -> new ChaosGameDescription(null, minCoords, maxCoords, "test"));
   }
 
   /**
@@ -63,7 +64,7 @@ class ChaosGameDescriptionTest {
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(matrixTransform, vectorTest));
     ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-                                                                         maxCoords, "test");
+        maxCoords, "test");
 
     assertThrows(IndexOutOfBoundsException.class, () -> chaosGameDescription.getTransform(2));
   }

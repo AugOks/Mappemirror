@@ -6,14 +6,13 @@ import static java.lang.Integer.parseInt;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Vector;
-import org.ntnu.IDATA2003.mappe5.AffineTransform2D;
-import org.ntnu.IDATA2003.mappe5.Transform2D;
-import org.ntnu.IDATA2003.mappe5.ChaosGame;
-import org.ntnu.IDATA2003.mappe5.ChaosGameDescription;
-import org.ntnu.IDATA2003.mappe5.Complex;
-import org.ntnu.IDATA2003.mappe5.Vector2D;
-import org.ntnu.IDATA2003.mappe5.TransformsParser;
+import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
+import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
+import org.ntnu.IDATA2003.mappe5.logic.TransformsParser;
 
 /**
  * This class is the user interface for the Chaos Game application.
@@ -38,10 +37,9 @@ public class ChaosGameUi {
    */
   private final static int SIERPINSKI = 1;
   private final static int JULIASET = 2;
-  private final static int BARNSLEY_FERN =3;
-
+  private final static int BARNSLEY_FERN = 3;
   private final static int USER_AFFINE = 4;
-  private final static int USER_JULIA =5;
+  private final static int USER_JULIA = 5;
   private final static int QUIT = 6;
   private static final int height = 50;
   private static final int width = 150;
@@ -55,7 +53,6 @@ public class ChaosGameUi {
   /**
    * The main Application screen.
    * Starts the application and gets user input.
-   *
    */
   public void start() {
     boolean finished = false;
@@ -140,13 +137,13 @@ public class ChaosGameUi {
     if (menuChoice == 2) {
       this.mainGame = new ChaosGame(controller.createJulia(), height, width);
     }
-    if (menuChoice == 3){
+    if (menuChoice == 3) {
       this.mainGame = new ChaosGame(controller.createBarnsleyFern(), height, width);
     }
-    if(menuChoice == 4){
+    if (menuChoice == 4) {
       this.mainGame = new ChaosGame(this.userDefinedJulia(), height, width);
     }
-    if(menuChoice == 5){
+    if (menuChoice == 5) {
       this.mainGame = new ChaosGame(this.userDefinedAffineTransform(), height, width);
     }
     this.mainGame.runSteps(steps);
@@ -154,7 +151,12 @@ public class ChaosGameUi {
 
   }
 
-  public ChaosGameDescription userDefinedJulia(){
+  /**
+   * Creates a user defined Julia set from user input.
+   *
+   * @return a chaosGame description containing the fractal.
+   */
+  public ChaosGameDescription userDefinedJulia() {
     Scanner scanner = new Scanner(System.in);
     System.out.println("name of the transform: ");
     String name = scanner.nextLine();
@@ -177,10 +179,15 @@ public class ChaosGameUi {
     double imag = scanner.nextDouble();
     Complex complex = new Complex(real, imag);
 
-    return controller.createUserDefinedJulia(name, minCoords,maxCoords,complex);
+    return controller.createUserDefinedJulia(name, minCoords, maxCoords, complex);
   }
 
-  public ChaosGameDescription userDefinedAffineTransform(){
+  /**
+   * Creates a user defined affine transform from user input.
+   *
+   * @return a chaosGame description containing the fractal.
+   */
+  public ChaosGameDescription userDefinedAffineTransform() {
     //TODO add gards for input
 
     Scanner scanner = new Scanner(System.in);
@@ -201,26 +208,26 @@ public class ChaosGameUi {
     Vector2D maxCoords = new Vector2D(maxCoordsX, maxCoordsY);
 
     boolean finisched = false;
-    int index=1;
-    ArrayList<String> dirtyArrayList=new ArrayList<>();
+    int index = 1;
+    ArrayList<String> dirtyArrayList = new ArrayList<>();
 
-    while(!finisched){
+    while (!finisched) {
       Scanner scannerWhile = new Scanner(System.in);
-      System.out.println("Matrix for transform "+index+" : ");
+      System.out.println("Matrix for transform " + index + " : ");
       String matrix = scannerWhile.nextLine();
 
-      System.out.println("Vector for transform "+index+" : ");
+      System.out.println("Vector for transform " + index + " : ");
       String vector = scannerWhile.nextLine();
-      dirtyArrayList.add(matrix +"," + vector);
+      dirtyArrayList.add(matrix + "," + vector);
 
       System.out.println("Want another transformation? [yes/No]");
       String newTransform = scannerWhile.nextLine();
 
-      if(newTransform.equalsIgnoreCase("no")){
-        finisched=true;
-      } else if(newTransform.equalsIgnoreCase("yes")){
+      if (newTransform.equalsIgnoreCase("no")) {
+        finisched = true;
+      } else if (newTransform.equalsIgnoreCase("yes")) {
         index++;
-      } else{
+      } else {
         System.out.println("Incorrect value, try again");
         //TODO add an additional while loop so it dont ask for value of matrix and vector again
       }
@@ -228,7 +235,7 @@ public class ChaosGameUi {
     TransformsParser parser = new TransformsParser();
     List<Transform2D> transforms = parser.parseAffineTransforms(dirtyArrayList);
 
-    return controller.createuserDefinedAffine(name, minCoords,maxCoords,transforms);
+    return controller.createuserDefinedAffine(name, minCoords, maxCoords, transforms);
   }
 
   /**

@@ -1,16 +1,22 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.logic;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
+import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**
  * This class tests the class {@link ChaosGame}.
  */
-class ChaosGameTest{
+class ChaosGameTest {
 
   private int height;
   private int width;
@@ -25,13 +31,13 @@ class ChaosGameTest{
    * Sets the value of the different parameters before each test.
    */
   @BeforeEach
-  public void instance(){
+  public void instance() {
     this.height = 30;
-    this.width =70;
+    this.width = 70;
     this.minCoords = new Vector2D(1, 1);
     this.matrix = new Matrix2x2(1, 1, 1, 1);
     this.maxCoords = new Vector2D(2, 2);
-    listOfTransformation=new ArrayList<>();
+    listOfTransformation = new ArrayList<>();
     this.listOfTransformation.add(new AffineTransform2D(matrix, minCoords));
     this.listOfTransformation.add(new AffineTransform2D(matrix, maxCoords));
     this.chaosGameDescription = new ChaosGameDescription(listOfTransformation,
@@ -43,8 +49,8 @@ class ChaosGameTest{
    * Positive test of the Instance of the class {@link ChaosGame}
    */
   @Test
-  public void testInstanceOfChaosGameWithValidInput(){
-    ChaosGame chaosGame = new ChaosGame(chaosGameDescription,height,width);
+  public void testInstanceOfChaosGameWithValidInput() {
+    ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
     assertNotNull(chaosGame);
   }
 
@@ -53,10 +59,10 @@ class ChaosGameTest{
    * The height is set to a negative value.
    */
   @Test
-  public void testInstanceOfChaosGameWithInvalidHeight(){
+  public void testInstanceOfChaosGameWithInvalidHeight() {
     this.height = -10;
     try {
-      ChaosGame chaosGame = new ChaosGame(chaosGameDescription,height,width);
+      ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
       fail();
     } catch (IllegalArgumentException a) {
       assertTrue(true);
@@ -68,10 +74,10 @@ class ChaosGameTest{
    * The width is set to a negative value.
    */
   @Test
-  public void testInstanceOfChaosGameWithInvalidWidth(){
+  public void testInstanceOfChaosGameWithInvalidWidth() {
     this.width = -10;
     try {
-      ChaosGame chaosGame = new ChaosGame(chaosGameDescription,height,width);
+      ChaosGame chaosGame = new ChaosGame(chaosGameDescription, height, width);
       fail();
     } catch (IllegalArgumentException a) {
       assertTrue(true);

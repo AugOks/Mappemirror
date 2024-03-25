@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

@@ -1,4 +1,8 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.logic;
+
+import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**
  * Represents a canvas where the fractals will be displayed.
@@ -12,7 +16,7 @@ public class ChaosCanvas {
   private Vector2D minCoords; //The minimum coordinates of the canvas.
   private Vector2D maxCoords; //The maximum coordinates of the canvas.
   private AffineTransform2D transformCoordsToIndices;
-      //The transformation from coordinates to indices.
+  //The transformation from coordinates to indices.
 
   /**
    * Creates an instance of the canvas in chaos game.
@@ -58,7 +62,7 @@ public class ChaosCanvas {
    * @param width the width of the canvas.
    */
   private void setWidth(int width) {
-    if(width < 0 ){
+    if (width < 0) {
       throw new IllegalArgumentException("width cannot be less than 0");
     }
     this.width = width;
@@ -80,7 +84,7 @@ public class ChaosCanvas {
    * @param height height of canvas
    */
   private void setHeight(int height) {
-    if(height < 0 ){ //TODO: Should have a lower bound.
+    if (height < 0) { //TODO: Should have a lower bound.
       throw new IllegalArgumentException("height cannot be less than 0");
     }
     this.height = height;
@@ -97,8 +101,8 @@ public class ChaosCanvas {
     int j = (int) Math.round(ijCoords.getY0());
     //System.out.println(i + " i  and "+ j + " j");
     if (i < 0 || i > this.height || j < 0 || j > this.width) {
-      throw new IndexOutOfBoundsException("When transforming coords to indices an invalid indices" +
-          "was returned.");
+      throw new IndexOutOfBoundsException("When transforming coords to indices an invalid indices"
+          + "was returned.");
     }
     this.canvas[i][j] = 1;
 
@@ -131,10 +135,10 @@ public class ChaosCanvas {
     double Ac1 = (this.width - 1) / (this.maxCoords.getX0() - this.minCoords.getX0());
     Matrix2x2 matrixA = new Matrix2x2(0, Ab1, Ac1, 0);
 
-    double Bx = ((this.height - 1) * this.maxCoords.getY0()) / (this.maxCoords.getY0() -
-                                                                this.minCoords.getY0());
-    double By = ((this.width - 1) * this.minCoords.getX0()) / (this.minCoords.getX0() -
-                                                               this.maxCoords.getX0());
+    double Bx = ((this.height - 1) * this.maxCoords.getY0()) / (this.maxCoords.getY0()
+        - this.minCoords.getY0());
+    double By = ((this.width - 1) * this.minCoords.getX0()) / (this.minCoords.getX0()
+        - this.maxCoords.getX0());
     Vector2D vectorB = new Vector2D(Bx, By);
 
     this.transformCoordsToIndices = new AffineTransform2D(matrixA, vectorB);

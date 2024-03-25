@@ -1,8 +1,17 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.logic;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
+import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
+import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
+/**
+ * Represents a class that takes in values and parses them into usable transforms and vectors.
+ */
 public class TransformsParser {
 
   /**
@@ -12,7 +21,7 @@ public class TransformsParser {
    * @return a list of affine transforms.
    */
   public List<Transform2D> parseAffineTransforms(List<String> fileContent) {
-    if (fileContent == null || fileContent.get(2) == null){
+    if (fileContent == null || fileContent.get(2) == null) {
       throw new IllegalArgumentException("This file is missing content. Could not parse");
     }
     ArrayList<Double> transfValues
@@ -33,28 +42,32 @@ public class TransformsParser {
     }
     return affineTransf;
   }
+
   /**
    * Takes in a dirty string filled with spaces and removes them.
+   *
    * @param dirtyString the string to be cleaned of spaces.
    * @return the clean string.
    */
-  public String cleanString(String dirtyString){
+  public String cleanString(String dirtyString) {
     return dirtyString.replaceAll("\\s", "");
   }
 
   /**
-   * Parses a julia complex string containing one complex number into two distinct transforms with inverted signs.
+   * Parses a julia complex string containing one complex number into two distinct transforms with
+   * inverted signs.
+   *
    * @param juliaComplex the String containing the Julia transform values.
    * @return the list of Julia transforms.
    */
   public List<JuliaTransform> parseJuliaTransforms(String juliaComplex) {
-    if (juliaComplex == null || juliaComplex.isBlank()){
+    if (juliaComplex == null || juliaComplex.isBlank()) {
       throw new IllegalArgumentException("string must have contents");
     }
     ArrayList<JuliaTransform> transforms = new ArrayList<>();
     juliaComplex = cleanString(juliaComplex);
     String[] juliaValues = juliaComplex.split(",");
-    if (juliaValues.length != 2){
+    if (juliaValues.length != 2) {
       throw new IllegalArgumentException("Invalid number of values in the string");
     }
     double real = Double.parseDouble(juliaValues[0]);
@@ -66,6 +79,7 @@ public class TransformsParser {
 
     return transforms;
   }
+
   /**
    * Gets a line of text, delimits it on ',' and returns the two values as a vector2D.
    *
@@ -73,11 +87,11 @@ public class TransformsParser {
    * @return A vector2D containing the values from the string.
    */
   public Vector2D getVectorFromString(String content) {
-    if(content == null || content.isBlank()){
+    if (content == null || content.isBlank()) {
       throw new IllegalArgumentException("Vector string must have content");
     }
     String[] maxCoords = content.split(",");
-    if (maxCoords.length != 2){
+    if (maxCoords.length != 2) {
       throw new IllegalArgumentException("Too many values in vector string");
     }
     double x = Double.parseDouble(maxCoords[0]);

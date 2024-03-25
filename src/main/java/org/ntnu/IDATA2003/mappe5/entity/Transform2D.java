@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.entity;
 
 /**
  * Interface for 2D transformations.

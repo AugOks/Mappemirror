@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.entity;
 
 /**
  * Represents a vector/coordinates in 2D space.

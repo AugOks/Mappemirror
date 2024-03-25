@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.entity;
 
 
 /**
@@ -13,7 +13,7 @@ public class AffineTransform2D implements Transform2D {
    *
    * @param matrix  the matrix for the transformation.
    * @param vectorV the vector to be used in the transformation.
-   * @throws IllegalArgumentException
+   * @throws IllegalArgumentException if any value is null
    */
   public AffineTransform2D(Matrix2x2 matrix, Vector2D vectorV) {
     if (matrix == null) {

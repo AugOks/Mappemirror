@@ -1,9 +1,12 @@
-package org.ntnu.IDATA2003.mappe5;
+package org.ntnu.IDATA2003.mappe5.logic;
 
 import java.util.List;
+import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**
- * Description creates the information for ChaosGame important for initializing the canvas and the transformations used.
+ * Description creates the information for ChaosGame important for initializing the canvas and the
+ * transformations used.
  */
 
 public class ChaosGameDescription {
@@ -15,7 +18,8 @@ public class ChaosGameDescription {
 
 
   /**
-   * Create an instance of a ChaosGameDescription with a list of transformations and min/mas coords of the canvas.
+   * Create an instance of a ChaosGameDescription with a list of transformations and min/mas coords
+   * of the canvas.
    *
    * @param transforms a list of transformations from transform2D
    * @param minCoords  a 2D vector of the minimum coordinates
@@ -33,7 +37,7 @@ public class ChaosGameDescription {
   /**
    * Returns the name of the fractal if one exists.
    *
-   * @return
+   * @return the name of the fractal.
    */
   public String getName() {
     return this.name;
@@ -42,7 +46,7 @@ public class ChaosGameDescription {
   /**
    * sets the name of the Fractal if one is applicable.
    *
-   * @param name
+   * @param name the name of the fractal.
    */
   private void setName(String name) {
     if (name == null) {
@@ -100,12 +104,13 @@ public class ChaosGameDescription {
    *
    * @param index representing the transformation wanted.
    * @return the transformation corresponding to the given index.
-   * @throws IndexOutOfBoundsException if the index is negative or larger than the amount of transforms.
+   * @throws IndexOutOfBoundsException if the index is negative or larger than the amount of
+   *                                   transforms.
    */
   public Transform2D getTransform(int index) {
     if (index < 0 || index >= this.getTransformSize()) {
-      throw new IndexOutOfBoundsException("index cannot be negative or larger than the amount " +
-                                          "transforms.");
+      throw new IndexOutOfBoundsException("index cannot be negative or larger than the amount "
+          + "transforms.");
     }
     return this.transforms.get(index);
   }

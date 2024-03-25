@@ -1,22 +1,18 @@
 package org.ntnu.IDATA2003.mappe5.logic;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.ntnu.IDATA2003.mappe5.ChaosGame;
-import org.ntnu.IDATA2003.mappe5.ChaosGameDescription;
-import org.ntnu.IDATA2003.mappe5.ChaosGameFileHandler;
-import org.ntnu.IDATA2003.mappe5.Complex;
-import org.ntnu.IDATA2003.mappe5.JuliaTransform;
-import org.ntnu.IDATA2003.mappe5.Transform2D;
-import org.ntnu.IDATA2003.mappe5.Vector2D;
+import org.ntnu.IDATA2003.mappe5.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
+import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 class ChaosGameFileHandlerTest {
   /**
@@ -25,17 +21,19 @@ class ChaosGameFileHandlerTest {
    */
   private ChaosGameFileHandler handler;
   private ChaosGameDescription description;
+
   @BeforeEach
-  void init(){
+  void init() {
     this.handler = new ChaosGameFileHandler();
     Vector2D minCoords = new Vector2D(-1.6, -1.0);
     Vector2D maxCoords = new Vector2D(1.6, 1.0);
     Complex c = new Complex(-0.74543, 0.11301);
     List<Transform2D> transformList = new ArrayList<>();
-    transformList.add(new JuliaTransform(c,1));
-    transformList.add(new JuliaTransform(c,-1));
+    transformList.add(new JuliaTransform(c, 1));
+    transformList.add(new JuliaTransform(c, -1));
 
-    this.description = new ChaosGameDescription(transformList, minCoords, maxCoords, "juliaTestFile");
+    this.description =
+        new ChaosGameDescription(transformList, minCoords, maxCoords, "juliaTestFile");
 
   }
 
@@ -44,7 +42,7 @@ class ChaosGameFileHandlerTest {
    */
   @Test
   @Order(1)
-  void testWriteToFile(){
+  void testWriteToFile() {
     try {
       this.handler.writeToFile(description);
     } catch (Exception e) {
@@ -57,7 +55,7 @@ class ChaosGameFileHandlerTest {
    */
   @Test
   @Order(2)
-  void testReadFromFile(){
+  void testReadFromFile() {
     ChaosGameDescription description = null;
     try {
       description = this.handler.readFromFile("juliaTestFileOut");
@@ -95,7 +93,7 @@ class ChaosGameFileHandlerTest {
    * Tests reading from a file that does not exist.
    */
   @Test
-  void testReadFromFileWithNegativeParameters(){
+  void testReadFromFileWithNegativeParameters() {
     try {
       this.handler.readFromFile("negativeValue");
       fail();
@@ -106,10 +104,9 @@ class ChaosGameFileHandlerTest {
 
   /**
    * Tests writing to a file with negative parameters.
-
    */
   @Test
-  void writeToFileWithNegativeParameters(){
+  void writeToFileWithNegativeParameters() {
     try {
       this.handler.writeToFile(null);
       fail();
@@ -117,7 +114,6 @@ class ChaosGameFileHandlerTest {
       assertTrue(true);
     }
   }
-
 
 
 }
