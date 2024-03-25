@@ -24,10 +24,9 @@ class Vector2DTest {
     Vector2D testVector2 = new Vector2D(2, 1);
     Vector2D resultVector = new Vector2D(3, 3);
 
-    testVector1.add(testVector2);
-    assertEquals(testVector1.getX0(), resultVector.getX0());
-    assertEquals(testVector1.getY0(), resultVector.getY0());
-    testVector1.add(resultVector);
+    Vector2D actualResults = testVector1.add(testVector2);
+    assertEquals(actualResults.getX0(), resultVector.getX0());
+    assertEquals(actualResults.getY0(), resultVector.getY0());
   }
 
   /**
@@ -40,9 +39,9 @@ class Vector2DTest {
     Vector2D testVector2 = new Vector2D(1, 1);
     Vector2D resultVector = new Vector2D(3, 3);
 
-    testVector1.sub(testVector2);
-    assertEquals(testVector1.getX0(), resultVector.getX0());
-    assertEquals(testVector1.getY0(), resultVector.getY0());
+    Vector2D actualResults = testVector1.sub(testVector2);
+    assertEquals(actualResults.getX0(), resultVector.getX0());
+    assertEquals(actualResults.getY0(), resultVector.getY0());
   }
 
   /**

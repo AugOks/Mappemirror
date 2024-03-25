@@ -1,30 +1,36 @@
 package org.ntnu.IDATA2003.mappe5;
 
-//TODO: Write JavaDoc for this class.
+/**
+ * A class that represents a julia transformation in 2D space.
+ * This class transform a 2D vector using the julia transformation.
+ */
 
 public class JuliaTransform implements Transform2D {
-  Complex julia; //TODO find better name.
+  Complex julia;
   int sign; // the sign of the complex number. Determines if it is the Conjugate.
 
 
   /**
-   * Constructor.
+   * Constructor for julia transformation.
    *
    * @param complex a complex vector.
    * @param sign    the sign of the complex vector. Must be -1 or 1.
-   * @throws IllegalArgumentException
    */
   public JuliaTransform(Complex complex, int sign) {
 
     if (complex == null) {
-      throw new IllegalArgumentException("complex is null");
+      throw new IllegalArgumentException("Complex is null");
     }
     if (!(sign == 1 || sign == -1)) {
       throw new IllegalArgumentException("Sign must be -1 or 1 ");
     }
-
     this.julia = new Complex(complex.getX0(), complex.getY0());
     this.sign = sign;
+  }
+
+  public String transformToString() {
+
+    return julia.getX0() + ", " + julia.getY0();
   }
 
   /**
@@ -32,15 +38,18 @@ public class JuliaTransform implements Transform2D {
    *
    * @param point A point in a 2D vector space. //no idea if this is correct.
    * @return a transformed 2D vector.
-   * @throws IllegalArgumentException
    */
+  @Override
   public Vector2D transform(Vector2D point) {
     if (point == null) {
       throw new IllegalArgumentException("Vector point cannot be null");
     }
-    this.julia.setX0(this.julia.getX0() - point.getX0());
-    this.julia.setY0(this.julia.getY0() - point.getY0() * sign);
-    return julia.sqrt();
-
+    Vector2D vector = point.sub(this.julia);
+    Complex complex = new Complex(vector.getX0(), vector.getY0());
+    complex = complex.sqrt();
+    complex.scalar(sign);
+    return complex;
   }
+
+
 }

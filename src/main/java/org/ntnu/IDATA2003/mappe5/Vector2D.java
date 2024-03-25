@@ -1,86 +1,89 @@
 package org.ntnu.IDATA2003.mappe5;
 
-//TODO: Write more JavaDoc for this class?
-
 /**
- * Represents a vector in 2D space.
+ * Represents a vector/coordinates in 2D space.
  * This class currently does not have any constraints as any valid double number
  * would be acceptable, perhaps an upper or lower bound is necessary at some point.
  */
+
 public class Vector2D {
 
-  private double x0;
-  private double y0;
-
+  private double x0; //The x0 value of the vector
+  private double y0; //The x1 value of the vector
 
   /**
    * Constructor.
    * initializes the fields.
    *
-   * @param x1 the X value for the 2D vector.
-   * @param y1 the Y value for the 2D vector.
-   * @throws ArithmeticException
+   * @param x1 the X0 value for the 2D vector.
+   * @param y1 the X1 value for the 2D vector.
    */
   public Vector2D(double x1, double y1) {
     if (Double.isNaN(x1) || Double.isNaN(y1)) {
-      throw new ArithmeticException("one of the paramaters is not a number");
+      throw new ArithmeticException("One of the parameters is not a number");
     }
     this.x0 = x1;
     this.y0 = y1;
   }
 
   /**
-   * Returns the X value of the vector.
+   * Returns the X0 value of the vector.
    *
-   * @return The X value of the vector.
+   * @return The X0 value of the vector.
    */
   public double getX0() {
+
     return this.x0;
   }
 
   /**
-   * Sets the X value of the vector.
+   * Sets the X0 value of the vector.
    *
-   * @param x the value to set this x to.
+   * @param x0 the X0 value of the vector.
    */
-  protected void setX0(double x) {
-    this.x0 = x;
+  protected void setX0(double x0) {
+
+    this.x0 = x0;
   }
 
   /**
-   * Returns the Y value of the vector.
+   * Returns the X1 value of the vector.
    *
-   * @return the Y value of the vector.
+   * @return the X1 value of the vector.
    */
   public double getY0() {
+
     return this.y0;
   }
 
   /**
    * Sets the Y value of the vector.
    *
-   * @param y the value to set this Y to.
+   * @param x1 the X1 value of the vector.
    */
-  protected void setY0(double y) {
-    this.y0 = y;
+  protected void setY0(double x1) {
+
+    this.y0 = x1;
+  }
+
+  public String toString() {
+
+    return this.x0 + ", " + this.y0;
   }
 
   /**
-   * Adds together this vector and other vector then returns the combined vector.
+   * Adds together two vectors then returns the product.
    *
    * @param otherVector the vector to be added to this vector.
    * @return this vector added to other vector.
-   * @throws IllegalArgumentException
    */
   public Vector2D add(Vector2D otherVector) {
-
     if (otherVector == null) {
       throw new IllegalArgumentException("Vector is null");
     }
-    this.x0 += otherVector.getX0();
-    this.y0 += otherVector.getY0();
-    return this;
-
+    double xValue = this.x0 + otherVector.getX0();
+    double yValue = this.y0 + otherVector.getY0();
+    return new Vector2D(xValue, yValue);
   }
 
   /**
@@ -88,16 +91,19 @@ public class Vector2D {
    *
    * @param otherVector the vector to be subtracted from this vector.
    * @return other vector subtracted from this vector.
-   * @throws IllegalArgumentException
    */
   public Vector2D sub(Vector2D otherVector) {
-    //TODO: needs Junit testing
     if (otherVector == null) {
       throw new IllegalArgumentException("Vector is null");
     }
-    this.x0 -= otherVector.getX0();
-    this.y0 -= otherVector.getY0();
-    return this;
+    double xValue = this.x0 - otherVector.getX0();
+    double yValue = this.y0 - otherVector.getY0();
+    return new Vector2D(xValue, yValue);
 
+  }
+
+  public void scalar(int n) {
+    this.y0 = this.y0 * n;
+    this.x0 = this.x0 * n;
   }
 }

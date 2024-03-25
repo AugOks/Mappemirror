@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
-//TODO Write JavaDoc for this test class.
+/**
+ * This class tests the AffineTransform2D class.
+ */
 
 class AffineTransform2DTest {
 
@@ -65,8 +67,8 @@ class AffineTransform2DTest {
     Vector2D vector = new Vector2D(1, 1);
     AffineTransform2D AT2D = new AffineTransform2D(matrix, vector);
     Vector2D transformedVector = AT2D.transform(new Vector2D(1, 1));
-    assertEquals(2, transformedVector.getX0());
-    assertEquals(2, transformedVector.getY0());
+    assertEquals(3, transformedVector.getX0());
+    assertEquals(3, transformedVector.getY0());
   }
 
   @Test

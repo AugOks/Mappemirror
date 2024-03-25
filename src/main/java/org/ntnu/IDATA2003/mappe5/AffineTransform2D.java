@@ -1,6 +1,9 @@
 package org.ntnu.IDATA2003.mappe5;
 
-//TODO: Write JavaDoc for this class.
+
+/**
+ * A class that represents an affine transformation in 2D space.
+ */
 public class AffineTransform2D implements Transform2D {
   private Matrix2x2 matrix;
   private Vector2D vector;
@@ -24,19 +27,47 @@ public class AffineTransform2D implements Transform2D {
   }
 
   /**
+   * Returns the matrix of the transformation.
+   *
+   * @return the matrix of the transformation.
+   */
+  public Matrix2x2 getMatrix() {
+    return matrix;
+  }
+
+  /**
+   * Returns the vector of the transformation.
+   *
+   * @return the vector of the transformation.
+   */
+  public Vector2D getVector() {
+    return vector;
+  }
+
+  /**
+   * Transforms the matrix and the vector to a string.
+   *
+   * @return String of the matrix and the vector.
+   */
+  @Override
+  public String transformToString() {
+    return this.matrix.matrixToString() + ", " + vector.toString();
+  }
+
+  /**
    * Performs an Affine transformation to the matrix and the vector.
    *
    * @param point A point in a 2D vector space. //no idea if this is correct.
    * @return a vector point in 2D space.
-   * @throws IllegalArgumentException
    */
   @Override
   public Vector2D transform(Vector2D point) {
     if (point == null) {
       throw new IllegalArgumentException("Vector point is null");
     }
-    this.matrix.multiply(this.vector);
-    this.vector.add(point);
-    return this.vector;
+    Vector2D vectorNew = this.matrix.multiply(point);
+    return vectorNew.add(this.vector);
+
   }
+
 }
