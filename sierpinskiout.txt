@@ -1,0 +1,6 @@
+Affine2D           # type of transform
+0.0, 0.0           # lower left coordinates
+1.0, 1.0           # upper right coordinates
+0.5, 0.0, 0.0, 0.5, 0.0, 0.0# transform number: 1
+0.5, 0.0, 0.0, 0.5, 0.25, 0.5# transform number: 2
+0.5, 0.0, 0.0, 0.5, 0.5, 0.0# transform number: 3

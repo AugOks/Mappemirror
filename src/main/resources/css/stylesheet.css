@@ -1,0 +1,34 @@
+.root{
+    -fx-background-color: lightgray;
+}
+.button-rightPane{
+    -fx-max-width: 200;
+    -fx-max-height: 40;
+    -fx-font-size: 15;
+    -fx-font-family: "Times New Roman",serif;
+    -fx-spacing: 20;
+    -fx-padding: 10;
+    -fx-alignment: center;
+}
+.button-rightPane:hover{
+    -fx-font-weight: bold;
+}
+.rightPane{
+    -fx-alignment: center;
+    -fx-spacing: 10;
+    -fx-padding: 10;
+    -fx-min-width: 300;
+    -fx-min-height: 500;
+    -fx-background-color: grey;
+}
+.header{
+    -fx-alignment: center;
+    -fx-background-color: lightgrey;
+}
+.header-logo{
+    -fx-max-width: 300;
+    -fx-max-height: 50;
+}
+.centerPane{
+    -fx-background-color: #bde8f1;
+}

@@ -7,6 +7,7 @@ import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
+import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
 
 
@@ -14,12 +15,14 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
  * Controller for the ChaosgameUI in accordance with the MVC pattern.
  */
 public class ChaosGameController {
+  private ChaosGameDescriptionFactory factory;
 
-  private ChaosGameUi gameUi;
+  private ChaosGameGui gameGui;
   private ChaosGameFileHandler handler;
 
-  public ChaosGameController(ChaosGameUi gameUi) {
-    this.gameUi = gameUi;
+  public ChaosGameController(ChaosGameGui gameGui) {
+    factory = new ChaosGameDescriptionFactory();
+    this.gameGui = gameGui;
     this.handler = new ChaosGameFileHandler();
   }
 
@@ -29,9 +32,9 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the sierpinski fractal.
    */
   public ChaosGameDescription createSierpinksi() {
-    ChaosGameDescription sierpinksi = this.handler.readFromFile("sierpinski");
+    //ChaosGameDescription sierpinksi = this.handler.readFromFile("sierpinski");
 
-    return sierpinksi;
+    return factory.createDescription(ChaosGameDescriptionFactory.fractals.SIERPINSKI);
   }
 
   /**
@@ -40,10 +43,9 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the mandelbrot fractal.
    */
   public ChaosGameDescription createJulia() {
+    //ChaosGameDescription julia = this.handler.readFromFile("juliaset");
 
-    ChaosGameDescription julia = this.handler.readFromFile("juliaset");
-
-    return julia;
+    return factory.createDescription(ChaosGameDescriptionFactory.fractals.JULIA);
 
   }
 
@@ -53,8 +55,9 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the Barnsley fern fractal.
    */
   public ChaosGameDescription createBarnsleyFern() {
-    ChaosGameDescription barnsleyFern = this.handler.readFromFile("barnsley-fern");
-    return barnsleyFern;
+    //ChaosGameDescription barnsleyFern = this.handler.readFromFile("barnsley-fern");
+    //TODO make error handling for these methods.
+    return factory.createDescription(ChaosGameDescriptionFactory.fractals.BARNSLEY);
   }
 
   /**
