@@ -234,7 +234,7 @@ public class ChaosGameUi {
     TransformsParser parser = new TransformsParser();
     List<Transform2D> transforms = parser.parseAffineTransforms(dirtyArrayList);
 
-    return controller.createuserDefinedAffine(name, minCoords, maxCoords, transforms);
+    return controller.createUserDefinedAffine(name, minCoords, maxCoords, transforms);
   }
 
   /**

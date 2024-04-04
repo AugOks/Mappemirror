@@ -6,29 +6,34 @@
     -fx-max-height: 40;
     -fx-font-size: 15;
     -fx-font-family: "Times New Roman",serif;
-    -fx-spacing: 20;
     -fx-padding: 10;
-    -fx-alignment: center;
-}
-.button-rightPane:hover{
-    -fx-font-weight: bold;
 }
 .rightPane{
-    -fx-alignment: center;
-    -fx-spacing: 10;
+    -fx-alignment: top-center;
+    -fx-spacing: 40;
     -fx-padding: 10;
-    -fx-min-width: 300;
-    -fx-min-height: 500;
-    -fx-background-color: grey;
+    -fx-min-width: 400;
+    -fx-background-color: #3f3d3d;
+}
+.leftPane{
+    -fx-alignment: center;
+    -fx-min-width: 10;
+    -fx-background-color: #3f3d3d;
+}
+.bottomPane{
+    -fx-min-height: 1-20;
+    -fx-background-color: #3f3d3d;
 }
 .header{
     -fx-alignment: center;
-    -fx-background-color: lightgrey;
+    -fx-background-color: #3f3d3d;
+    -fx-max-height: 100;
+    -fx-min-height: 100;
 }
 .header-logo{
-    -fx-max-width: 300;
-    -fx-max-height: 50;
+    -fx-scale-x: 0.5;
+    -fx-scale-y: 0.5;
 }
 .centerPane{
-    -fx-background-color: #bde8f1;
+    -fx-background-color: black;
 }

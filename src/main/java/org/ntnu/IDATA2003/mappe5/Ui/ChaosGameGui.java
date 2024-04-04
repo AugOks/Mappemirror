@@ -2,6 +2,7 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -18,15 +19,19 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
+import org.ntnu.IDATA2003.mappe5.Ui.ChaosGameControllerGui;
 import javafx.scene.canvas.*;
 
+//TODO find out why the cursor is not changing
 public class ChaosGameGui extends Application implements ChaosGameObserver {
 
-  private Canvas canvasView;
-  private ChaosGameController controller;
+  private HBox canvasCenterPane;
+  private ChaosGameControllerGui controller;
+  private Scene scene;
 
   public ChaosGameGui(){
-    controller = new ChaosGameController(this);
+
+    controller = new ChaosGameControllerGui(this);
   }
 
   public static void mainApp(String[] args) {
@@ -39,6 +44,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     try {
 
       BorderPane root = new BorderPane();
+      this.scene = new Scene(root, 400, 500);
 
       // The header for chaos game
       root.setTop(createTopPane());
@@ -47,10 +53,16 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       root.setRight(createRightPane());
 
       // The center pane with the canvas
-      root.setCenter(createCenterPane());
+      HBox centerPane = createCenterPane();
+      root.setCenter(centerPane);
 
-      Scene scene = new Scene(root, 400, 500);
+      // The left pane
+      VBox leftPane = new VBox();
+      leftPane.getStyleClass().add("leftPane");
+      root.setLeft(leftPane);
+
       scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
+      scene.setCursor(Cursor.DEFAULT);
       primaryStage.setTitle("Chaos Game");
       primaryStage.setScene(scene);
       primaryStage.setMaximized(true);
@@ -78,19 +90,24 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     GridPane grid = new GridPane();
 
     // Button for the julia transformation
-    Button juliaButton = new Button("Julia Transformation");
+    Button juliaButton = new Button("Julia Set");
     juliaButton.getStyleClass().add("button-rightPane");
-    juliaButton.setOnAction(e -> System.out.println("Julia Transformation"));
+    juliaButton.setOnAction(e -> controller.createJulia());
 
-    //Button for the affine transformation
-    Button affineButton = new Button("Affine Transformation");
-    affineButton.getStyleClass().add("button-rightPane");
-    affineButton.setOnAction(e -> System.out.println("Affine Transformation"));
+    //Button for the sierpinski transformation
+    Button sierpinskiButton = new Button("Sierpinski");
+    sierpinskiButton.getStyleClass().add("button-rightPane");
 
-    grid.add(juliaButton, 1, 1);
-    grid.add(affineButton, 1, 4);
+    sierpinskiButton.setOnAction(e -> controller.createSierpinski());
 
-    rightPane.getChildren().add(grid);
+    //Button for the barnsley fern transformation
+    Button barnsleyButton = new Button("Barnsley Fern");
+    barnsleyButton.getStyleClass().add("button-rightPane");
+
+    barnsleyButton.setOnAction(e -> controller.createBarnsleyFern());
+
+    rightPane.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton);
+    rightPane.setAlignment(Pos.TOP_CENTER);
     rightPane.getStyleClass().add("rightPane");
 
     return rightPane;
@@ -111,35 +128,42 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   }
 
   private HBox createCenterPane(){
-    HBox centerPane = new HBox();
+    this.canvasCenterPane = new HBox();
 
-    centerPane.getStyleClass().add("centerPane");
-    centerPane.getChildren().add(createCanvas());
-    centerPane.setAlignment(Pos.CENTER);
-    return centerPane;
+    this.canvasCenterPane.getStyleClass().add("centerPane");
+
+    this.controller.createJulia();
+
+    this.canvasCenterPane.setAlignment(Pos.CENTER);
+    return canvasCenterPane;
   }
 
-  private HBox createCanvas(){
-
-    ChaosGameDescription description  = controller.createSierpinksi();
-    ChaosGame game = new ChaosGame(description,500, 1000);
+  public void createCanvas(ChaosGame game, int steps){
+    //----
+    this.scene.setCursor(Cursor.WAIT);
+    //----
     ChaosCanvas canvas = game.getCanvas();
     int index_i = canvas.getHeight();
     int index_j = canvas.getWidth();
     int[][] canvasArray =  canvas.getCanvasArray();
-    game.runSteps(10000000);
+    game.runSteps(steps);
 
-    WritableImage writable_image = new WritableImage(1000, 500);
+    WritableImage writable_image = new WritableImage(900, 500);
     PixelWriter writer = writable_image.getPixelWriter();
 
     for (int i = 0; i < index_i; i++) {
       for (int j = 0; j < index_j; j++) {
         if (canvasArray[i][j] == 1) {
-          writer.setColor(j, i, Color.BLACK);
+          writer.setColor(j, i, Color.WHITE);
         }
       }
     }
+
     ImageView fractal = new ImageView(writable_image);
-    return new HBox(fractal);
+    this.canvasCenterPane.getChildren().clear();
+    this.canvasCenterPane.getChildren().add(new HBox(fractal));
+    //----
+    this.scene.setCursor(Cursor.DEFAULT);
+    //----
   }
 }

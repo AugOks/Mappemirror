@@ -65,9 +65,9 @@ public class ChaosGameController {
    *
    * @param name      the name of the transform if any.
    * @param minCoords the maximum coordinates of the transform.
-   * @param maxCoords the minimum coordiantes of the transform.
+   * @param maxCoords the minimum coordinates of the transform.
    * @param complex   the Complex constant to be turned into transformations.
-   * @return the Chaosgame description containing all the values for the fractal.
+   * @return the ChaosGame description containing all the values for the fractal.
    */
   public ChaosGameDescription createUserDefinedJulia(String name, Vector2D minCoords,
                                                      Vector2D maxCoords, Complex complex) {
@@ -79,15 +79,15 @@ public class ChaosGameController {
   }
 
   /**
-   * Create a affine transformation based on user input.
+   * Create an affine transformation based on user input.
    *
    * @param name       the name of the fractal if any.
    * @param minCoords  the minimum coordinates of the fractal.
    * @param maxCoords  the maximum coordinates of the fractal.
    * @param transforms The list of transforms for the fractal.
-   * @return the chaosgame description containing all the values of the fractal.
+   * @return the ChaosGame description containing all the values of the fractal.
    */
-  public ChaosGameDescription createuserDefinedAffine(String name, Vector2D minCoords,
+  public ChaosGameDescription createUserDefinedAffine(String name, Vector2D minCoords,
                                                       Vector2D maxCoords,
                                                       List<Transform2D> transforms) {
     return new ChaosGameDescription(transforms, minCoords, maxCoords, name);
