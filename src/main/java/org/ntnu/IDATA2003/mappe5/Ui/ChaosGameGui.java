@@ -1,13 +1,11 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelFormat;
-import javafx.scene.image.PixelReader;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
@@ -112,32 +110,36 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     return bannerPane;
   }
 
-  private VBox createCenterPane(){
-    VBox centerPane = new VBox();
+  private HBox createCenterPane(){
+    HBox centerPane = new HBox();
 
     centerPane.getStyleClass().add("centerPane");
     centerPane.getChildren().add(createCanvas());
+    centerPane.setAlignment(Pos.CENTER);
     return centerPane;
   }
 
-  private ImageView createCanvas(){
-    ChaosGameDescription description  = controller.createBarnsleyFern();
-    ChaosGame game = new ChaosGame(description,1000, 500);
+  private HBox createCanvas(){
+
+    ChaosGameDescription description  = controller.createSierpinksi();
+    ChaosGame game = new ChaosGame(description,500, 1000);
     ChaosCanvas canvas = game.getCanvas();
+    int index_i = canvas.getHeight();
+    int index_j = canvas.getWidth();
     int[][] canvasArray =  canvas.getCanvasArray();
-    game.runSteps(10000);
-    WritableImage writable_image = new WritableImage(500, 1000);
-    /*
-    GraphicsContext graphics_context = canvasView.getGraphicsContext2D();
-    graphics_context.setFill(Color.RED);
+    game.runSteps(10000000);
 
-    for (int i = 0; i < 10; i++) {
-      writable_image.getPixelWriter().setPixels(i, 0, canvas.getHeight()-1, canvas.getWidth()-1, PixelFormat.getIntArgbInstance(),
-                                                  canvasArray[i], 0, canvas.getWidth()-1);
+    WritableImage writable_image = new WritableImage(1000, 500);
+    PixelWriter writer = writable_image.getPixelWriter();
+
+    for (int i = 0; i < index_i; i++) {
+      for (int j = 0; j < index_j; j++) {
+        if (canvasArray[i][j] == 1) {
+          writer.setColor(j, i, Color.BLACK);
+        }
+      }
     }
-         */
     ImageView fractal = new ImageView(writable_image);
-
-    return fractal;
+    return new HBox(fractal);
   }
 }
