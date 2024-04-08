@@ -23,6 +23,7 @@ public class ChaosGameControllerGui {
     this.gameGui = gameGui;
 
   }
+  //TODO: implement Filechooser!
 
   /**
    * Sets the description for the sierpinski fractal.
