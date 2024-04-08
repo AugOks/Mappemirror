@@ -112,7 +112,7 @@ public class ChaosGameFileHandler {
     }
 
     if (!description.getName().isBlank()) {
-      pathOfFile = Path.of(description.getName() + "out.txt");
+      pathOfFile = Path.of(description.getName() + "Out.txt");
     } else {
       Random rand = new Random();
       rand.nextInt(100);       //Generates a random name to give to the nameless fractal.

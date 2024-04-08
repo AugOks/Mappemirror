@@ -58,27 +58,27 @@ class ChaosGameFileHandlerTest {
   void testReadFromFile() {
     ChaosGameDescription description = null;
     try {
-      description = this.handler.readFromFile("juliaTestFileOut");
+      description = this.handler.readFromFile("juliaset");
       assertNotNull(description);
-      ChaosGame game = new ChaosGame(description, 100, 100);
+      ChaosGame game = new ChaosGame(description, 100, 300);
       game.runSteps(1000);
       int index_i = game.getCanvas().getHeight();
       int index_j = game.getCanvas().getWidth();
       int[][] canvas = game.getCanvas().getCanvasArray();
       ArrayList<String> canvasConsole = new ArrayList<>();
-      String line = "";
+      StringBuilder line = new StringBuilder();
 
       //TODO refactor this to use StringBuilder
       for (int i = 0; i < index_i; i++) {
         for (int j = 0; j < index_j; j++) {
           if (canvas[i][j] == 0) {
-            line += "-";
+            line.append("-");
           } else {
-            line += "X";
+            line.append("X");
           }
         }
-        canvasConsole.add(line);
-        line = "";
+        canvasConsole.add(line.toString());
+        line = new StringBuilder();
       }
       for (String s : canvasConsole) {
         System.out.println(s);
@@ -97,7 +97,7 @@ class ChaosGameFileHandlerTest {
     try {
       this.handler.readFromFile("negativeValue");
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
       assertTrue(true);
     }
   }

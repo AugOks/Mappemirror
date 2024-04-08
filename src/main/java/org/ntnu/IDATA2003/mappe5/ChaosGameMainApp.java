@@ -8,8 +8,6 @@ import org.ntnu.IDATA2003.mappe5.Ui.ChaosGameGui;
  */
 public class ChaosGameMainApp {
   public static void main(String[] args) {
-    // ChaosGameUi gameUi = new ChaosGameUi();
-    // gameUi.start();
     ChaosGameGui.mainApp(args);
   }
 
