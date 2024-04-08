@@ -51,7 +51,17 @@ public class ChaosGame {
    */
   public ChaosCanvas getCanvas() {
 
-    return canvas;
+    return this.canvas;
+  }
+
+  /**
+   * Gets the description of the game being played.
+   *
+   * @return the description of the game.
+   */
+  public ChaosGameDescription getDescription(){
+
+    return this.description;
   }
 
   /**

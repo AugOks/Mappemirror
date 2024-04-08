@@ -1,31 +1,38 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
-import org.ntnu.IDATA2003.mappe5.Ui.ChaosGameControllerGui;
-import javafx.scene.canvas.*;
+import javafx.scene.control.Slider;
 
 //TODO find out why the cursor is not changing
 public class ChaosGameGui extends Application implements ChaosGameObserver {
 
   private HBox canvasCenterPane;
+  private HBox inputBox;
   private ChaosGameControllerGui controller;
   private Scene scene;
 
@@ -49,12 +56,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       // The header for chaos game
       root.setTop(createTopPane());
 
-      //The right pane with all
-      root.setRight(createRightPane());
-
       // The center pane with the canvas
       HBox centerPane = createCenterPane();
       root.setCenter(centerPane);
+
+      //The right pane with all
+      root.setRight(createRightPane());
 
       // The left pane
       VBox leftPane = new VBox();
@@ -84,9 +91,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * Creates the right pane with buttons for the different transformations
    * @return HBox a HBox containing the components for the right pane.
    */
-  private HBox createRightPane() {
+  private VBox createRightPane() {
 
-    HBox rightPane = new HBox();
+    VBox rightPane = new VBox();
     GridPane grid = new GridPane();
 
     // Button for the julia transformation
@@ -106,7 +113,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     barnsleyButton.setOnAction(e -> controller.createBarnsleyFern());
 
-    rightPane.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton);
+    HBox buttonBox = new HBox();
+    buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton);
+    //TODO add css style to these buttons
+    buttonBox.setSpacing(20);
+    buttonBox.setAlignment(Pos.CENTER);
+    rightPane.getChildren().addAll(buttonBox, this.inputBox);
     rightPane.setAlignment(Pos.TOP_CENTER);
     rightPane.getStyleClass().add("rightPane");
 
@@ -139,6 +151,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   }
 
   public void createCanvas(ChaosGame game, int steps){
+    createInputBoxJulia(game, steps);
     //----
     this.scene.setCursor(Cursor.WAIT);
     //----
@@ -166,4 +179,111 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     this.scene.setCursor(Cursor.DEFAULT);
     //----
   }
+
+  private void createInputBoxJulia(ChaosGame game, int stepsInt){
+    ChaosGameDescription description = game.getDescription();
+    Vector2D minCoords = description.getMinCoords();
+    Vector2D maxCoords = description.getMaxCoords();
+    GridPane grid = new GridPane();
+
+    // Adds text fields to dialog
+    TextField steps = new TextField();
+    steps.setPromptText("Steps");
+
+    TextField minX = new TextField();
+    minX.setPromptText("x0");
+
+    TextField minY = new TextField();
+    minY.setPromptText("y0");
+
+    TextField maxX = new TextField();
+    maxX.setPromptText("x1");
+
+    TextField maxY = new TextField();
+    maxY.setPromptText("y1");
+
+    Slider real = new Slider(-1, 1, 0);
+    real.setShowTickMarks(true);
+    real.setShowTickLabels(true);
+    real.setMajorTickUnit(0.25f);
+    real.setBlockIncrement(0.1f);
+
+    Label realL = new Label("Value: "+0);
+
+    // Adding Listener to value property.
+    real.valueProperty().addListener(
+        new ChangeListener<Number>() {
+          public void changed(ObservableValue<? extends Number >
+                                  observable, Number oldValue, Number newValue)
+          {
+            realL.setText("Value: " + newValue);
+          }
+        });
+
+    Slider imag = new Slider(-1, 1, 0);
+    imag.setShowTickMarks(true);
+    imag.setShowTickLabels(true);
+    imag.setMajorTickUnit(0.25f);
+    imag.setBlockIncrement(0.1f);
+
+    Label imagL = new Label("Value: "+0);
+
+    // Adding Listener to value property.
+    imag.valueProperty().addListener(
+        new ChangeListener<Number>() {
+          public void changed(ObservableValue<? extends Number >
+                                  observable, Number oldValue, Number newValue)
+          {
+            imagL.setText("Value: " + newValue);
+          }
+        });
+
+    //Makes sure the steps is an integer
+    steps.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (!newValue.isEmpty()) {
+          Integer.parseInt(newValue);
+        }
+      } catch (NumberFormatException e) {
+        // The user have entered a non-integer character, hence just keep the
+        // oldValue and ignore the newValue.
+        steps.setText(oldValue);
+      }
+    });
+
+    //Adds text for each text input
+    grid.add(new Label("Run Steps:"), 0, 0);
+    grid.add(steps, 1, 0);
+
+    grid.add(new Label("  "),0,1);
+
+    grid.add(new Label("Min coords:"), 0, 2);
+    grid.add(minX, 1, 2);
+    grid.add(minY, 2, 2);
+
+    grid.add(new Label("Max coords:"), 0, 3);
+    grid.add(maxX, 1, 3);
+    grid.add(maxY, 2, 3);
+
+    grid.add(new Label("  "),0,4);
+
+    grid.add(new Label("Real number:"), 0, 5);
+    grid.add(real, 1, 5);
+    grid.add(realL, 2, 5);
+    grid.add(new Label("Imag number:"), 0, 6);
+    grid.add(imag, 1, 6);
+    grid.add(imagL,2,6);
+
+    minX.setText(String.valueOf(minCoords.getX0()));
+    minY.setText(String.valueOf(minCoords.getY0()));
+    maxX.setText(String.valueOf(maxCoords.getX0()));
+    maxY.setText(String.valueOf(maxCoords.getY0()));
+    steps.setText(String.valueOf(stepsInt));
+
+    this.inputBox = new HBox(grid);
+    this.inputBox.setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
+
+
+  }
+
 }
