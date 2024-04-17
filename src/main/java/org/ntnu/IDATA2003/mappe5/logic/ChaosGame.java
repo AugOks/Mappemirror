@@ -89,6 +89,9 @@ public class ChaosGame {
    * @param steps the amount of steps to be run before halting
    */
   public void runSteps(int steps) {
+    if (steps < 1) {
+      throw new IllegalArgumentException("Steps cannot be less than 1");
+    }
     for (int i = 0; i < steps; i++) {
       int dice = this.random.nextInt(
           this.description.getTransformSize());    // throws a die for a random number
@@ -100,6 +103,12 @@ public class ChaosGame {
     }
   }
 
+  /**
+   * Sets the description of the game.
+   *
+   * @param description the new description of the game.
+   * @throws IllegalArgumentException if the description is a null object.
+   */
   public void setDescription(ChaosGameDescription description) {
     if (description == null) {
       throw new IllegalArgumentException("Description cannot be null");
