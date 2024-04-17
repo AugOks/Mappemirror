@@ -186,22 +186,101 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Vector2D maxCoords = description.getMaxCoords();
     GridPane grid = new GridPane();
 
-    // Adds text fields to dialog
+    // ------ Adds text fields to dialog  ------
+
+    // Amount of steps to run the game for
     TextField steps = new TextField();
     steps.setPromptText("Steps");
+    steps.setText(String.valueOf(stepsInt));
+    steps.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (!newValue.isEmpty()) {
+          int newValueInt = Integer.parseInt(newValue);
+          if (newValueInt<=0){
+            throw new NumberFormatException("Number is negative");
+            //TODO pop up warning?
+          }
+        }
+      } catch (NumberFormatException e) {
+        // The user have entered a non-integer character, hence just keep the
+        // oldValue and ignore the newValue.
+        steps.setText(oldValue);
+      }
+    });
 
+    // X0 value of the min coords
     TextField minX = new TextField();
     minX.setPromptText("x0");
+    minX.setText(String.valueOf(minCoords.getX0()));
+    minX.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (!newValue.isEmpty()) {
+          Integer.parseInt(newValue);
+        }
+        //TODO add gard for incorrect input
 
+      } catch (NumberFormatException e) {
+        // The user have entered a non-integer character, hence just keep the
+        // oldValue and ignore the newValue.
+        minX.setText(oldValue);
+      }
+    });
+
+    // The Y0 value of the min coords.
     TextField minY = new TextField();
     minY.setPromptText("y0");
+    minY.setText(String.valueOf(minCoords.getY0()));
+    minY.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (!newValue.isEmpty()) {
+          int newValueInt = Integer.parseInt(newValue);
+        }
+        //TODO add gard for incorrect input
 
+      } catch (NumberFormatException e) {
+        // The user have entered a non-integer character, hence just keep the
+        // oldValue and ignore the newValue.
+        minY.setText(oldValue);
+      }
+    });
+
+    //The X1 value of the max coords
     TextField maxX = new TextField();
     maxX.setPromptText("x1");
+    maxX.setText(String.valueOf(maxCoords.getX0()));
+    maxX.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (!newValue.isEmpty()) {
+          int newValueInt = Integer.parseInt(newValue);
+        }
+        //TODO add gard for incorrect input
 
+      } catch (NumberFormatException e) {
+        // The user have entered a non-integer character, hence just keep the
+        // oldValue and ignore the newValue.
+        maxX.setText(oldValue);
+      }
+    });
+
+    // The Y1 value of the max coords
     TextField maxY = new TextField();
     maxY.setPromptText("y1");
+    maxY.setText(String.valueOf(maxCoords.getY0()));
+    maxY.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        if (!newValue.isEmpty()) {
+          int newValueInt = Integer.parseInt(newValue);
+        }
+        //TODO add gard for incorrect input
 
+      } catch (NumberFormatException e) {
+        // The user have entered a non-integer character, hence just keep the
+        // oldValue and ignore the newValue.
+        maxY.setText(oldValue);
+      }
+    });
+
+    //The real number input slider
     Slider real = new Slider(-1, 1, 0);
     real.setShowTickMarks(true);
     real.setShowTickLabels(true);
@@ -211,6 +290,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Label realL = new Label("Value: "+0);
 
     // Adding Listener to value property.
+    //TODO add the source webpage you found this from
     real.valueProperty().addListener(
         new ChangeListener<Number>() {
           public void changed(ObservableValue<? extends Number >
@@ -220,6 +300,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
           }
         });
 
+    //
     Slider imag = new Slider(-1, 1, 0);
     imag.setShowTickMarks(true);
     imag.setShowTickLabels(true);
@@ -259,29 +340,29 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     grid.add(new Label("Min coords:"), 0, 2);
     grid.add(minX, 1, 2);
-    grid.add(minY, 2, 2);
-
-    grid.add(new Label("Max coords:"), 0, 3);
-    grid.add(maxX, 1, 3);
-    grid.add(maxY, 2, 3);
+    grid.add(new Label(" x0"), 2, 2);
+    grid.add(minY, 1, 3);
+    grid.add(new Label(" y0"), 2, 3);
 
     grid.add(new Label("  "),0,4);
 
-    grid.add(new Label("Real number:"), 0, 5);
-    grid.add(real, 1, 5);
-    grid.add(realL, 2, 5);
-    grid.add(new Label("Imag number:"), 0, 6);
-    grid.add(imag, 1, 6);
-    grid.add(imagL,2,6);
+    grid.add(new Label("Max coords:"), 0, 5);
+    grid.add(maxX, 1, 5);
+    grid.add(new Label(" x1"), 2, 5);
+    grid.add(maxY, 1, 6);
+    grid.add(new Label(" y1"), 2, 6);
 
-    minX.setText(String.valueOf(minCoords.getX0()));
-    minY.setText(String.valueOf(minCoords.getY0()));
-    maxX.setText(String.valueOf(maxCoords.getX0()));
-    maxY.setText(String.valueOf(maxCoords.getY0()));
-    steps.setText(String.valueOf(stepsInt));
+    grid.add(new Label("  "),0,7);
+
+    grid.add(new Label("Real number:"), 0, 8);
+    grid.add(real, 1, 8);
+    grid.add(realL, 2, 8);
+    grid.add(new Label("Imag number:"), 0, 9);
+    grid.add(imag, 1, 9);
+    grid.add(imagL,2,9);
 
     this.inputBox = new HBox(grid);
-    this.inputBox.setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
+    this.inputBox.setBackground(new Background(new BackgroundFill(Color.DARKGREY,null,null)));
 
 
   }
