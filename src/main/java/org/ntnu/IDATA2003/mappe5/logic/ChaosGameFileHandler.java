@@ -64,7 +64,7 @@ public class ChaosGameFileHandler {
       }
       minimumCoords = parser.getVectorFromString(fileContent.get(1));
       maximumCoords = parser.getVectorFromString(fileContent.get(2));
-      transforms.addAll(this.getTransformsFromStrings(fileContent));
+      transforms.addAll(parser.getTransformsFromStrings(fileContent));
 
     } catch (IOException e) {
       throw new IllegalArgumentException(
@@ -81,24 +81,7 @@ public class ChaosGameFileHandler {
     return game;
   }
 
-  /**
-   * Gets all transforms read in from file and returns it as a list of transform2Ds.
-   *
-   * @param fileContent The content of the file to be turned into transforms.
-   * @return The list of transforms.
-   */
-  private ArrayList<Transform2D> getTransformsFromStrings(ArrayList<String> fileContent) {
-    ArrayList<Transform2D> transforms = new ArrayList<>();
-    String typeOfTransf = parser.cleanString(fileContent.getFirst());
-    List<String> parseString = fileContent.subList(3, fileContent.size());
-    if (typeOfTransf.equals("Affine2D")) {
-      transforms.addAll(parser.parseAffineTransforms(parseString));
-    }
-    if (typeOfTransf.equals("Julia")) {
-      transforms.addAll(parser.parseJuliaTransforms(fileContent.get(3)));
-    }
-    return transforms;
-  }
+
 
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal but
@@ -120,7 +103,7 @@ public class ChaosGameFileHandler {
     }
     try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
 
-      List<String> chaosGameInfo = this.getChaosGameInfoAsString(description);
+      List<String> chaosGameInfo = parser.getChaosGameInfoAsString(description);
 
       output.write(
           chaosGameInfo.get(1) + chaosGameInfo.get(2) + chaosGameInfo.get(3)
@@ -134,70 +117,6 @@ public class ChaosGameFileHandler {
   }
 
 
-  /**
-   * Turns the information of the ChaosGame description into writable strings and returns it.
-   * <ul>
-   *   <li>The first element of the list is a un-appended name of the transform, used to compare
-   *   what type of transform that is being read.</li>
-   *   <li>Second element is the name of the transform that will have more text appended, unsuitable
-   *   for comparing.</li>
-   *   <li>Third element is the minimum coordinates of the transformation.</li>
-   *   <li>Fourth element is the maximum coordinates of the transformation.</li>
-   * </ul>
-   *
-   * @param description the chaos game description to be turned into strings.
-   * @return transformInfo
-   */
-  private ArrayList<String> getChaosGameInfoAsString(ChaosGameDescription description) {
-    //TODO use stringbuilder instead.
-    if (description == null) {
-      throw new IllegalArgumentException("description cannot be null");
-    }
-    ArrayList<String> transformInfo = new ArrayList<>();
-    String transform =
-        description.getTransform(0).getClass().getSimpleName()
-            .replaceAll("Transform", "");
-    String compare = new String(transform);
-    transform += "           # type of transform" + '\n';
-    String minCoords =
-        description.getMinCoords().getX0() + ", " + description.getMinCoords().getY0();
-    minCoords += "           # lower left coordinates" + '\n';
-    String maxCoords =
-        description.getMaxCoords().getX0() + ", " + description.getMaxCoords().getY0();
-    maxCoords += "           # upper right coordinates" + '\n';
-    transformInfo.add(compare);
-    transformInfo.add(transform);
-    transformInfo.add(minCoords);
-    transformInfo.add(maxCoords);
-    String transformsAsStrings = "";
 
-    if (compare.equals("Affine2D")) {
-      transformsAsStrings = this.writeAffineToString(description.getAllTransforms());
-    } else if (compare.equals("Julia")) {
-      transformsAsStrings = description.getTransform(0).transformToString()
-          + " # real and imaginary part of constant c";
-    }
-    transformInfo.add(transformsAsStrings);
-    return transformInfo;
-  }
-
-  /**
-   * Writes all the affine matrices to a singular continuous string with a CSV format,
-   * used to write to file.
-   *
-   * @param transforms The list of transforms to be turned into strings.
-   * @return The string of all the transforms.
-   */
-  private String writeAffineToString(List<Transform2D> transforms) {
-    String matrices = "";
-    int index = 1;
-    for (Transform2D transf : transforms) {
-      String matrixValues = "";
-      matrixValues = transf.transformToString() + "# transform number: " + index + '\n';
-      index++;
-      matrices += matrixValues;
-    }
-    return matrices;
-  }
 
 }

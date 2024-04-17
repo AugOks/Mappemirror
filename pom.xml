@@ -63,35 +63,6 @@
                     </archive>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <shadedArtifactAttached>true</shadedArtifactAttached>
-                            <shadedClassifierName>project-classifier</shadedClassifierName>
-                            <!--
-                                The executable JAR-file will be placed in the subfolder "shade" under "target".
-                            -->
-                            <outputFile>target\shade\${project.artifactId}-${project.version}.jar</outputFile>
-
-                            <transformers>
-                                <transformer implementation=
-                                                     "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <!-- TODO: Add your main-class here, with full package prefix. From the example above: the MyJavaFXApplicationMain-class -->
-                                    <mainClass>org.ntnu.IDATA2003.mappe5.ChaosGameMainApp</mainClass>
-                                </transformer>
-                            </transformers>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
 
