@@ -2,9 +2,11 @@ package org.ntnu.IDATA2003.mappe5.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**
@@ -56,10 +58,14 @@ class ChaosCanvasTest {
     int i = 2;
     int j = 2;
     Vector2D vector = new Vector2D(i, j);
-    chaosCanvas.putPixel(vector);
-    //int[] pos = chaosCanvas.transformCoordsToIndices(vector);
-    int[][] canvas = chaosCanvas.getCanvasArray();
-    assertEquals(canvas[8][1], 1);
+    try {
+      chaosCanvas.putPixel(vector);
+      //int[] pos = chaosCanvas.transformCoordsToIndices(vector);
+      int[][] canvas = chaosCanvas.getCanvasArray();
+      assertEquals(canvas[8][1], 1);
+    }catch (PixelOutOfBoundsException p){
+      fail();
+    }
   }
 
   /**
@@ -72,7 +78,11 @@ class ChaosCanvasTest {
     int i = 2;
     int j = 2;
     Vector2D vector = new Vector2D(i, j);
-    chaosCanvas.putPixel(vector);
+    try {
+      chaosCanvas.putPixel(vector);
+    } catch (PixelOutOfBoundsException e) {
+      fail();
+    }
     int[][] canvas = chaosCanvas.getCanvasArray();
     assertEquals(canvas[8][1], 1);
   }
@@ -84,7 +94,11 @@ class ChaosCanvasTest {
     ChaosGame game = new ChaosGame(description, height, width);
     ChaosCanvas canvas = game.getCanvas();
     Vector2D testPoint = new Vector2D(-1.59, -0.95);
-    canvas.putPixel(testPoint);
+    try {
+      canvas.putPixel(testPoint);
+    } catch (PixelOutOfBoundsException e) {
+      fail();
+    }
     canvas.transformCoordsToIndices(testPoint);
     int[][] canvasArray = canvas.getCanvasArray();
     assertEquals(canvasArray[9][0], 1);

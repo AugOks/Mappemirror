@@ -2,6 +2,7 @@ package org.ntnu.IDATA2003.mappe5.logic;
 
 import java.util.ArrayList;
 import java.util.Random;
+import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
@@ -88,18 +89,22 @@ public class ChaosGame {
    *
    * @param steps the amount of steps to be run before halting
    */
-  public void runSteps(int steps) {
+  public void runSteps(int steps) throws PixelOutOfBoundsException {
     if (steps < 1) {
       throw new IllegalArgumentException("Steps cannot be less than 1");
     }
-    for (int i = 0; i < steps; i++) {
-      int dice = this.random.nextInt(
-          this.description.getTransformSize());    // throws a die for a random number
-      Transform2D transform = this.description.getTransform(
-          dice); // gets a random transform based on die
-      Vector2D point = transform.transform(this.currentPoint); // transforms current position.
-      canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
-      this.currentPoint = point; //Sets the current pont to the result of the transformation
+    try {
+      for (int i = 0; i < steps; i++) {
+        int dice = this.random.nextInt(
+            this.description.getTransformSize());    // throws a die for a random number
+        Transform2D transform = this.description.getTransform(
+            dice); // gets a random transform based on die
+        Vector2D point = transform.transform(this.currentPoint); // transforms current position.
+        canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
+        this.currentPoint = point; //Sets the current pont to the result of the transformation
+      }
+    } catch (PixelOutOfBoundsException e) {
+      throw new PixelOutOfBoundsException("The point was out of bounds");
     }
   }
 

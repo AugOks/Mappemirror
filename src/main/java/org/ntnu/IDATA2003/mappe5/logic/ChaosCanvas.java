@@ -2,6 +2,7 @@ package org.ntnu.IDATA2003.mappe5.logic;
 
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
+import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**
@@ -95,13 +96,13 @@ public class ChaosCanvas {
    *
    * @param point the coordinates of the pixel to put.
    */
-  public void putPixel(Vector2D point) {
+  public void putPixel(Vector2D point) throws PixelOutOfBoundsException {
     Vector2D ijCoords = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
     //System.out.println(i + " i  and "+ j + " j");
     if (i < 0 || i > this.height || j < 0 || j > this.width) {
-      throw new IndexOutOfBoundsException("When transforming coords to indices an invalid indices"
+      throw new PixelOutOfBoundsException("When transforming coords to indices an invalid indices"
           + "was returned.");
     }
     this.canvas[i][j] = 1;

@@ -21,6 +21,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
@@ -159,7 +160,11 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     int index_i = canvas.getHeight();
     int index_j = canvas.getWidth();
     int[][] canvasArray =  canvas.getCanvasArray();
-    game.runSteps(steps);
+    try {
+      game.runSteps(steps);
+    } catch (PixelOutOfBoundsException e) {
+      //TODO: dialog box for error
+    }
 
     WritableImage writable_image = new WritableImage(900, 500);
     PixelWriter writer = writable_image.getPixelWriter();

@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
@@ -145,7 +146,11 @@ public class ChaosGameUi {
     if (menuChoice == 5) {
       this.mainGame = new ChaosGame(this.userDefinedAffineTransform(), height, width);
     }
-    this.mainGame.runSteps(steps);
+    try {
+      this.mainGame.runSteps(steps);
+    } catch (PixelOutOfBoundsException e) {
+      //Dialog for errors
+    }
     printCanvas();
 
   }
