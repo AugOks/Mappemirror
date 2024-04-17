@@ -286,21 +286,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     real.setShowTickLabels(true);
     real.setMajorTickUnit(0.25f);
     real.setBlockIncrement(0.1f);
-
     Label realL = new Label("Value: "+0);
+    this.sliderListener(real, realL);
 
-    // Adding Listener to value property.
-    //TODO add the source webpage you found this from
-    real.valueProperty().addListener(
-        new ChangeListener<Number>() {
-          public void changed(ObservableValue<? extends Number >
-                                  observable, Number oldValue, Number newValue)
-          {
-            realL.setText("Value: " + newValue);
-          }
-        });
-
-    //
     Slider imag = new Slider(-1, 1, 0);
     imag.setShowTickMarks(true);
     imag.setShowTickLabels(true);
@@ -308,16 +296,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     imag.setBlockIncrement(0.1f);
 
     Label imagL = new Label("Value: "+0);
-
-    // Adding Listener to value property.
-    imag.valueProperty().addListener(
-        new ChangeListener<Number>() {
-          public void changed(ObservableValue<? extends Number >
-                                  observable, Number oldValue, Number newValue)
-          {
-            imagL.setText("Value: " + newValue);
-          }
-        });
+    this.sliderListener(imag, imagL);
 
     //Makes sure the steps is an integer
     steps.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -363,8 +342,18 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     this.inputBox = new HBox(grid);
     this.inputBox.setBackground(new Background(new BackgroundFill(Color.DARKGREY,null,null)));
+  }
 
-
+  private void sliderListener(Slider slider, Label label){
+    slider.valueProperty().addListener(
+        new ChangeListener<Number>() {
+          public void changed(ObservableValue<? extends Number >
+                                  observable, Number oldValue, Number newValue)
+          {
+            String displayValue = String.format( "Value:  %.2f", newValue);
+            label.setText(displayValue);
+          }
+        });
   }
 
 }
