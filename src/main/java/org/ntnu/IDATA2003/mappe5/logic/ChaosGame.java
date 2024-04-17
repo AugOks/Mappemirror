@@ -97,14 +97,15 @@ public class ChaosGame {
       Vector2D point = transform.transform(this.currentPoint); // transforms current position.
       canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
       this.currentPoint = point; //Sets the current pont to the result of the transformation
-      this.updateSubscriber();
     }
   }
 
   public void setDescription(ChaosGameDescription description) {
-
+    if (description == null) {
+      throw new IllegalArgumentException("Description cannot be null");
+    }
     this.description = description;
+    this.updateSubscriber();
   }
-
 
 }

@@ -9,14 +9,17 @@ import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
+import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
 
 
 /**
  * Controller for the ChaosGameGui in accordance with the MVC pattern.
  */
-public class ChaosGameControllerGui {
+public class ChaosGameControllerGui implements ChaosGameObserver {
   private ChaosGameDescriptionFactory factory;
   private ChaosGameGui gameGui;
+
+  private ChaosGame theGame;
 
   public ChaosGameControllerGui(ChaosGameGui gameGui) {
     factory = new ChaosGameDescriptionFactory();
@@ -29,18 +32,20 @@ public class ChaosGameControllerGui {
    * Sets the description for the sierpinski fractal.
    */
   public void createSierpinski() {
-    ChaosGameDescription description =  factory.createDescription(ChaosGameDescriptionFactory.fractals.SIERPINSKI);
-    ChaosGame game = new ChaosGame(description, 500, 900);
-    gameGui.createCanvas(game, 1000000);
+    ChaosGameDescription description =
+        factory.createDescription(ChaosGameDescriptionFactory.fractals.SIERPINSKI);
+    theGame = new ChaosGame(description, 500, 900);
+    gameGui.createCanvas(theGame, 1000000);
   }
 
   /**
    * Sets the description for the mandelbrot fractal.
    */
   public void createJulia() {
-    ChaosGameDescription description = factory.createDescription(ChaosGameDescriptionFactory.fractals.JULIA);
-    ChaosGame game = new ChaosGame(description, 500, 900);
-    gameGui.createCanvas(game,10000000);
+    ChaosGameDescription description =
+        factory.createDescription(ChaosGameDescriptionFactory.fractals.JULIA);
+    theGame = new ChaosGame(description, 500, 900);
+    gameGui.createCanvas(theGame,10000000);
 
   }
 
@@ -49,10 +54,12 @@ public class ChaosGameControllerGui {
    */
   public void createBarnsleyFern() {
 
-    ChaosGameDescription description = factory.createDescription(ChaosGameDescriptionFactory.fractals.BARNSLEY);
-    ChaosGame game = new ChaosGame(description, 500, 900);
-    gameGui.createCanvas(game, 70000000);
+    ChaosGameDescription description =
+        factory.createDescription(ChaosGameDescriptionFactory.fractals.BARNSLEY);
+    theGame = new ChaosGame(description, 500, 900);
+    gameGui.createCanvas(theGame, 70000000);
   }
+
 
   /**
    * Create a julia transform based on user input.
@@ -85,6 +92,29 @@ public class ChaosGameControllerGui {
                                                       Vector2D maxCoords,
                                                       List<Transform2D> transforms) {
     return new ChaosGameDescription(transforms, minCoords, maxCoords, name);
+  }
+
+  /**
+   * Change the description of the current game.
+   * @param description the new description of the game.
+   */
+  public void changeDescription(ChaosGameDescription description) {
+    theGame.setDescription(description);
+  }
+
+  /**
+   * Get the description of the current game.
+   * @return the current description of the game.
+   */
+  public ChaosGameDescription getDescription() {
+    return theGame.getDescription();
+  }
+
+  /**
+   * automated update method, don't use this method!
+   */
+  @Override
+  public void update() {
   }
 }
 
