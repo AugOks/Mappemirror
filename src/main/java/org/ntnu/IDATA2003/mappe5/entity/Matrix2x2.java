@@ -87,8 +87,25 @@ public class Matrix2x2 {
 
   }
 
+
+
   public String matrixToString() {
     return this.a + ", " + this.b + ", " + this.c + ", " + this.d;
   }
 
+  public double getA() {
+    return a;
+  }
+
+  public double getB() {
+    return b;
+  }
+
+  public double getC() {
+    return c;
+  }
+
+  public double getD() {
+    return d;
+  }
 }
