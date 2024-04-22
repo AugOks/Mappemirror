@@ -58,7 +58,7 @@ class ChaosGameFileHandlerTest {
   void testReadFromFile() {
     ChaosGameDescription description = null;
     try {
-      description = this.handler.readFromFile("juliaset");
+      description = this.handler.readFromFileWithFractalName("juliaset");
       assertNotNull(description);
       ChaosGame game = new ChaosGame(description, 100, 300);
       game.runSteps(1000);
@@ -95,7 +95,7 @@ class ChaosGameFileHandlerTest {
   @Test
   void testReadFromFileWithNegativeParameters() {
     try {
-      this.handler.readFromFile("negativeValue");
+      this.handler.readFromFileWithFractalName("negativeValue");
       fail();
     } catch (Exception e) {
       assertTrue(true);

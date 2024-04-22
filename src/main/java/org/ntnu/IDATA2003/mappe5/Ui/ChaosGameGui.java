@@ -297,6 +297,11 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     this.inputBox.setBackground(new Background(new BackgroundFill(Color.DARKGREY,null,null)));
   }
 
+  /**
+   * Listens to the slider and updates the label with the value of the slider.
+   * @param slider the slider to listen to
+   * @param label the label to update
+   */
   private void sliderListener(Slider slider, Label label){
     slider.valueProperty().addListener(
         new ChangeListener<Number>() {

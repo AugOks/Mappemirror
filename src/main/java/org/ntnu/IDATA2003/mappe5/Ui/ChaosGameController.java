@@ -32,8 +32,6 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the sierpinski fractal.
    */
   public ChaosGameDescription createSierpinksi() {
-    //ChaosGameDescription sierpinksi = this.handler.readFromFile("sierpinski");
-
     return factory.createDescription(ChaosGameDescriptionFactory.fractals.SIERPINSKI);
   }
 
@@ -43,10 +41,7 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the mandelbrot fractal.
    */
   public ChaosGameDescription createJulia() {
-    //ChaosGameDescription julia = this.handler.readFromFile("juliaset");
-
     return factory.createDescription(ChaosGameDescriptionFactory.fractals.JULIA);
-
   }
 
   /**
@@ -55,8 +50,6 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the Barnsley fern fractal.
    */
   public ChaosGameDescription createBarnsleyFern() {
-    //ChaosGameDescription barnsleyFern = this.handler.readFromFile("barnsley-fern");
-    //TODO make error handling for these methods.
     return factory.createDescription(ChaosGameDescriptionFactory.fractals.BARNSLEY);
   }
 

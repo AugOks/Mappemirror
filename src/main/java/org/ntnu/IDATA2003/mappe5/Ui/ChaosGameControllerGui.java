@@ -1,7 +1,9 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.stage.FileChooser;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
@@ -9,6 +11,7 @@ import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
+import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
 
 
@@ -19,6 +22,8 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   private ChaosGameDescriptionFactory factory;
   private ChaosGameGui gameGui;
 
+  private ChaosGameFileHandler fileHandler;
+
   private ChaosGame theGame;
 
   public ChaosGameControllerGui(ChaosGameGui gameGui) {
@@ -27,6 +32,17 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
 
   }
   //TODO: implement Filechooser!
+
+  /**
+   * Filechooser method for choosing a file.
+   */
+  public  void filechooser(){
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Open Resource File");
+    File file = fileChooser.showOpenDialog(null);
+    this.changeDescription(this.fileHandler.getcontentsOfFile(file.getAbsolutePath()));
+  }
+
 
   /**
    * Sets the description for the sierpinski fractal.
@@ -116,6 +132,47 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
    */
   @Override
   public void update() {
+  }
+
+  /**
+   * Changes the minimum coordinates of the current game.
+   * @param minCoords the new minimum coordinates.
+   */
+  public void changeMinCoords(Vector2D minCoords){
+    if(minCoords == null){
+      throw new IllegalArgumentException("Min coordinates cannot be null");
+    }
+    ChaosGameDescription currentGame = getDescription();
+    currentGame.setMinCoords(minCoords);
+    changeDescription(currentGame);
+  }
+
+  /**
+   * Changes the maximum coordinates of the current game.
+   * @param maxCoords the new maximum coordinates.
+   */
+  public void changeMaxCoords(Vector2D maxCoords){
+    if(maxCoords == null){
+      throw new IllegalArgumentException("Max coordinates cannot be null");
+    }
+    ChaosGameDescription currentGame = getDescription();
+    currentGame.setMaxCoords(maxCoords);
+    changeDescription(currentGame);
+  }
+
+  /**
+   * Changes the complex number of the current game.
+   * @param real the real part of the complex number.
+   * @param imag the imaginary part of the complex number.
+   */
+  public void changeComplex(double real, double imag) {
+    ChaosGameDescription currentGame = getDescription();
+    List<Transform2D> transforms = new ArrayList<>();
+    Complex complex = new Complex(real, imag);
+    transforms.add(new JuliaTransform(complex, 1));
+    transforms.add(new JuliaTransform(complex, -1));
+    currentGame.setTransforms(transforms);
+    changeDescription(currentGame);
   }
 }
 

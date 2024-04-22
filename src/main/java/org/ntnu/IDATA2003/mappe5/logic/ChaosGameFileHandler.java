@@ -34,13 +34,13 @@ public class ChaosGameFileHandler {
   /**
    * Reads in the contents of a given file.
    *
-   * @param fractal the name of the file without exstension.
+   * @param path the path to the file to read.
    * @return the contents of the file as a chaosGameDescription object.
    * @throws IllegalArgumentException if no file with the given fractal name could be found.
    * @throws NumberFormatException    if parsing doubles from string failed.
    */
-  public ChaosGameDescription readFromFile(String fractal) {
-    URL url = getClass().getClassLoader().getResource(fractal + ".txt");
+  public ChaosGameDescription getcontentsOfFile(String path) {
+    URL url = getClass().getClassLoader().getResource(path);
     Path pathOfFile = null;
     try {
       pathOfFile = Path.of(url.toURI());
@@ -74,11 +74,19 @@ public class ChaosGameFileHandler {
     } catch (IndexOutOfBoundsException e) {
       //TODO do something here
     }
-
+    String name = path.split(".txt")[0];
     ChaosGameDescription game = new ChaosGameDescription(transforms, minimumCoords, maximumCoords,
-        fractal);
+        name);
     this.chaosGames.add(game);
     return game;
+  }
+  public ChaosGameDescription readFromAnyFile(Path path){
+    return getcontentsOfFile(path.toString());
+  }
+  public ChaosGameDescription readFromFileWithFractalName(String fractal){
+    return getcontentsOfFile(fractal + ".txt");
+
+
   }
 
 

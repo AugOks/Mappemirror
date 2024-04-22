@@ -105,7 +105,7 @@ public class TransformsParser {
    * @param fileContent The content of the file to be turned into transforms.
    * @return The list of transforms.
    */
-  public ArrayList<Transform2D> getTransformsFromStrings(ArrayList<String> fileContent) {
+  public List<Transform2D> getTransformsFromStrings(ArrayList<String> fileContent) {
     ArrayList<Transform2D> transforms = new ArrayList<>();
     String typeOfTransf = cleanString(fileContent.getFirst());
     List<String> parseString = fileContent.subList(3, fileContent.size());
@@ -126,15 +126,15 @@ public class TransformsParser {
    * @return The string of all the transforms.
    */
   public String writeAffineToString(List<Transform2D> transforms) {
-    String matrices = "";
+    StringBuilder matrices = new StringBuilder();
     int index = 1;
     for (Transform2D transf : transforms) {
       String matrixValues = "";
       matrixValues = transf.transformToString() + "# transform number: " + index + '\n';
       index++;
-      matrices += matrixValues;
+      matrices.append(matrixValues);
     }
-    return matrices;
+    return matrices.toString();
   }
   /**
    * Turns the information of the ChaosGame description into writable strings and returns it.
@@ -150,15 +150,14 @@ public class TransformsParser {
    * @param description the chaos game description to be turned into strings.
    * @return transformInfo
    */
-  public ArrayList<String> getChaosGameInfoAsString(ChaosGameDescription description) {
-    //TODO use stringbuilder instead.
+  public List<String> getChaosGameInfoAsString(ChaosGameDescription description) {
     if (description == null) {
       throw new IllegalArgumentException("description cannot be null");
     }
     ArrayList<String> transformInfo = new ArrayList<>();
     String transform =
         description.getTransform(0).getClass().getSimpleName()
-            .replaceAll("Transform", "");
+            .replace("Transform", "");
     String compare = transform;
     transform += "           # type of transform" + '\n';
     String minCoords =

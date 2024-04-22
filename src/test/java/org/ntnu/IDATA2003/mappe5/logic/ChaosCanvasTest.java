@@ -90,7 +90,7 @@ class ChaosCanvasTest {
   @Test
   void testPutPixelWithJuliaTransform() {
     ChaosGameFileHandler handler = new ChaosGameFileHandler();
-    ChaosGameDescription description = handler.readFromFile("juliaset");
+    ChaosGameDescription description = handler.readFromFileWithFractalName("juliaset");
     ChaosGame game = new ChaosGame(description, height, width);
     ChaosCanvas canvas = game.getCanvas();
     Vector2D testPoint = new Vector2D(-1.59, -0.95);
