@@ -6,6 +6,7 @@ import java.util.List;
 import javafx.stage.FileChooser;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
+import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
@@ -31,12 +32,11 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     this.gameGui = gameGui;
 
   }
-  //TODO: implement Filechooser!
 
   /**
    * Filechooser method for choosing a file.
    */
-  public  void filechooser(){
+  public  void fileChooser(){
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open Resource File");
     File file = fileChooser.showOpenDialog(null);
@@ -52,7 +52,9 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
         factory.createDescription(ChaosGameDescriptionFactory.fractals.SIERPINSKI);
     theGame = new ChaosGame(description, 500, 900);
     gameGui.createCanvas(theGame, 1000000);
-    gameGui.createInputBoxAffine(theGame,1000000);
+    gameGui.createInputBox(theGame.getDescription(),1000000);
+    theGame.addSubscriber(gameGui);
+
   }
 
   /**
@@ -63,7 +65,8 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
         factory.createDescription(ChaosGameDescriptionFactory.fractals.JULIA);
     theGame = new ChaosGame(description, 500, 900);
     gameGui.createCanvas(theGame,10000000);
-    gameGui.createInputBoxJulia(theGame,10000000 );
+    gameGui.createInputBox(theGame.getDescription(),10000000);
+    theGame.addSubscriber(gameGui);
 
   }
 
@@ -76,6 +79,8 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
         factory.createDescription(ChaosGameDescriptionFactory.fractals.BARNSLEY);
     theGame = new ChaosGame(description, 500, 900);
     gameGui.createCanvas(theGame, 70000000);
+    gameGui.createInputBox(theGame.getDescription(),70000000);
+    theGame.addSubscriber(gameGui);
   }
 
 
@@ -135,6 +140,14 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   public void update() {
   }
 
+  public void runGame(int steps){
+    try {
+      theGame.runSteps(steps);
+    } catch (PixelOutOfBoundsException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   /**
    * Changes the minimum coordinates of the current game.
    * @param minCoords the new minimum coordinates.
@@ -174,6 +187,10 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     transforms.add(new JuliaTransform(complex, -1));
     currentGame.setTransforms(transforms);
     changeDescription(currentGame);
+  }
+
+  public ChaosGame getGame() {
+    return theGame;
   }
 }
 
