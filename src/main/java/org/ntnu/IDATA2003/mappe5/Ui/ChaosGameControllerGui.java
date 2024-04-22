@@ -46,6 +46,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
         factory.createDescription(ChaosGameDescriptionFactory.fractals.JULIA);
     theGame = new ChaosGame(description, 500, 900);
     gameGui.createCanvas(theGame,10000000);
+    gameGui.createInputBoxJulia(theGame,10000000 );
 
   }
 

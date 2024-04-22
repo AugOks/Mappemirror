@@ -152,10 +152,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   }
 
   public void createCanvas(ChaosGame game, int steps){
-    createInputBoxJulia(game, steps);
-    //----
-    this.scene.setCursor(Cursor.WAIT);
-    //----
+
     ChaosCanvas canvas = game.getCanvas();
     int index_i = canvas.getHeight();
     int index_j = canvas.getWidth();
@@ -180,12 +177,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     ImageView fractal = new ImageView(writable_image);
     this.canvasCenterPane.getChildren().clear();
     this.canvasCenterPane.getChildren().add(new HBox(fractal));
-    //----
-    this.scene.setCursor(Cursor.DEFAULT);
-    //----
   }
 
-  private void createInputBoxJulia(ChaosGame game, int stepsInt){
+  public void createInputBoxJulia(ChaosGame game, int stepsInt){
     ChaosGameDescription description = game.getDescription();
     Vector2D minCoords = description.getMinCoords();
     Vector2D maxCoords = description.getMaxCoords();
@@ -198,19 +192,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     steps.setPromptText("Steps");
     steps.setText(String.valueOf(stepsInt));
     steps.textProperty().addListener((observable, oldValue, newValue) -> {
-      try {
-        if (!newValue.isEmpty()) {
-          int newValueInt = Integer.parseInt(newValue);
-          if (newValueInt<=0){
-            throw new NumberFormatException("Number is negative");
-            //TODO pop up warning?
-          }
-        }
-      } catch (NumberFormatException e) {
-        // The user have entered a non-integer character, hence just keep the
-        // oldValue and ignore the newValue.
-        steps.setText(oldValue);
-      }
+      String newInput = textInputListener(newValue,oldValue);
+      steps.setText(newInput);
     });
 
     // X0 value of the min coords
@@ -218,17 +201,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     minX.setPromptText("x0");
     minX.setText(String.valueOf(minCoords.getX0()));
     minX.textProperty().addListener((observable, oldValue, newValue) -> {
-      try {
-        if (!newValue.isEmpty()) {
-          Integer.parseInt(newValue);
-        }
-        //TODO add gard for incorrect input
-
-      } catch (NumberFormatException e) {
-        // The user have entered a non-integer character, hence just keep the
-        // oldValue and ignore the newValue.
-        minX.setText(oldValue);
-      }
+      String newInput = textInputListener(newValue,oldValue);
+      minX.setText(newInput);
     });
 
     // The Y0 value of the min coords.
@@ -236,17 +210,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     minY.setPromptText("y0");
     minY.setText(String.valueOf(minCoords.getY0()));
     minY.textProperty().addListener((observable, oldValue, newValue) -> {
-      try {
-        if (!newValue.isEmpty()) {
-          int newValueInt = Integer.parseInt(newValue);
-        }
-        //TODO add gard for incorrect input
-
-      } catch (NumberFormatException e) {
-        // The user have entered a non-integer character, hence just keep the
-        // oldValue and ignore the newValue.
-        minY.setText(oldValue);
-      }
+      String newInput = textInputListener(newValue,oldValue);
+      minY.setText(newInput);
     });
 
     //The X1 value of the max coords
@@ -254,17 +219,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     maxX.setPromptText("x1");
     maxX.setText(String.valueOf(maxCoords.getX0()));
     maxX.textProperty().addListener((observable, oldValue, newValue) -> {
-      try {
-        if (!newValue.isEmpty()) {
-          int newValueInt = Integer.parseInt(newValue);
-        }
-        //TODO add gard for incorrect input
-
-      } catch (NumberFormatException e) {
-        // The user have entered a non-integer character, hence just keep the
-        // oldValue and ignore the newValue.
-        maxX.setText(oldValue);
-      }
+      String newInput = textInputListener(newValue,oldValue);
+      maxX.setText(newInput);
     });
 
     // The Y1 value of the max coords
@@ -272,20 +228,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     maxY.setPromptText("y1");
     maxY.setText(String.valueOf(maxCoords.getY0()));
     maxY.textProperty().addListener((observable, oldValue, newValue) -> {
-      try {
-        if (!newValue.isEmpty()) {
-          int newValueInt = Integer.parseInt(newValue);
-        }
-        //TODO add gard for incorrect input
-
-      } catch (NumberFormatException e) {
-        // The user have entered a non-integer character, hence just keep the
-        // oldValue and ignore the newValue.
-        maxY.setText(oldValue);
-      }
+      String newInput = textInputListener(newValue,oldValue);
+      maxY.setText(newInput);
     });
 
     //The real number input slider
+    //TODO refactor this and add to css file
     Slider real = new Slider(-1, 1, 0);
     real.setShowTickMarks(true);
     real.setShowTickLabels(true);
@@ -359,6 +307,35 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
             label.setText(displayValue);
           }
         });
+  }
+
+  private String textInputListener(String newValue, String oldValue){
+    String returnValue = null;
+    try {
+      if (!newValue.isEmpty()) {
+        int newValueInt;
+        if (newValue.substring(newValue.length() - 1).equals(".")){
+          newValue = newValue+"0";
+        }
+
+        if (newValue.contains("-")){
+          newValue =newValue.replace("-", "");
+          newValueInt= Integer.parseInt(newValue);
+          newValueInt=newValueInt*(-1);
+        } else{
+          newValueInt= Integer.parseInt(newValue);
+        }
+        returnValue = newValue;
+
+        //TODO add gard specific to the different types of input felt
+      }
+    } catch (NumberFormatException e) {
+      // The user have entered a non-integer character, hence just keep the
+      // oldValue and ignore the newValue.
+      returnValue = oldValue;
+    }
+    return returnValue;
+    //TODO here the description should change and the canvas should be updated
   }
 
 }
