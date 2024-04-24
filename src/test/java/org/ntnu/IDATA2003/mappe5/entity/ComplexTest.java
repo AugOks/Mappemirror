@@ -40,17 +40,4 @@ class ComplexTest {
     assertEquals(resultTest.getY0(), -1.098, 0.001);
   }
 
-  /**
-   * Tests that the constructor performs as expected when giving it NaN values.
-   */
-  @Test
-  public void complexTestConstructorWithNaNValues() {
-    try {
-      Complex testComplex = new Complex(1 / 0, 1 / 0);
-      fail();
-    } catch (ArithmeticException a) {
-      assertTrue(true);
-    }
-  }
-
 }

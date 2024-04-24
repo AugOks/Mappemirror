@@ -32,7 +32,7 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the sierpinski fractal.
    */
   public ChaosGameDescription createSierpinksi() {
-    return factory.createDescription(ChaosGameDescriptionFactory.fractals.SIERPINSKI);
+    return factory.createDescription(ChaosGameDescriptionFactory.Fractals.SIERPINSKI);
   }
 
   /**
@@ -41,7 +41,7 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the mandelbrot fractal.
    */
   public ChaosGameDescription createJulia() {
-    return factory.createDescription(ChaosGameDescriptionFactory.fractals.JULIA);
+    return factory.createDescription(ChaosGameDescriptionFactory.Fractals.JULIA);
   }
 
   /**
@@ -50,7 +50,7 @@ public class ChaosGameController {
    * @return ChaosGameDescription for the Barnsley fern fractal.
    */
   public ChaosGameDescription createBarnsleyFern() {
-    return factory.createDescription(ChaosGameDescriptionFactory.fractals.BARNSLEY);
+    return factory.createDescription(ChaosGameDescriptionFactory.Fractals.BARNSLEY);
   }
 
   /**

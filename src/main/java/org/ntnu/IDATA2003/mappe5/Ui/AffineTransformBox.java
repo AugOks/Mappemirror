@@ -21,7 +21,7 @@ public class AffineTransformBox {
 
   /**
    * Constructor for the TransformBox class.
-   * Takes in a matrix and a Vector and creates the various textfields that corresponde to their
+   * Takes in a matrix and a Vector and creates the various text fields that correspond to their
    * values.
    * @param matrix the matrix to be represented.
    * @param vector the vector to be represented.

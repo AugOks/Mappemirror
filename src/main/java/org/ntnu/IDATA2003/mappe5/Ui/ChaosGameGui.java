@@ -228,6 +228,16 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     this.inputBox.setBackground(new Background(new BackgroundFill(Color.DARKGREY,
         null,null)));
     this.inputBox.getChildren().add(grid);
+
+    Button runButton = new Button("Run");
+    runButton.getStyleClass().add("button-rightPane");
+    runButton.setOnAction(e -> {
+      //TODO update the description and the canvas
+      this.controller.update();
+      System.out.println("Run button pressed");
+    });
+    grid.add(new Label(" "),0,3);
+    grid.add(runButton, 0, 4);
   }
 
   /**
@@ -260,7 +270,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
         }
       }
     }
-
     ImageView fractal = new ImageView(writable_image);
     this.canvasCenterPane.getChildren().clear();
     this.canvasCenterPane.getChildren().add(new HBox(fractal));
@@ -319,23 +328,37 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   public GridPane createInputBoxAffine(ChaosGameDescription description){
     this.transformBoxes.clear();
     int indexTransform = 0;
-    int placement = 0;
+    int row = 0;
+    int column = 0;
 
     GridPane grid = new GridPane();
+
+    //TODO refactor this shittt
     for(Transform2D transform:  description.getAllTransforms()){
       AffineTransform2D castedTransform = (AffineTransform2D) transform;
       this.transformBoxes.add(new AffineTransformBox(castedTransform.getMatrix(),
             castedTransform.getVector()));
 
       int number = indexTransform+1;
-      grid.add(new Label("Transform "+number+":"), 0, placement);
-      placement++;
-      grid.add(this.transformBoxes.get(indexTransform).getGridBox(), 0, placement);
+
+      grid.add(new Label("Transform "+number+":"), column, row);
+      row++;
+      grid.add(this.transformBoxes.get(indexTransform).getGridBox(), column, row);
+      row++;
+      if (column == 0){
+        column++;
+        if(row == 2){
+          row = 0;
+        } else {
+          row-=2;
+        }
+      } else if (column == 1) {
+        column--;
+        row+=2;
+      }
       indexTransform++;
-      placement++;
+
     }
-
-
     return grid;
   }
 

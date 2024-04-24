@@ -20,7 +20,7 @@ public class ChaosGameDescriptionFactory {
   /**
    * An enum containing all currently available pre-defined fractals the factory can output.
    */
-  public enum fractals {
+  public enum Fractals {
     JULIA, BARNSLEY, SIERPINSKI
   }
 
@@ -30,7 +30,7 @@ public class ChaosGameDescriptionFactory {
    * @return null if no fractal with the given name could be found,
    * otherwise a complete chaos game description for the given fractal
    */
-  public ChaosGameDescription createDescription(fractals fractal){
+  public ChaosGameDescription createDescription(Fractals fractal){
 
     ChaosGameDescription description = null;
     switch (fractal){
@@ -65,7 +65,7 @@ public class ChaosGameDescriptionFactory {
     transformList.add(new JuliaTransform(c, 1));
     transformList.add(new JuliaTransform(c, -1));
 
-    return new ChaosGameDescription(transformList, minCoords, maxCoords, "juliaTestFile");
+    return new ChaosGameDescription(transformList, minCoords, maxCoords, "Julia");
   }
 
   /**
