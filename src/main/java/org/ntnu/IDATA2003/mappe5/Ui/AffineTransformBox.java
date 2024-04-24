@@ -11,7 +11,7 @@ import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
  * Represents the input boxes for a single matrix, and a single vector.
  * This class allows easy access and manipulation of the values in the matrix and vector.
  */
-public class TransformBox {
+public class AffineTransformBox {
   private TextField a;
   private TextField b;
   private TextField c;
@@ -26,7 +26,7 @@ public class TransformBox {
    * @param matrix the matrix to be represented.
    * @param vector the vector to be represented.
    */
-    public TransformBox(Matrix2x2 matrix, Vector2D vector) {
+    public AffineTransformBox(Matrix2x2 matrix, Vector2D vector) {
         this.a = new TextField();
         this.b = new TextField();
         this.c = new TextField();

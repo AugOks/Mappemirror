@@ -1,6 +1,5 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
@@ -25,10 +24,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
-import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
-import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
@@ -37,12 +34,14 @@ import javafx.scene.control.Slider;
 
 public class ChaosGameGui extends Application implements ChaosGameObserver {
 
+
   private HBox canvasCenterPane; // The canvas for the fractal
   private HBox inputBox; // The right pane with the input fields
   private ChaosGameControllerGui controller; // The controller for the chaos game app
-  private List<TransformBox> transformBoxes; // The input fields for the affine transformation
+  private List<AffineTransformBox> transformBoxes; // The input fields for the affine transformation
   private MinMaxCoordsBox minMaxCoordsBox; // The input fields for the min/max coords
   private Scene scene; // The scene for the chaos game app
+
 
 
   /**
@@ -325,7 +324,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     GridPane grid = new GridPane();
     for(Transform2D transform:  description.getAllTransforms()){
       AffineTransform2D castedTransform = (AffineTransform2D) transform;
-      this.transformBoxes.add(new TransformBox(castedTransform.getMatrix(),
+      this.transformBoxes.add(new AffineTransformBox(castedTransform.getMatrix(),
             castedTransform.getVector()));
 
       int number = indexTransform+1;
