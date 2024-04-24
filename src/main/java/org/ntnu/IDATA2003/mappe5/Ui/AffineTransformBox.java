@@ -12,6 +12,9 @@ import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
  * This class allows easy access and manipulation of the values in the matrix and vector.
  */
 public class AffineTransformBox {
+
+  Vector2D vector;
+  Matrix2x2 matrix;
   private TextField a;
   private TextField b;
   private TextField c;
@@ -27,33 +30,31 @@ public class AffineTransformBox {
    * @param vector the vector to be represented.
    */
     public AffineTransformBox(Matrix2x2 matrix, Vector2D vector) {
-        this.a = new TextField();
-        this.b = new TextField();
-        this.c = new TextField();
-        this.d = new TextField();
-        this.vectorX = new TextField();
-        this.vectorY = new TextField();
-        createTextField(this.a, "a00", matrix.getA());
-        createTextField(this.b, "a01", matrix.getB());
-        createTextField(this.c, "a10", matrix.getC());
-        createTextField(this.d, "a11", matrix.getD());
-        createTextField(this.vectorX, "b0", vector.getX0());
-        createTextField(this.vectorY, "b1", vector.getY0());
+      this.vector = vector;
+      this.matrix = matrix;
+      this.a = createTextField("a00", matrix.getA());
+      this.b = createTextField("a01", matrix.getB());
+      this.c = createTextField("a10", matrix.getC());
+      this.d = createTextField("a11", matrix.getD());
+      this.vectorX = createTextField("b0", vector.getX0());
+      this.vectorY = createTextField("b1", vector.getY0());
     }
 
   /**
    * Creates a textfield with the values of the matrix and awaits any changes.
-   * @param field the textfield to be created.
-   * @param name the prompt text.
+   *
+   * @param name  the prompt text.
    * @param value the value of the textfield.
    */
-  private void createTextField(TextField field, String name, double value){
+  private TextField createTextField(String name, double value){
+    TextField field = new TextField();
     field.setPromptText(name);
     field.setMaxWidth(60);
     field.setText(String.valueOf(value));
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       field.setText(newValue);
     });
+    return field;
   }
 
   /**
@@ -61,7 +62,7 @@ public class AffineTransformBox {
    * @return the gridpane containing the matrix and vector.
    */
   public GridPane getGridBox(){
-GridPane gridPane = new GridPane();
+    GridPane gridPane = new GridPane();
     gridPane.add(new Label("  "),0,0);
 
     GridPane firstMatrix = new GridPane();
@@ -83,50 +84,31 @@ GridPane gridPane = new GridPane();
   }
 
   /**
-   * Get the a value of this matrix.
-   * @return the a value of this matrix.
+   * Returns the matrix.
+   * @param modify if the method should return the factory matrix or the modified matrix.
+   * @return the matrix.
    */
-  public TextField getA() {
-    return a;
+  public Matrix2x2 getMatrix(boolean modify) {
+    if (modify) {
+      matrix.setA(Double.parseDouble(a.getText()));
+      matrix.setB(Double.parseDouble(b.getText()));
+      matrix.setC(Double.parseDouble(c.getText()));
+      matrix.setD(Double.parseDouble(d.getText()));
+    }
+    return matrix;
+
   }
 
   /**
-   * Get the b value of this matrix.
-   * @return the b value of this matrix
+   * Returns the vector.
+   * @param modify if the method should return the factory vector or the modified vector.
+   * @return the vector.
    */
-  public TextField getB() {
-    return b;
-  }
-
-  /**
-   * Get the c value of this matrix.
-   * @return the c value of this matrix
-   */
-  public TextField getC() {
-    return c;
-  }
-
-  /**
-   * Get the d value of this matrix.
-   * @return the d value of this matrix
-   */
-  public TextField getD() {
-    return d;
-  }
-
-  /**
-   * Get the x value of this vector.
-   * @return
-   */
-  public TextField getVectorX() {
-    return vectorX;
-  }
-
-  /**
-   * Get the y value of this vector.
-   * @return the y value of this vector
-   */
-  public TextField getVectorY() {
-    return vectorY;
+  public Vector2D getVector(boolean modify){
+    if (modify) {
+      this.vector.setX0(Double.parseDouble(vectorX.getText()));
+      this.vector.setY0(Double.parseDouble(vectorY.getText()));
+    }
+    return vector;
   }
 }

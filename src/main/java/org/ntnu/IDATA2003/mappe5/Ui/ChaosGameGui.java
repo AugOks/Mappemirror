@@ -24,6 +24,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
@@ -39,6 +40,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private HBox inputBox; // The right pane with the input fields
   private ChaosGameControllerGui controller; // The controller for the chaos game app
   private List<AffineTransformBox> transformBoxes; // The input fields for the affine transformation
+  private JuliaSliderBox sliderBox; // The input slider for the julia transformation
   private MinMaxCoordsBox minMaxCoordsBox; // The input fields for the min/max coords
   private Scene scene; // The scene for the chaos game app
 
@@ -288,37 +290,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
         description.getMaxCoords());
     GridPane grid = new GridPane();
     Transform2D transform = description.getTransform(0);
-
-
-    //The real number input slider
-    Slider real = new Slider(-1, 1, 0);
-    real.setShowTickMarks(true);
-    real.setShowTickLabels(true);
-    real.setMajorTickUnit(0.25f);
-    real.setBlockIncrement(0.1f);
-    Label realL = new Label("Value: "+0);
-    this.sliderListener(real, realL);
-
-    //The imaginary number input slider
-    Slider imag = new Slider(-1, 1, 0);
-    imag.setShowTickMarks(true);
-    imag.setShowTickLabels(true);
-    imag.setMajorTickUnit(0.25f);
-    imag.setBlockIncrement(0.1f);
-    Label imagL = new Label("Value: "+0);
-    this.sliderListener(imag, imagL);
-
-    //Puts the sliders in the grid
-    grid.add(new Label("Real number:"), 0, 0);
-    grid.add(real, 1, 0);
-    grid.add(realL, 2, 0);
-    grid.add(new Label("Imag number:"), 0, 1);
-    grid.add(imag, 1, 1);
-    grid.add(imagL,2,1);
-
-  return grid;
+    if (transform instanceof JuliaTransform juliaTransform) {
+      this.sliderBox = new JuliaSliderBox(juliaTransform.getComplex());
+        grid.add(this.sliderBox.getSliderGrid(), 0, 0);
+    }
+    return grid;
   }
-
   /**
    * Creates the input box for the affine transformation
    * @param description the description of the chaos game.
@@ -362,22 +339,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     return grid;
   }
 
-  /**
-   * Listens to the slider and updates the label with the value of the slider.
-   * @param slider the slider to listen to.
-   * @param label the label to update.
-   */
-  private void sliderListener(Slider slider, Label label){
-    slider.valueProperty().addListener(
-        new ChangeListener<Number>() {
-          public void changed(ObservableValue<? extends Number >
-                                  observable, Number oldValue, Number newValue)
-          {
-            String displayValue = String.format( "Value:  %.2f", newValue);
-            label.setText(displayValue);
-          }
-        });
-  }
 
   /**
    * Listens to the text input and updates the text field with the new value.

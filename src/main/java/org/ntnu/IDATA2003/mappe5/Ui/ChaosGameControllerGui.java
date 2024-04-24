@@ -35,8 +35,8 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
 
   /**
    * Filechooser method for choosing a file.
-   */
-  public  void fileChooser(){
+   */ //TODO: MAke the button for this method.
+  public  void fileChooser() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open Resource File");
     File file = fileChooser.showOpenDialog(null);

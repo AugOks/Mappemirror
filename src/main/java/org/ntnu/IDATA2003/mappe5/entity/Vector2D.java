@@ -41,7 +41,7 @@ public class Vector2D {
    *
    * @param x0 the X0 value of the vector.
    */
-  protected void setX0(double x0) {
+  public void setX0(double x0) {
 
     this.x0 = x0;
   }
@@ -61,7 +61,7 @@ public class Vector2D {
    *
    * @param x1 the X1 value of the vector.
    */
-  protected void setY0(double x1) {
+  public void setY0(double x1) {
 
     this.y0 = x1;
   }

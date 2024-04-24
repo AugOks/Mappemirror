@@ -51,5 +51,13 @@ public class JuliaTransform implements Transform2D {
     return complex;
   }
 
+  /**
+   * Gets the complex number of the julia transformation.
+   * @return the complex number.
+   */
+  public Complex getComplex() {
+    return julia;
+  }
+
 
 }
