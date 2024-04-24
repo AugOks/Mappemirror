@@ -6,6 +6,11 @@ import javafx.scene.layout.GridPane;
 import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
+
+/**
+ * Represents the input boxes for a single matrix, and a single vector.
+ * This class allows easy access and manipulation of the values in the matrix and vector.
+ */
 public class TransformBox {
   private TextField a;
   private TextField b;
@@ -14,6 +19,13 @@ public class TransformBox {
   private  TextField vectorX;
   private TextField vectorY;
 
+  /**
+   * Constructor for the TransformBox class.
+   * Takes in a matrix and a Vector and creates the various textfields that corresponde to their
+   * values.
+   * @param matrix the matrix to be represented.
+   * @param vector the vector to be represented.
+   */
     public TransformBox(Matrix2x2 matrix, Vector2D vector) {
         this.a = new TextField();
         this.b = new TextField();
@@ -29,6 +41,12 @@ public class TransformBox {
         createTextField(this.vectorY, "b1", vector.getY0());
     }
 
+  /**
+   * Creates a textfield with the values of the matrix and awaits any changes.
+   * @param field the textfield to be created.
+   * @param name the prompt text.
+   * @param value the value of the textfield.
+   */
   private void createTextField(TextField field, String name, double value){
     field.setPromptText(name);
     field.setMaxWidth(60);
@@ -37,6 +55,11 @@ public class TransformBox {
       field.setText(newValue);
     });
   }
+
+  /**
+   * Returns the gridpane containing the matrix and vector textfields.
+   * @return the gridpane containing the matrix and vector.
+   */
   public GridPane getGridBox(){
 GridPane gridPane = new GridPane();
     gridPane.add(new Label("  "),0,0);
@@ -57,5 +80,53 @@ GridPane gridPane = new GridPane();
     gridPane.add(new Label("  "),1,1);
     gridPane.add(firstVector,2,1);
     return gridPane;
+  }
+
+  /**
+   * Get the a value of this matrix.
+   * @return the a value of this matrix.
+   */
+  public TextField getA() {
+    return a;
+  }
+
+  /**
+   * Get the b value of this matrix.
+   * @return the b value of this matrix
+   */
+  public TextField getB() {
+    return b;
+  }
+
+  /**
+   * Get the c value of this matrix.
+   * @return the c value of this matrix
+   */
+  public TextField getC() {
+    return c;
+  }
+
+  /**
+   * Get the d value of this matrix.
+   * @return the d value of this matrix
+   */
+  public TextField getD() {
+    return d;
+  }
+
+  /**
+   * Get the x value of this vector.
+   * @return
+   */
+  public TextField getVectorX() {
+    return vectorX;
+  }
+
+  /**
+   * Get the y value of this vector.
+   * @return the y value of this vector
+   */
+  public TextField getVectorY() {
+    return vectorY;
   }
 }

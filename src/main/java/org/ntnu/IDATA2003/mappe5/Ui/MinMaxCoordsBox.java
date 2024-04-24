@@ -5,12 +5,22 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
+/**
+ * Class for creating a grid with textfields for min and max coordinates.
+ * Used in the ChaosGameGui class
+ */
 public class MinMaxCoordsBox {
+  // Textfields for min and max coordinates
   private TextField minX;
     private TextField minY;
     private TextField maxX;
     private TextField maxY;
 
+    /**
+     * Constructor for the MinMaxCoordsBox class.
+     * @param minCoords the minimum coordinates
+     * @param maxCoords the maximum coordinates
+     */
     public MinMaxCoordsBox(Vector2D minCoords, Vector2D maxCoords) {
         this.minX = new TextField();
         this.minY = new TextField();
@@ -25,6 +35,13 @@ public class MinMaxCoordsBox {
         this.setListener(this.maxX, "maxX", maxCoords.getX0());
         this.setListener(this.maxY, "maxY", maxCoords.getY0());
     }
+
+    /**
+     * Creates a textfield with a prompt text and a value.
+     * @param field the textfield
+     * @param name the prompt text
+     * @param value the value
+     */
   private void createTextField(TextField field, String name, double value){
     field.setPromptText(name);
     field.setMaxWidth(80);
@@ -33,6 +50,11 @@ public class MinMaxCoordsBox {
       field.setText(newValue);
     });
   }
+
+  /**
+   * Creates a grid with textfields for min and max coordinates.
+   * @return the grid containing the min max textfields.
+   */
   public GridPane getMinMaxGrid(){
       GridPane grid = new GridPane();
     grid.add(new Label("Min coords:"), 0, 0);
@@ -51,6 +73,13 @@ public class MinMaxCoordsBox {
     grid.add(new Label("  "),0,5);
     return grid;
   }
+
+  /**
+   * Sets a listener for the textfield.
+   * @param field the textfield to assign a listner to.
+   * @param name the name of the textfield.
+   * @param value the current value of the corresponding vector.
+   */
   private void setListener(TextField field, String name, double value){
     field.setPromptText(name);
     field.setMaxWidth(80);
@@ -60,4 +89,19 @@ public class MinMaxCoordsBox {
     });
   }
 
+  /**
+   * Returns the minimum coordinates.
+   * @return the minimum coordinates as a Vector2D object.
+   */
+  public Vector2D getMinCoords() {
+    return new Vector2D(Double.parseDouble(minX.getText()), Double.parseDouble(minY.getText()));
+  }
+
+  /**
+   * Returns the maximum coordinates.
+   * @return the maximum coordinates as a Vector2D object.
+   */
+  public Vector2D getMaxCoords() {
+    return new Vector2D(Double.parseDouble(maxX.getText()), Double.parseDouble(maxY.getText()));
+  }
 }
