@@ -41,10 +41,10 @@ public class AffineTransformBox {
     }
 
   /**
-   * Creates a textfield with the values of the matrix and awaits any changes.
+   * Creates a text field with the values of the matrix and awaits any changes.
    *
    * @param name  the prompt text.
-   * @param value the value of the textfield.
+   * @param value the value of the text field.
    */
   private TextField createTextField(String name, double value){
     TextField field = new TextField();
@@ -58,8 +58,8 @@ public class AffineTransformBox {
   }
 
   /**
-   * Returns the gridpane containing the matrix and vector textfields.
-   * @return the gridpane containing the matrix and vector.
+   * Returns the GridPane containing the matrix and vector text fields.
+   * @return the GridPane containing the matrix and vector.
    */
   public GridPane getGridBox(){
     GridPane gridPane = new GridPane();

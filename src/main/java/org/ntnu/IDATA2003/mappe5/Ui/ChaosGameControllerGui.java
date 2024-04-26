@@ -138,6 +138,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
    */
   @Override
   public void update() {
+
   }
 
   public void runGame(int steps){
