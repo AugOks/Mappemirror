@@ -78,6 +78,7 @@ public class ChaosGame {
   }
   private void updateSubscriber(){
     for (ChaosGameObserver sub: this.subscribers){
+      this.canvas.clear();
       sub.update();
     }
   }

@@ -3,6 +3,7 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
@@ -97,6 +98,10 @@ public class AffineTransformBox {
     }
     return matrix;
 
+  }
+
+  public AffineTransform2D getTransform(){
+    return new AffineTransform2D(getMatrix(true), getVector(true));
   }
 
   /**

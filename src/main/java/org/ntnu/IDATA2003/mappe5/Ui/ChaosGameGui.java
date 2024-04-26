@@ -3,8 +3,6 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
@@ -31,17 +29,18 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
-import javafx.scene.control.Slider;
 
 public class ChaosGameGui extends Application implements ChaosGameObserver {
 
+  //TODO: consider refactoring affineTransformBox and SliderBox to inherit from a super inputbox class
 
   private HBox canvasCenterPane; // The canvas for the fractal
   private HBox inputBox; // The right pane with the input fields
   private ChaosGameControllerGui controller; // The controller for the chaos game app
   private List<AffineTransformBox> transformBoxes; // The input fields for the affine transformation
-  private JuliaSliderBox sliderBox; // The input slider for the julia transformation
+  private JuliaSliderBox sliderBox = null; // The input slider for the julia transformation
   private MinMaxCoordsBox minMaxCoordsBox; // The input fields for the min/max coords
+  private int currentSteps = 10;
   private Scene scene; // The scene for the chaos game app
 
 
@@ -107,7 +106,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * Method for receiving changes made in chaos game based on observer pattern.
    */
   public void update(){
-    createCanvas(controller.getGame(), 10000000);
+    this.canvasCenterPane.getChildren().clear();
+    createCanvas(controller.getGame(), currentSteps);
   }
 
   /**
@@ -130,7 +130,11 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Button sierpinskiButton = new Button("Sierpinski");
     sierpinskiButton.getStyleClass().add("button-rightPane");
 
-    sierpinskiButton.setOnAction(e -> controller.createSierpinski());
+    sierpinskiButton.setOnAction(e -> {
+      controller.createSierpinski();
+      //TODO BAD CODE!!!!
+      this.sliderBox = null;
+    });
 
     //Button for the barnsley fern transformation
     Button barnsleyButton = new Button("Barnsley Fern");
@@ -195,6 +199,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @param description the description of the chaos game.
    * @param stepsInt the amount of steps to run the chaos game.
    */
+  //TODO refactor this method to its own class.
 
   public void createInputBox(ChaosGameDescription description, int stepsInt){
 
@@ -204,13 +209,14 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
         description.getMaxCoords());
 
     TextField steps = new TextField();
+
     steps.setPromptText("Steps");
     steps.setText(String.valueOf(stepsInt));
     steps.textProperty().addListener((observable, oldValue, newValue) -> {
       String newInput = textInputListener(newValue,oldValue);
-      steps.setText(newInput);
+      this.currentSteps = Integer.parseInt(newInput);
     });
-
+    steps.setText(String.valueOf(currentSteps));
     HBox stepBox = new HBox();
     stepBox.getChildren().addAll(new Label("steps"), steps);
     stepBox.setSpacing(10);
@@ -234,9 +240,15 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Button runButton = new Button("Run");
     runButton.getStyleClass().add("button-rightPane");
     runButton.setOnAction(e -> {
-      //TODO update the description and the canvas
-      this.controller.update();
-      System.out.println("Run button pressed");
+      List<Transform2D> newTransforms = new ArrayList<>();
+      if(this.sliderBox == null){
+        ChaosGameDescription newDescription = description;
+        for (AffineTransformBox boxValues: this.transformBoxes){
+          newTransforms.add(boxValues.getTransform());
+        }
+        newDescription.setTransforms(newTransforms);
+        controller.changeDescription(newDescription);
+      }
     });
     grid.add(new Label(" "),0,3);
     grid.add(runButton, 0, 4);
