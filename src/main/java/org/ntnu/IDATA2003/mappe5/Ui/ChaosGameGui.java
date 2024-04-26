@@ -35,12 +35,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   //TODO: consider refactoring affineTransformBox and SliderBox to inherit from a super inputbox class
 
   private HBox canvasCenterPane; // The canvas for the fractal
-  private HBox inputBox; // The right pane with the input fields
+  private inputNode input; // The right pane with the input fields
   private ChaosGameControllerGui controller; // The controller for the chaos game app
-  private List<AffineTransformBox> transformBoxes; // The input fields for the affine transformation
-  private JuliaSliderBox sliderBox = null; // The input slider for the julia transformation
-  private MinMaxCoordsBox minMaxCoordsBox; // The input fields for the min/max coords
-  private int currentSteps = 10;
   private Scene scene; // The scene for the chaos game app
 
 
@@ -49,7 +45,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * Constructor for the ChaosGameGui.
    */
   public ChaosGameGui(){
-    this.transformBoxes = new ArrayList<>();
     controller = new ChaosGameControllerGui(this);
   }
 
@@ -78,13 +73,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       // The header
       root.setTop(createTopPane());
 
-      //The right pane
-      root.setRight(createRightPane());
-
       // The center pane with the canvas
       HBox centerPane = createCenterPane();
       root.setCenter(centerPane);
 
+      //The right pane
+      root.setRight(createRightPane());
       // The left pane
       VBox leftPane = new VBox();
       leftPane.getStyleClass().add("leftPane");
@@ -107,7 +101,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    */
   public void update(){
     this.canvasCenterPane.getChildren().clear();
-    createCanvas(controller.getGame(), currentSteps);
+    createCanvas(controller.getGame(), input.getCurrentSteps());
   }
 
   /**
@@ -117,7 +111,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @return HBox a HBox containing the components for the right pane.
    */
   private VBox createRightPane() {
-    this.inputBox = new HBox();
 
     VBox rightPane = new VBox();
 
@@ -132,8 +125,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     sierpinskiButton.setOnAction(e -> {
       controller.createSierpinski();
-      //TODO BAD CODE!!!!
-      this.sliderBox = null;
     });
 
     //Button for the barnsley fern transformation
@@ -147,7 +138,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     //TODO add css style to these buttons
     buttonBox.setSpacing(20);
     buttonBox.setAlignment(Pos.CENTER);
-    rightPane.getChildren().addAll(buttonBox, this.inputBox);
+    rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
     rightPane.setAlignment(Pos.TOP_CENTER);
     rightPane.getStyleClass().add("rightPane");
 
@@ -199,13 +190,17 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @param description the description of the chaos game.
    * @param stepsInt the amount of steps to run the chaos game.
    */
-  //TODO refactor this method to its own class.
+  public void createInputNode(ChaosGameDescription description, int stepsInt){
+    this.input = new inputNode(description, stepsInt);
+  }
 
+  //TODO refactor this method to its own class.
+/*
   public void createInputBox(ChaosGameDescription description, int stepsInt){
 
     this.inputBox.getChildren().clear();
 
-    this.minMaxCoordsBox = new MinMaxCoordsBox(description.getMinCoords(),
+    this.minMaxCoordsBox = new MinMaxCoordsNode(description.getMinCoords(),
         description.getMaxCoords());
 
     TextField steps = new TextField();
@@ -230,7 +225,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     GridPane grid = new GridPane();
     grid.add(stepBox, 0, 0);
-    grid.add(this.minMaxCoordsBox.getMinMaxGrid(), 0, 1);
+    grid.add(this.minMaxCoordsBox.getMinMaxNode(), 0, 1);
     grid.add(box, 0, 2);
 
     this.inputBox.setBackground(new Background(new BackgroundFill(Color.DARKGREY,
@@ -243,8 +238,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       List<Transform2D> newTransforms = new ArrayList<>();
       if(this.sliderBox == null){
         ChaosGameDescription newDescription = description;
-        for (AffineTransformBox boxValues: this.transformBoxes){
-          newTransforms.add(boxValues.getTransform());
+        for (AffineTransformNode boxValues: this.transformBoxes){
+         // newTransforms.add(boxValues.getTransform());
         }
         newDescription.setTransforms(newTransforms);
         controller.changeDescription(newDescription);
@@ -253,7 +248,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     grid.add(new Label(" "),0,3);
     grid.add(runButton, 0, 4);
   }
-
+*/
   /**
    * Creates the canvas for the chaos game.
    * It will draw the canvas based on the game description and the amount of steps.
@@ -296,24 +291,26 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @param description the description of the chaos game.
    * @return a grid pane containing the unique input fields for the julia transformation.
    */
-
+/*
   public GridPane createInputBoxJulia(ChaosGameDescription description){
-    this.minMaxCoordsBox = new MinMaxCoordsBox(description.getMinCoords(),
+    this.minMaxCoordsBox = new MinMaxCoordsNode(description.getMinCoords(),
         description.getMaxCoords());
     GridPane grid = new GridPane();
     Transform2D transform = description.getTransform(0);
     if (transform instanceof JuliaTransform juliaTransform) {
-      this.sliderBox = new JuliaSliderBox(juliaTransform.getComplex());
+      this.sliderBox = new JuliaTransformNode(juliaTransform.getComplex());
         grid.add(this.sliderBox.getSliderGrid(), 0, 0);
     }
     return grid;
   }
+  */
+
   /**
    * Creates the input box for the affine transformation
    * @param description the description of the chaos game.
    * @return a grid pane containing the unique input fields for the affine transformation.
    */
-
+/*
   public GridPane createInputBoxAffine(ChaosGameDescription description){
     this.transformBoxes.clear();
     int indexTransform = 0;
@@ -325,7 +322,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     //TODO refactor this shittt
     for(Transform2D transform:  description.getAllTransforms()){
       AffineTransform2D castedTransform = (AffineTransform2D) transform;
-      this.transformBoxes.add(new AffineTransformBox(castedTransform.getMatrix(),
+      this.transformBoxes.add(new AffineTransformNode(castedTransform.getMatrix(),
             castedTransform.getVector()));
 
       int number = indexTransform+1;
@@ -350,7 +347,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     }
     return grid;
   }
-
+*/
 
   /**
    * Listens to the text input and updates the text field with the new value.

@@ -1,5 +1,6 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
@@ -9,7 +10,7 @@ import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
  * Class for creating a grid with textfields for min and max coordinates.
  * Used in the ChaosGameGui class
  */
-public class MinMaxCoordsBox {
+public class MinMaxCoordsNode {
   // Textfields for min and max coordinates
   private TextField minX;
     private TextField minY;
@@ -21,7 +22,7 @@ public class MinMaxCoordsBox {
      * @param minCoords the minimum coordinates
      * @param maxCoords the maximum coordinates
      */
-    public MinMaxCoordsBox(Vector2D minCoords, Vector2D maxCoords) {
+    public MinMaxCoordsNode(Vector2D minCoords, Vector2D maxCoords) {
         this.minX = new TextField();
         this.minY = new TextField();
         this.maxX = new TextField();
@@ -55,7 +56,7 @@ public class MinMaxCoordsBox {
    * Creates a grid with textfields for min and max coordinates.
    * @return the grid containing the min max textfields.
    */
-  public GridPane getMinMaxGrid(){
+  public Node getMinMaxNode(){
       GridPane grid = new GridPane();
     grid.add(new Label("Min coords:"), 0, 0);
     grid.add(minX, 1, 0);

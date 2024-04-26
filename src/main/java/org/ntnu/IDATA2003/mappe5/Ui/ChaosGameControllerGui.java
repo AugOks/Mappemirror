@@ -52,7 +52,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
         factory.createDescription(ChaosGameDescriptionFactory.Fractals.SIERPINSKI);
     theGame = new ChaosGame(description, 500, 900);
     gameGui.createCanvas(theGame, 1000000);
-    gameGui.createInputBox(theGame.getDescription(),1000000);
+    gameGui.createInputNode(theGame.getDescription(),1000000);
     theGame.addSubscriber(gameGui);
 
   }
@@ -65,7 +65,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
         factory.createDescription(ChaosGameDescriptionFactory.Fractals.JULIA);
     theGame = new ChaosGame(description, 500, 900);
     gameGui.createCanvas(theGame,10000000);
-    gameGui.createInputBox(theGame.getDescription(),10000000);
+    gameGui.createInputNode(theGame.getDescription(),10000000);
     theGame.addSubscriber(gameGui);
 
   }
@@ -79,7 +79,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
         factory.createDescription(ChaosGameDescriptionFactory.Fractals.BARNSLEY);
     theGame = new ChaosGame(description, 500, 900);
     gameGui.createCanvas(theGame, 70000000);
-    gameGui.createInputBox(theGame.getDescription(),70000000);
+    gameGui.createInputNode(theGame.getDescription(),70000000);
     theGame.addSubscriber(gameGui);
   }
 

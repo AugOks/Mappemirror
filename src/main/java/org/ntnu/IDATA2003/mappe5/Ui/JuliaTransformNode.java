@@ -1,13 +1,14 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.GridPane;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
+import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 
-public class JuliaSliderBox {
+public class JuliaTransformNode implements FractalInputNode {
   private Slider imaginarySlider;
   private Label imaginaryLabel;
   private Slider realSlider;
@@ -17,7 +18,9 @@ public class JuliaSliderBox {
    * Constructor for the JuliaSliderBox class.
    * @param complex the complex number to be represented.
    */
-  public JuliaSliderBox(Complex complex) {
+  public JuliaTransformNode(ChaosGameDescription description){
+    JuliaTransform julia  = (JuliaTransform) description.getTransform(0);
+    Complex complex = julia.getComplex();
     this.imaginaryLabel = new Label();
     this.realLabel = new Label();
     this.imaginarySlider = this.createSlider(complex.getX0(),-1, 1.0,this.imaginaryLabel);
@@ -60,7 +63,8 @@ public class JuliaSliderBox {
    * Creates a grid with sliders for the real and imaginary part of a complex number.
    * @return the grid containing the sliders.
    */
-  public GridPane getSliderGrid(){
+  @Override
+  public Node getFractalNode() {
     GridPane grid = new GridPane();
     grid.add(new Label("Real:"), 0, 0);
     grid.add(this.realSlider, 1, 0);
@@ -70,5 +74,4 @@ public class JuliaSliderBox {
     grid.add(this.imaginaryLabel, 2, 1);
     return grid;
   }
-
 }
