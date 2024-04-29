@@ -32,13 +32,13 @@ public class JuliaTransformNode implements FractalInputNode {
     this.complex = julia.getComplex();
     this.imagTextField = new TextField();
     this.imagTextField.setId("imag");
-    this.imagTextField.setMaxWidth(50);
+    this.imagTextField.setMaxWidth(70);
     this.realTextField = new TextField();
-    this.realTextField.setMaxWidth(50);
+    this.realTextField.setMaxWidth(70);
     this.realTextField.setId("real");
 
-    this.imaginarySlider = this.createSlider(this.complex.getX0(),-1, 1.0,this.imagTextField);
-    this.realSlider = createSlider(this.complex.getY0(),-1, 1.0,  this.realTextField);
+    this.imaginarySlider = createSlider(this.complex.getY0(),-1, 1.0,this.imagTextField);
+    this.realSlider = createSlider(this.complex.getX0(),-1, 1.0,  this.realTextField);
     this.textFieldListener(this.imagTextField);
     this.textFieldListener(this.realTextField);
   }
@@ -53,14 +53,14 @@ public class JuliaTransformNode implements FractalInputNode {
    * @return the slider.
    */
   private Slider createSlider(double startValue,double min, double max, TextField textField) {
-    Slider slider = new Slider(min, max,0); //starts at 0 just for construction.
+    Slider slider = new Slider(min, max,startValue); //starts at 0 just for construction.
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
     slider.setMajorTickUnit(0.25f);
     slider.setBlockIncrement(0.1f);
+    textField.textProperty().setValue(String.valueOf(startValue));
     slider.setId(textField.getText());
     this.sliderListener(slider,textField);
-    slider.setValue(startValue);
     return slider;
   }
   /**
@@ -72,7 +72,7 @@ public class JuliaTransformNode implements FractalInputNode {
   private void sliderListener(Slider slider, TextField textField){
     slider.valueProperty().addListener(
         (observable, oldValue, newValue) -> {
-          String displayValue = String.format("%.2f", newValue);
+          String displayValue =  String.valueOf(newValue);
           if(slider.getId().equalsIgnoreCase("real")){
             this.complex.setX0((double) newValue);
           }else {

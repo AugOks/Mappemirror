@@ -96,17 +96,13 @@ public class ChaosCanvas {
    *
    * @param point the coordinates of the pixel to put.
    */
-  public void putPixel(Vector2D point) throws PixelOutOfBoundsException {
+  public void putPixel(Vector2D point) {
     Vector2D ijCoords = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
-    //System.out.println(i + " i  and "+ j + " j");
-    if (i < 0 || i > this.height || j < 0 || j > this.width) {
-      throw new PixelOutOfBoundsException("When transforming coords to indices an invalid indices"
-          + "was returned.");
+    if(i >= 0 && i < this.height && j >= 0 && j < this.width) {
+      this.canvas[i][j] = 1;
     }
-    this.canvas[i][j] = 1;
-
   }
 
   /**

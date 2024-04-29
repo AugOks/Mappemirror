@@ -58,8 +58,8 @@ public class ChaosGameDescriptionFactory {
    */
   private ChaosGameDescription createJulia(){
 
-    Vector2D minCoords = new Vector2D(-1.6, -1.0);
-    Vector2D maxCoords = new Vector2D(1.6, 1.0);
+    Vector2D minCoords = new Vector2D(-1.6, -1);
+    Vector2D maxCoords = new Vector2D(1.6, 1);
     Complex c = new Complex(-0.74543, 0.11301);
     List<Transform2D> transformList = new ArrayList<>();
     transformList.add(new JuliaTransform(c, 1));

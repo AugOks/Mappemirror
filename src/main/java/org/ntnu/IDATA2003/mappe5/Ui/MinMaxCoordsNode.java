@@ -7,7 +7,7 @@ import javafx.scene.layout.GridPane;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**
- * Class for creating a grid with textfields for min and max coordinates.
+ * Class for creating a grid with text fields for min and max coordinates.
  * Used in the ChaosGameGui class
  */
 public class MinMaxCoordsNode {
@@ -17,24 +17,27 @@ public class MinMaxCoordsNode {
     private TextField maxX;
     private TextField maxY;
 
+    private Vector2D minCoords;
+    private Vector2D maxCoords;
+
     /**
      * Constructor for the MinMaxCoordsBox class.
      * @param minCoords the minimum coordinates
      * @param maxCoords the maximum coordinates
      */
     public MinMaxCoordsNode(Vector2D minCoords, Vector2D maxCoords) {
+        this.maxCoords = maxCoords;
+        this.minCoords = minCoords;
+
         this.minX = new TextField();
         this.minY = new TextField();
         this.maxX = new TextField();
         this.maxY = new TextField();
+
         this.createTextField(this.minX, "minX", minCoords.getX0());
         this.createTextField(this.minY, "minY", minCoords.getY0());
         this.createTextField(this.maxX, "maxX", maxCoords.getX0());
         this.createTextField(this.maxY, "maxY", maxCoords.getY0());
-        this.setListener(this.minX, "minX", minCoords.getX0());
-        this.setListener(this.minY, "minY", minCoords.getY0());
-        this.setListener(this.maxX, "maxX", maxCoords.getX0());
-        this.setListener(this.maxY, "maxY", maxCoords.getY0());
     }
 
     /**
@@ -49,8 +52,18 @@ public class MinMaxCoordsNode {
     field.setText(String.valueOf(value));
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       field.setText(newValue);
+      if (name.equalsIgnoreCase("minx")){
+        minCoords.setX0(Double.parseDouble(newValue));
+      } else if (name.equalsIgnoreCase("miny")){
+        minCoords.setY0(Double.parseDouble(newValue));
+      } else if (name.equalsIgnoreCase("maxx")){
+        maxCoords.setX0(Double.parseDouble(newValue));
+      } else if (name.equalsIgnoreCase("maxy")){
+        maxCoords.setY0(Double.parseDouble(newValue));
+      }
     });
   }
+
 
   /**
    * Creates a grid with textfields for min and max coordinates.
@@ -73,21 +86,6 @@ public class MinMaxCoordsNode {
 
     grid.add(new Label("  "),0,5);
     return grid;
-  }
-
-  /**
-   * Sets a listener for the textfield.
-   * @param field the textfield to assign a listner to.
-   * @param name the name of the textfield.
-   * @param value the current value of the corresponding vector.
-   */
-  private void setListener(TextField field, String name, double value){
-    field.setPromptText(name);
-    field.setMaxWidth(80);
-    field.setText(String.valueOf(value));
-    field.textProperty().addListener((observable, oldValue, newValue) -> {
-      field.setText(newValue);
-    });
   }
 
   /**

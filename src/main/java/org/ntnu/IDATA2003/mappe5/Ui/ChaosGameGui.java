@@ -82,7 +82,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       primaryStage.setScene(scene);
       primaryStage.setMaximized(true);
       primaryStage.show();
-
+      System.out.println(root.getBoundsInParent().getHeight());
     } catch (Exception e) {
       e.printStackTrace();
     }

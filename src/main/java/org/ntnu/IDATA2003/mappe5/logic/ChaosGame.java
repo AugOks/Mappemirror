@@ -17,6 +17,8 @@ public class ChaosGame {
   private Vector2D currentPoint; //The current point
   private Random random;
   private ArrayList<ChaosGameObserver> subscribers;
+  private int currentHeight;
+  private int currentWidth;
 
   /**
    * Creates an instance of ChaosGame and initializes fields with values.
@@ -34,6 +36,9 @@ public class ChaosGame {
       throw new IllegalArgumentException("The canvas cannot have size smaller than 1x1");
     }
     this.random = new Random();
+    //TODO refactor this to gui when making canvas dynamic
+    this.currentHeight = height;
+    this.currentWidth = width;
     this.subscribers = new ArrayList<>();
     this.setDescription(description);
     Vector2D maxCoords = this.description.getMaxCoords();
@@ -55,6 +60,10 @@ public class ChaosGame {
     return this.canvas;
   }
 
+  private void setCanvas(){
+    this.canvas = new ChaosCanvas(this.currentHeight, this.currentWidth, this.description.getMinCoords()
+    , this.description.getMaxCoords());
+  }
   /**
    * Gets the description of the game being played.
    *
@@ -94,7 +103,6 @@ public class ChaosGame {
     if (steps < 1) {
       throw new IllegalArgumentException("Steps cannot be less than 1");
     }
-    try {
       for (int i = 0; i < steps; i++) {
         int dice = this.random.nextInt(
             this.description.getTransformSize());    // throws a die for a random number
@@ -104,9 +112,7 @@ public class ChaosGame {
         canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
         this.currentPoint = point; //Sets the current pont to the result of the transformation
       }
-    } catch (PixelOutOfBoundsException e) {
-      throw new PixelOutOfBoundsException("The point was out of bounds");
-    }
+
   }
 
   /**
@@ -120,6 +126,7 @@ public class ChaosGame {
       throw new IllegalArgumentException("Description cannot be null");
     }
     this.description = description;
+    this.setCanvas();
     this.updateSubscriber();
   }
 
