@@ -1,38 +1,30 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
-import java.util.ArrayList;
-import java.util.List;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
-import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
-import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
 
+/**
+ * The GUI for the chaos game app.
+ * This class is responsible for creating the GUI for the chaos game app.
+ */
 public class ChaosGameGui extends Application implements ChaosGameObserver {
-
-  //TODO: consider refactoring affineTransformBox and SliderBox to inherit from a super inputbox class
 
   private HBox canvasCenterPane; // The canvas for the fractal
   private inputNode input; // The right pane with the input fields
@@ -197,62 +189,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       this.input.changeInputNode(description, stepsInt);
     }
   }
-
-  //TODO refactor this method to its own class.
-/*
-  public void createInputBox(ChaosGameDescription description, int stepsInt){
-
-    this.inputBox.getChildren().clear();
-
-    this.minMaxCoordsBox = new MinMaxCoordsNode(description.getMinCoords(),
-        description.getMaxCoords());
-
-    TextField steps = new TextField();
-
-    steps.setPromptText("Steps");
-    steps.setText(String.valueOf(stepsInt));
-    steps.textProperty().addListener((observable, oldValue, newValue) -> {
-      String newInput = textInputListener(newValue,oldValue);
-      this.currentSteps = Integer.parseInt(newInput);
-    });
-    steps.setText(String.valueOf(currentSteps));
-    HBox stepBox = new HBox();
-    stepBox.getChildren().addAll(new Label("steps"), steps);
-    stepBox.setSpacing(10);
-    HBox box = new HBox();
-
-    if (description.getTransform(0) instanceof AffineTransform2D){
-      box.getChildren().add(createInputBoxAffine(description));
-    }else{
-      box.getChildren().add(createInputBoxJulia(description));
-    }
-
-    GridPane grid = new GridPane();
-    grid.add(stepBox, 0, 0);
-    grid.add(this.minMaxCoordsBox.getMinMaxNode(), 0, 1);
-    grid.add(box, 0, 2);
-
-    this.inputBox.setBackground(new Background(new BackgroundFill(Color.DARKGREY,
-        null,null)));
-    this.inputBox.getChildren().add(grid);
-
-    Button runButton = new Button("Run");
-    runButton.getStyleClass().add("button-rightPane");
-    runButton.setOnAction(e -> {
-      List<Transform2D> newTransforms = new ArrayList<>();
-      if(this.sliderBox == null){
-        ChaosGameDescription newDescription = description;
-        for (AffineTransformNode boxValues: this.transformBoxes){
-         // newTransforms.add(boxValues.getTransform());
-        }
-        newDescription.setTransforms(newTransforms);
-        controller.changeDescription(newDescription);
-      }
-    });
-    grid.add(new Label(" "),0,3);
-    grid.add(runButton, 0, 4);
-  }
-*/
   /**
    * Creates the canvas for the chaos game.
    * It will draw the canvas based on the game description and the amount of steps.
@@ -260,7 +196,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @param game the chaos game to create the canvas for.
    * @param steps the amount of steps to run the chaos game.
    */
-
   public void createCanvas(ChaosGame game, int steps){
 
     ChaosCanvas canvas = game.getCanvas();
@@ -286,107 +221,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     ImageView fractal = new ImageView(writable_image);
     this.canvasCenterPane.getChildren().clear();
     this.canvasCenterPane.getChildren().add(new HBox(fractal));
-  }
-
-  /**
-   * Creates the input box for the julia transformation.
-   * This includes the input fields for the real and imaginary number.
-   *
-   * @param description the description of the chaos game.
-   * @return a grid pane containing the unique input fields for the julia transformation.
-   */
-/*
-  public GridPane createInputBoxJulia(ChaosGameDescription description){
-    this.minMaxCoordsBox = new MinMaxCoordsNode(description.getMinCoords(),
-        description.getMaxCoords());
-    GridPane grid = new GridPane();
-    Transform2D transform = description.getTransform(0);
-    if (transform instanceof JuliaTransform juliaTransform) {
-      this.sliderBox = new JuliaTransformNode(juliaTransform.getComplex());
-        grid.add(this.sliderBox.getSliderGrid(), 0, 0);
-    }
-    return grid;
-  }
-  */
-
-  /**
-   * Creates the input box for the affine transformation
-   * @param description the description of the chaos game.
-   * @return a grid pane containing the unique input fields for the affine transformation.
-   */
-/*
-  public GridPane createInputBoxAffine(ChaosGameDescription description){
-    this.transformBoxes.clear();
-    int indexTransform = 0;
-    int row = 0;
-    int column = 0;
-
-    GridPane grid = new GridPane();
-
-    //TODO refactor this shittt
-    for(Transform2D transform:  description.getAllTransforms()){
-      AffineTransform2D castedTransform = (AffineTransform2D) transform;
-      this.transformBoxes.add(new AffineTransformNode(castedTransform.getMatrix(),
-            castedTransform.getVector()));
-
-      int number = indexTransform+1;
-
-      grid.add(new Label("Transform "+number+":"), column, row);
-      row++;
-      grid.add(this.transformBoxes.get(indexTransform).getGridBox(), column, row);
-      row++;
-      if (column == 0){
-        column++;
-        if(row == 2){
-          row = 0;
-        } else {
-          row-=2;
-        }
-      } else if (column == 1) {
-        column--;
-        row+=2;
-      }
-      indexTransform++;
-
-    }
-    return grid;
-  }
-*/
-
-  /**
-   * Listens to the text input and updates the text field with the new value.
-   * Makes sure that the input is correct, and that the user cannot type it in wrong.
-   *
-   * @param newValue the new value of the text field.
-   * @param oldValue the old value of the text field.
-   */
-  private String textInputListener(String newValue, String oldValue){
-    String returnValue = null;
-    try {
-      if (!newValue.isEmpty()) {
-        int newValueInt;
-        if (newValue.substring(newValue.length() - 1).equals(".")){
-          newValue = newValue+"0";
-        }
-
-        if (newValue.contains("-")){
-          newValue =newValue.replace("-", "");
-          newValueInt= Integer.parseInt(newValue);
-          newValueInt=newValueInt*(-1);
-        } else{
-          newValueInt= Integer.parseInt(newValue);
-        }
-        returnValue = newValue;
-
-        //TODO add gard specific to the different types of input felt
-      }
-    } catch (NumberFormatException e) {
-      // The user have entered a non-integer character, hence just keep the
-      // oldValue and ignore the newValue.
-      returnValue = oldValue;
-    }
-    return returnValue;
-    //TODO here the description should change and the canvas should be updated
   }
 
 

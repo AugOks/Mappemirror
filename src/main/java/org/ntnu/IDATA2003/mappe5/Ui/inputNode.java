@@ -1,6 +1,5 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
