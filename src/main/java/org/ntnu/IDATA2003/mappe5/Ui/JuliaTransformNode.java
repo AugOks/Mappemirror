@@ -1,66 +1,108 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
+import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 
+/**
+ * Represents the input field for a Julia transformation.
+ */
 public class JuliaTransformNode implements FractalInputNode {
   private Slider imaginarySlider;
-  private Label imaginaryLabel;
   private Slider realSlider;
-  private Label realLabel;
+  private TextField imagTextField;
+  private TextField realTextField;
+  private Complex complex;
 
   /**
    * Constructor for the JuliaSliderBox class.
-   * @param complex the complex number to be represented.
+   *
+   * @param description the description for the current game.
    */
   public JuliaTransformNode(ChaosGameDescription description){
     JuliaTransform julia  = (JuliaTransform) description.getTransform(0);
-    Complex complex = julia.getComplex();
-    this.imaginaryLabel = new Label();
-    this.realLabel = new Label();
-    this.imaginarySlider = this.createSlider(complex.getX0(),-1, 1.0,this.imaginaryLabel);
-    this.realSlider = createSlider(complex.getY0(),-1, 1.0,  this.realLabel);
+    this.complex = julia.getComplex();
+    this.imagTextField = new TextField();
+    this.imagTextField.setId("imag");
+    this.imagTextField.setMaxWidth(50);
+    this.realTextField = new TextField();
+    this.realTextField.setMaxWidth(50);
+    this.realTextField.setId("real");
 
+    this.imaginarySlider = this.createSlider(this.complex.getX0(),-1, 1.0,this.imagTextField);
+    this.realSlider = createSlider(this.complex.getY0(),-1, 1.0,  this.realTextField);
+    this.textFieldListener(this.imagTextField);
+    this.textFieldListener(this.realTextField);
   }
 
   /**
    * Creates a slider with a start value and a label to display the value of the slider.
+   *
    * @param startValue The initial value of the complex number.
    * @param min The minimum value of the slider.
    * @param max The maximum value of the slider.
-   * @param label The label to display the value of the slider.
+   * @param textField The label to display the value of the slider.
    * @return the slider.
    */
-  private Slider createSlider(double startValue,double min, double max, Label label) {
+  private Slider createSlider(double startValue,double min, double max, TextField textField) {
     Slider slider = new Slider(min, max,0); //starts at 0 just for construction.
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
     slider.setMajorTickUnit(0.25f);
     slider.setBlockIncrement(0.1f);
-    this.sliderListener(slider,label);
+    slider.setId(textField.getText());
+    this.sliderListener(slider,textField);
     slider.setValue(startValue);
     return slider;
   }
   /**
    * Listens to the slider and updates the label with the value of the slider.
+   *
    * @param slider the slider to listen to.
-   * @param label the label to update.
+   * @param textField the label to update.
    */
-  private void sliderListener(Slider slider, Label label){
+  private void sliderListener(Slider slider, TextField textField){
     slider.valueProperty().addListener(
         (observable, oldValue, newValue) -> {
-          String displayValue = String.format("Value:  %.2f", newValue);
-          label.setText(displayValue);
+          String displayValue = String.format("%.2f", newValue);
+          if(slider.getId().equalsIgnoreCase("real")){
+            this.complex.setX0((double) newValue);
+          }else {
+            this.complex.setY0((double) newValue);
+          }
+          textField.setText(displayValue);
         });
   }
 
   /**
+   * Listens to the text field and updates the complex and the slider with the new values.
+   *
+   * @param field the text field to assign a listener to.
+   */
+  private void textFieldListener(TextField field){
+    field.textProperty().addListener((observable, oldValue, newValue) -> {
+      double value = Double.parseDouble(newValue);
+      if(field.getId().equalsIgnoreCase("real")){
+        this.complex.setX0(value);
+        realSlider.setValue(value);
+      }else {
+        this.complex.setY0(value);
+        imaginarySlider.setValue(value);
+      }
+    });
+  }
+
+  /**
    * Creates a grid with sliders for the real and imaginary part of a complex number.
+   *
    * @return the grid containing the sliders.
    */
   @Override
@@ -68,10 +110,25 @@ public class JuliaTransformNode implements FractalInputNode {
     GridPane grid = new GridPane();
     grid.add(new Label("Real:"), 0, 0);
     grid.add(this.realSlider, 1, 0);
-    grid.add(this.realLabel, 2, 0);
+    grid.add(new Label("Value: "), 2, 0);
+    grid.add(this.realTextField, 3, 0);
     grid.add(new Label("Imaginary:"), 0, 1);
     grid.add(this.imaginarySlider, 1, 1);
-    grid.add(this.imaginaryLabel, 2, 1);
+    grid.add(new Label("value: "), 2 ,1);
+    grid.add(this.imagTextField, 3, 1);
     return grid;
+  }
+
+  /**
+   * Returns the transforms for the Julia set.
+   *
+   * @return the list of transforms.
+   */
+  @Override
+  public List<Transform2D> getTransforms() {
+    List<Transform2D> transforms = new ArrayList<>();
+    transforms.add(new JuliaTransform(complex, 1));
+    transforms.add(new JuliaTransform(complex, -1));
+    return  transforms;
   }
 }

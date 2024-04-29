@@ -190,8 +190,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @param description the description of the chaos game.
    * @param stepsInt the amount of steps to run the chaos game.
    */
-  public void createInputNode(ChaosGameDescription description, int stepsInt){
-    this.input = new inputNode(description, stepsInt);
+  public void createInputNode(ChaosGameDescription description, int stepsInt) {
+    if (this.input == null) {
+      this.input = new inputNode(description, stepsInt, this.controller);
+    } else {
+      this.input.changeInputNode(description, stepsInt);
+    }
   }
 
   //TODO refactor this method to its own class.
