@@ -13,7 +13,7 @@
     -fx-spacing: 40;
     -fx-padding: 10;
     -fx-min-width: 400;
-    -fx-background-color: #3f3d3d;
+    -fx-background-color: #3b3939;
 }
 .leftPane{
     -fx-alignment: center;
@@ -21,7 +21,7 @@
     -fx-background-color: #3f3d3d;
 }
 .bottomPane{
-    -fx-min-height: 1-20;
+    -fx-min-height: 10;
     -fx-background-color: #3f3d3d;
 }
 .header{
@@ -36,4 +36,30 @@
 }
 .centerPane{
     -fx-background-color: black;
+}
+.inputNode{
+    -fx-background-color: #3b3939;
+    -fx-alignment: Center;
+    -fx-spacing: 10;
+    -fx-min-width: 300;
+}
+.minMaxField{
+    -fx-min-width: 100;
+    -fx-min-height: 25;
+    -fx-font-size: 10;
+}
+.matrix-field{
+    -fx-min-width: 50;
+    -fx-min-height: 25;
+    -fx-font-size: 10;
+}
+.vector-field{
+    -fx-min-width: 50;
+    -fx-min-height: 25;
+    -fx-font-size: 10;
+}
+.input-title{
+    -fx-font-size: 12;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
 }

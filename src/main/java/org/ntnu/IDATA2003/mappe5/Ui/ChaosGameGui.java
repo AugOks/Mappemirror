@@ -6,6 +6,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -60,42 +61,42 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   public void start(Stage primaryStage) throws Exception  {
     try {
 
+      //Create the root pane and maximize the size to the users screen
       BorderPane root = new BorderPane();
       Screen screen = Screen.getPrimary();
       Rectangle2D bounds = screen.getVisualBounds();
       this.scene = new Scene(root,bounds.getWidth(), bounds.getHeight());
 
-      // The header
+      // The top pane with the
       root.setTop(createTopPane());
 
       // The center pane with the canvas
-
-
-
-
       HBox centerPane = createCenterPane();
       root.setCenter(centerPane);
 
       //The right pane
-      root.setRight(createRightPane());
+      root.setRight(new ScrollPane(createRightPane()));
+
+      // The left pane
+      VBox leftPane = new VBox();
+      leftPane.getStyleClass().add("leftPane");
+      root.setLeft(leftPane);
+
+      // Listener for the size of the screen, change the dimensions of fractal
       scene.widthProperty().addListener(event -> {
         controller.changeDescription(controller.getDescription());
       });
       scene.heightProperty().addListener(event -> {
         controller.changeDescription(controller.getDescription());
       });
-      // The left pane
-      VBox leftPane = new VBox();
-      leftPane.getStyleClass().add("leftPane");
-      root.setLeft(leftPane);
 
       scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
       scene.setCursor(Cursor.DEFAULT);
       primaryStage.setTitle("Chaos Game");
       primaryStage.setScene(scene);
-
       primaryStage.show();
       System.out.println(canvasCenterPane.getHeight());
+
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -127,7 +128,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     //Button for the sierpinski transformation
     Button sierpinskiButton = new Button("Sierpinski");
     sierpinskiButton.getStyleClass().add("button-rightPane");
-
     sierpinskiButton.setOnAction(e -> {
       controller.createSierpinski();
     });
@@ -135,33 +135,43 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     //Button for the barnsley fern transformation
     Button barnsleyButton = new Button("Barnsley Fern");
     barnsleyButton.getStyleClass().add("button-rightPane");
+    barnsleyButton.setOnAction(e -> controller.createBarnsleyFern());
 
+    // Button for the file chooser
     Button fileChooserButton = new Button("Choose File");
     fileChooserButton.getStyleClass().add("button-rightPane");
     fileChooserButton.setOnAction(e -> controller.fileChooser());
 
-
-    barnsleyButton.setOnAction(e -> controller.createBarnsleyFern());
-
     HBox buttonBox = new HBox();
     buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton, fileChooserButton);
-    //TODO add css style to these buttons
     buttonBox.setSpacing(20);
     buttonBox.setAlignment(Pos.CENTER);
     rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
     rightPane.setAlignment(Pos.TOP_CENTER);
     rightPane.getStyleClass().add("rightPane");
 
+
     return rightPane;
   }
 
+  /**
+   * Gets the height of the canvas.
+   *
+   * @return the height of the canvas.
+   */
   public int getHeightForCanvas(){
    BorderPane root =  (BorderPane) scene.getRoot();
-   double returnValue =  scene.getHeight() - root.getTop().getBoundsInLocal().getHeight();
-   return (int) returnValue;
+   double returnValue =  scene.getHeight() - root.getTop().getBoundsInLocal().getHeight()-10;
+   return (int) returnValue-5;
   }
+
+  /**
+   * Gets the width of the canvas.
+   *
+   * @return the width of the canvas.
+   */
   public int getWidthForCanvas(){
-    double returnValue =  scene.getWidth()*0.75;
+    double returnValue =  scene.getWidth()*0.70;
     return (int) returnValue;
   }
 
@@ -197,8 +207,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     this.canvasCenterPane.getStyleClass().add("centerPane");
 
-   this.controller.createSierpinski();
-
+    this.controller.createSierpinski();
 
     this.canvasCenterPane.setAlignment(Pos.CENTER);
     return canvasCenterPane;
@@ -217,6 +226,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     } else {
       this.input.changeInputNode(description, stepsInt);
     }
+
   }
 
   /**
