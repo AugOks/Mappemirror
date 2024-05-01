@@ -6,6 +6,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
@@ -144,6 +145,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     HBox buttonBox = new HBox();
     buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton);
     buttonBox.setSpacing(20);
+    buttonBox.setPrefWidth(350);
     buttonBox.setAlignment(Pos.CENTER);
     rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
     rightPane.setAlignment(Pos.TOP_CENTER);
@@ -180,6 +182,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    */
 
   private VBox createTopPane(){
+    VBox topPane = new VBox();
     MenuBar menu = new MenuBar();
     Menu file = new Menu("File");
     Menu edit = new Menu("Edit");
@@ -193,10 +196,19 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     ImageView bannerView = new ImageView(banner);
     bannerView.getStyleClass().add("header-logo");
 
-    bannerPane.getChildren().addAll(menu, bannerView);
+    bannerPane.getChildren().addAll(bannerView);
     bannerPane.getStyleClass().add("header");
+    topPane.getChildren().addAll(menu, bannerPane);
+    return topPane;
+  }
 
-    return bannerPane;
+  private void createMenuBar(){
+    MenuBar menu = new MenuBar();
+    Menu file = new Menu("File");
+    Menu edit = new Menu("Edit");
+    Menu help = new Menu("Help");
+    menu.getMenus().addAll(file,edit,help);
+
   }
 
   /**

@@ -27,10 +27,11 @@
 .header{
     -fx-alignment: center;
     -fx-background-color: #3f3d3d;
-
+    -fx-max-height: 100;
     -fx-min-height: 100;
 }
 .header-logo{
+
     -fx-scale-x: 0.5;
     -fx-scale-y: 0.5;
 }
