@@ -51,15 +51,19 @@ public class MinMaxCoordsNode {
     field.setMaxWidth(80);
     field.setText(String.valueOf(value));
     field.textProperty().addListener((observable, oldValue, newValue) -> {
-      field.setText(newValue);
-      if (name.equalsIgnoreCase("minx")){
-        minCoords.setX0(Double.parseDouble(newValue));
-      } else if (name.equalsIgnoreCase("miny")){
-        minCoords.setY0(Double.parseDouble(newValue));
-      } else if (name.equalsIgnoreCase("maxx")){
-        maxCoords.setX0(Double.parseDouble(newValue));
-      } else if (name.equalsIgnoreCase("maxy")){
-        maxCoords.setY0(Double.parseDouble(newValue));
+      try {
+        field.setText(newValue);
+        if (name.equalsIgnoreCase("minx")) {
+          minCoords.setX0(Double.parseDouble(newValue));
+        } else if (name.equalsIgnoreCase("miny")) {
+          minCoords.setY0(Double.parseDouble(newValue));
+        } else if (name.equalsIgnoreCase("maxx")) {
+          maxCoords.setX0(Double.parseDouble(newValue));
+        } else if (name.equalsIgnoreCase("maxy")) {
+          maxCoords.setY0(Double.parseDouble(newValue));
+        }
+      }catch (Exception e){
+        ;//TODO Maybe fix this
       }
     });
   }

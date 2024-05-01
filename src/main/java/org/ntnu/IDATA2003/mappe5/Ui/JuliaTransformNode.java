@@ -73,12 +73,16 @@ public class JuliaTransformNode implements FractalInputNode {
     slider.valueProperty().addListener(
         (observable, oldValue, newValue) -> {
           String displayValue =  String.valueOf(newValue);
-          if(slider.getId().equalsIgnoreCase("real")){
-            this.complex.setX0((double) newValue);
-          }else {
-            this.complex.setY0((double) newValue);
+          try {
+            if (slider.getId().equalsIgnoreCase("real")) {
+              this.complex.setX0((double) newValue);
+            } else {
+              this.complex.setY0((double) newValue);
+            }
+            textField.setText(displayValue);
+          }catch (Exception e){
+            ;//TODO Maybe fix this
           }
-          textField.setText(displayValue);
         });
   }
 
@@ -89,13 +93,17 @@ public class JuliaTransformNode implements FractalInputNode {
    */
   private void textFieldListener(TextField field){
     field.textProperty().addListener((observable, oldValue, newValue) -> {
-      double value = Double.parseDouble(newValue);
-      if(field.getId().equalsIgnoreCase("real")){
-        this.complex.setX0(value);
-        realSlider.setValue(value);
-      }else {
-        this.complex.setY0(value);
-        imaginarySlider.setValue(value);
+      try {
+        double value = Double.parseDouble(newValue);
+        if (field.getId().equalsIgnoreCase("real")) {
+          this.complex.setX0(value);
+          realSlider.setValue(value);
+        } else {
+          this.complex.setY0(value);
+          imaginarySlider.setValue(value);
+        }
+      }catch (Exception e){
+        ;//TODO Maybe fix this
       }
     });
   }

@@ -53,8 +53,12 @@ public class AffineTransformNode implements FractalInputNode {
     field.setMaxWidth(60);
     field.setText(String.valueOf(value));
     field.textProperty().addListener((observable, oldValue, newValue) -> {
-      field.setText(newValue);
-      this.conditionalSetValue(name, matrix, newValue);
+      try {
+        field.setText(newValue);
+        this.conditionalSetValue(name, matrix, newValue);
+      }catch (Exception e){
+        ;//TODO Fix this
+      }
     });
     return field;
   }
@@ -73,11 +77,15 @@ public class AffineTransformNode implements FractalInputNode {
     field.setMaxWidth(60);
     field.setText(String.valueOf(value));
     field.textProperty().addListener((observable, oldValue, newValue) -> {
-      field.setText(newValue);
-      if(name.equals("b0")){
-        vector.setX0(Double.parseDouble(newValue));
-      } else{
-        vector.setY0(Double.parseDouble(newValue));
+      try {
+        field.setText(newValue);
+        if (name.equals("b0")) {
+          vector.setX0(Double.parseDouble(newValue));
+        } else {
+          vector.setY0(Double.parseDouble(newValue));
+        }
+      }catch (Exception e){
+        ;//TODO Fix this
       }
 
     });

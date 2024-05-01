@@ -40,13 +40,9 @@ public class ChaosGameFileHandler {
    * @throws NumberFormatException    if parsing doubles from string failed.
    */
   public ChaosGameDescription getcontentsOfFile(String path) {
-    URL url = getClass().getClassLoader().getResource(path);
     Path pathOfFile = null;
-    try {
-      pathOfFile = Path.of(url.toURI());
-    } catch (URISyntaxException e) {
-      throw new RuntimeException(e);
-    }
+      pathOfFile = Path.of(path);
+
     ArrayList<String> fileContent = new ArrayList<>();
     ArrayList<Transform2D> transforms = new ArrayList<>();
     Vector2D minimumCoords = new Vector2D(0, 0);
