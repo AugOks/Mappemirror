@@ -88,6 +88,7 @@ public class MinMaxCoordsNode {
   public Node getMinMaxNode(){
 
     GridPane allGrids = new GridPane();
+
     Label minLabel = new Label("Min coords:");
     minLabel.getStyleClass().add("input-title");
     Label maxLabel = new Label("Max coords:");
@@ -96,7 +97,6 @@ public class MinMaxCoordsNode {
     GridPane minGrid = new GridPane();
     minGrid.add(minLabel, 0, 0);
 
-
     minGrid.add(minX, 0, 1);
     minGrid.add(new Label(" x0"), 1, 1);
     minGrid.add(minY, 0, 2);
@@ -104,12 +104,13 @@ public class MinMaxCoordsNode {
     minGrid.add(new Label("  "),0,3);
 
     allGrids.add(minGrid, 0, 0);
+
     if (isJulia) {
       GridPane sliderGrid = new GridPane();
-      sliderGrid.add(createSlider(-0.5, minX), 0, 1);
-      sliderGrid.add(createSlider(minCoords.getY0(), minY), 0, 2);
-      sliderGrid.add(createSlider(maxCoords.getX0(), maxX), 0, 3);
-      sliderGrid.add(createSlider(maxCoords.getY0(), maxY), 0, 4);
+      sliderGrid.add(createSlider(-0.5, minX, "minx"), 0, 1);
+      sliderGrid.add(createSlider(minCoords.getY0(), minY, "miny"), 0, 2);
+      sliderGrid.add(createSlider(maxCoords.getX0(), maxX,"maxx"), 0, 3);
+      sliderGrid.add(createSlider(maxCoords.getY0(), maxY, "maxy"), 0, 4);
         allGrids.add(sliderGrid, 0, 1);
     }
     GridPane maxGrid = new GridPane();
@@ -119,7 +120,6 @@ public class MinMaxCoordsNode {
     maxGrid.add(maxY, 0, 2);
     maxGrid.add(new Label(" y1"), 1, 2);
 
-    allGrids.add(minGrid, 0, 0);
     allGrids.add(maxGrid, 1, 0);
 
     return allGrids;
@@ -147,14 +147,13 @@ public class MinMaxCoordsNode {
     return new Vector2D(Double.parseDouble(maxX.getText()), Double.parseDouble(maxY.getText()));
   }
 
-  private Slider createSlider(double startValue, TextField textField) {
-    Slider slider = new Slider(-3, 3,startValue);
+  private Slider createSlider(double startValue, TextField textField, String id) {
+    Slider slider = new Slider(-3, 3, startValue);
+    slider.setId(id);
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
     slider.setMajorTickUnit(0.25f);
     slider.setBlockIncrement(0.1f);
-    textField.textProperty().setValue(String.valueOf(startValue));
-    slider.setId(textField.getText());
     this.sliderListener(slider,textField);
     return slider;
   }
@@ -162,9 +161,8 @@ public class MinMaxCoordsNode {
   private void sliderListener(Slider slider, TextField textField) {
     slider.valueProperty().addListener(
         (observable, oldValue, newValue) -> {
-          slider.setValue(newValue.doubleValue());
           if (slider.getId().equalsIgnoreCase("minx")) {
-            minCoords.setX0(newValue.doubleValue());
+            minCoords.setX0(slider.getValue());
             valueIsChanged = true;
           } else if (slider.getId().equalsIgnoreCase("miny")) {
             minCoords.setY0(newValue.doubleValue());

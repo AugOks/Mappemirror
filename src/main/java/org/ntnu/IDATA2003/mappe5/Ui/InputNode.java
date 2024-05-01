@@ -10,8 +10,6 @@ import javafx.scene.paint.Color;
 
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.GridPane;
-import javafx.scene.paint.Color;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 
@@ -36,15 +34,14 @@ public class InputNode {
   /**
    * Constructs the input node for the user interface.
    * Initializes the input node with a textfield for the number of steps and a fractal input node.
-   *
    * @param description the description of the fractal to be drawn.
    * @param stepsInt the number of steps to be drawn.
-   * @param controller the chaosGameControllerGui object.
    */
   public InputNode(ChaosGameDescription description, int stepsInt, ChaosGameControllerGui controller) {
     this.controller = new InputNodeController(controller, description, this);
     this.currentSteps = stepsInt;
     this.inputNode = new GridPane();
+    this.inputNode.getStyleClass().add("inputNode");
     this.inputNode.setBackground(new Background(new BackgroundFill(Color.DARKGREY,
         null,null)));
     TextField steps = new TextField();
@@ -54,6 +51,7 @@ public class InputNode {
     steps.textProperty().addListener((observable, oldValue, newValue) -> {
       this.currentSteps = Integer.parseInt(newValue);
     });
+    this.inputNode.add(steps, 0, 0);
     boolean julia = this.findInstance(description);
     this.createInputNode(description, julia);
     Button runButton = new Button("Run");
@@ -62,12 +60,7 @@ public class InputNode {
         this.controller.run(minMaxCoordsNode, fractalInputNode);
         });
 
-    this.inputNode.add(steps, 0, 0);
-    this.inputNode.add(new Label(" "), 0, 1);
-    // max/min coords
-    this.inputNode.add(new Label(" "), 0, 4);
-    //Fractal input node
-    this.inputNode.add(runButton, 0, 5);
+
   }
 
 
