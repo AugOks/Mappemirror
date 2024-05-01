@@ -2,6 +2,7 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
@@ -30,7 +32,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private inputNode input; // The right pane with the input fields
   private ChaosGameControllerGui controller; // The controller for the chaos game app
   private Scene scene; // The scene for the chaos game app
-
 
 
   /**
@@ -60,17 +61,29 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     try {
 
       BorderPane root = new BorderPane();
-      this.scene = new Scene(root, 400, 500);
+      Screen screen = Screen.getPrimary();
+      Rectangle2D bounds = screen.getVisualBounds();
+      this.scene = new Scene(root,bounds.getWidth(), bounds.getHeight());
 
       // The header
       root.setTop(createTopPane());
 
       // The center pane with the canvas
+
+
+
+
       HBox centerPane = createCenterPane();
       root.setCenter(centerPane);
 
       //The right pane
       root.setRight(createRightPane());
+      scene.widthProperty().addListener(event -> {
+        controller.changeDescription(controller.getDescription());
+      });
+      scene.heightProperty().addListener(event -> {
+        controller.changeDescription(controller.getDescription());
+      });
       // The left pane
       VBox leftPane = new VBox();
       leftPane.getStyleClass().add("leftPane");
@@ -80,9 +93,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       scene.setCursor(Cursor.DEFAULT);
       primaryStage.setTitle("Chaos Game");
       primaryStage.setScene(scene);
-      primaryStage.setMaximized(true);
+
       primaryStage.show();
-      System.out.println(root.getBoundsInParent().getHeight());
+      System.out.println(canvasCenterPane.getHeight());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -123,10 +136,15 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Button barnsleyButton = new Button("Barnsley Fern");
     barnsleyButton.getStyleClass().add("button-rightPane");
 
+    Button fileChooserButton = new Button("Choose File");
+    fileChooserButton.getStyleClass().add("button-rightPane");
+    fileChooserButton.setOnAction(e -> controller.fileChooser());
+
+
     barnsleyButton.setOnAction(e -> controller.createBarnsleyFern());
 
     HBox buttonBox = new HBox();
-    buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton);
+    buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton, fileChooserButton);
     //TODO add css style to these buttons
     buttonBox.setSpacing(20);
     buttonBox.setAlignment(Pos.CENTER);
@@ -135,6 +153,16 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     rightPane.getStyleClass().add("rightPane");
 
     return rightPane;
+  }
+
+  public int getHeightForCanvas(){
+   BorderPane root =  (BorderPane) scene.getRoot();
+   double returnValue =  scene.getHeight() - root.getTop().getBoundsInLocal().getHeight();
+   return (int) returnValue;
+  }
+  public int getWidthForCanvas(){
+    double returnValue =  scene.getWidth()*0.75;
+    return (int) returnValue;
   }
 
   /**
@@ -169,7 +197,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     this.canvasCenterPane.getStyleClass().add("centerPane");
 
-    this.controller.createSierpinski();
+   this.controller.createSierpinski();
+
 
     this.canvasCenterPane.setAlignment(Pos.CENTER);
     return canvasCenterPane;
@@ -189,6 +218,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       this.input.changeInputNode(description, stepsInt);
     }
   }
+
   /**
    * Creates the canvas for the chaos game.
    * It will draw the canvas based on the game description and the amount of steps.
@@ -208,7 +238,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       //TODO: dialog box for error
     }
 
-    WritableImage writable_image = new WritableImage(900, 500);
+    WritableImage writable_image = new WritableImage(getWidthForCanvas(), getHeightForCanvas());
     PixelWriter writer = writable_image.getPixelWriter();
 
     for (int i = 0; i < index_i; i++) {

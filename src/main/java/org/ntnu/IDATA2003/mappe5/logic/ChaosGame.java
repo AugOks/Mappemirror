@@ -40,7 +40,7 @@ public class ChaosGame {
     this.currentHeight = height;
     this.currentWidth = width;
     this.subscribers = new ArrayList<>();
-    this.setDescription(description);
+    this.setDescription(description, currentHeight, currentWidth);
     Vector2D maxCoords = this.description.getMaxCoords();
     Vector2D minCoords = this.description.getMinCoords();
     this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
@@ -121,10 +121,12 @@ public class ChaosGame {
    * @param description the new description of the game.
    * @throws IllegalArgumentException if the description is a null object.
    */
-  public void setDescription(ChaosGameDescription description) {
+  public void setDescription(ChaosGameDescription description, int height, int width) {
     if (description == null) {
       throw new IllegalArgumentException("Description cannot be null");
     }
+    currentWidth = width;
+    currentHeight = height;
     this.description = description;
     this.setCanvas();
     this.updateSubscriber();
