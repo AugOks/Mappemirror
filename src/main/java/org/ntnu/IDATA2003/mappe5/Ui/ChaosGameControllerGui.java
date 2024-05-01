@@ -41,7 +41,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open Resource File");
     File file = fileChooser.showOpenDialog(null);
-    System.out.println(file.getPath());
+    //System.out.println(file.getPath());
     this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
   }
 

@@ -33,7 +33,7 @@ public class InputNode {
 
   /**
    * Constructs the input node for the user interface.
-   * Initializes the input node with a textfield for the number of steps and a fractal input node.
+   * Initializes the input node with a text field for the number of steps and a fractal input node.
    * @param description the description of the fractal to be drawn.
    * @param stepsInt the number of steps to be drawn.
    */
@@ -59,7 +59,7 @@ public class InputNode {
     runButton.setOnAction(e -> {
         this.controller.run(minMaxCoordsNode, fractalInputNode);
         });
-
+    this.inputNode.add(runButton,0,5);
 
   }
 

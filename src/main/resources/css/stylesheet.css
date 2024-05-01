@@ -42,6 +42,7 @@
     -fx-alignment: Center;
     -fx-spacing: 10;
     -fx-min-width: 300;
+    -fx-grid-lines-visible: true;
 }
 .minMaxField{
     -fx-min-width: 100;

@@ -154,7 +154,7 @@ public class ChaosCanvas {
     Vector2D indices = this.transformCoordsToIndices.transform(coordinates);
     xy[0] = (int) Math.round(indices.getX0());
     xy[1] = (int) Math.round(indices.getY0());
-    System.out.println(xy[0] + "index");
+    // System.out.println(xy[0] + "index");
 
     return xy;
   }

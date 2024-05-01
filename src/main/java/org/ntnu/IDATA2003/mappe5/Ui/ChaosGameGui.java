@@ -75,7 +75,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       root.setCenter(centerPane);
 
       //The right pane
-      root.setRight(new ScrollPane(createRightPane()));
+      ScrollPane scrollPane = new ScrollPane();
+      scrollPane.setContent(createRightPane());
+      root.setRight(scrollPane);
 
       // The left pane
       VBox leftPane = new VBox();
@@ -95,7 +97,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       primaryStage.setTitle("Chaos Game");
       primaryStage.setScene(scene);
       primaryStage.show();
-      System.out.println(canvasCenterPane.getHeight());
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -149,7 +150,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
     rightPane.setAlignment(Pos.TOP_CENTER);
     rightPane.getStyleClass().add("rightPane");
-
 
     return rightPane;
   }
