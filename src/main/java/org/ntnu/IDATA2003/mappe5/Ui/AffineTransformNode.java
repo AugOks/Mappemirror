@@ -21,6 +21,7 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 public class AffineTransformNode implements FractalInputNode {
 
   private List<AffineTransform2D> transforms;
+  private boolean valueChanged= true;
 
   /**
    * Constructor for the TransformBox class.
@@ -56,7 +57,9 @@ public class AffineTransformNode implements FractalInputNode {
       try {
         field.setText(newValue);
         this.conditionalSetValue(name, matrix, newValue);
+        this.valueChanged = true;
       }catch (Exception e){
+        this.valueChanged = false;
         ;//TODO Fix this
       }
     });
@@ -84,7 +87,9 @@ public class AffineTransformNode implements FractalInputNode {
         } else {
           vector.setY0(Double.parseDouble(newValue));
         }
+        this.valueChanged = true;
       }catch (Exception e){
+        this.valueChanged = false;
         ;//TODO Fix this
       }
 
@@ -137,7 +142,12 @@ public class AffineTransformNode implements FractalInputNode {
    */
   @Override
   public List<Transform2D> getTransforms() {
-    return new ArrayList<>(transforms);
+    return new ArrayList<>(this.transforms);
+  }
+
+  @Override
+  public boolean isValueChanged() {
+    return this.valueChanged;
   }
 
   /**

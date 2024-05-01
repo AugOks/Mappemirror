@@ -16,7 +16,7 @@ public class MinMaxCoordsNode {
     private TextField minY;
     private TextField maxX;
     private TextField maxY;
-
+    private  boolean valueIsChanged = true;
     private Vector2D minCoords;
     private Vector2D maxCoords;
 
@@ -62,7 +62,9 @@ public class MinMaxCoordsNode {
         } else if (name.equalsIgnoreCase("maxy")) {
           maxCoords.setY0(Double.parseDouble(newValue));
         }
+        this.valueIsChanged = true;
       }catch (Exception e){
+        this.valueIsChanged = false;
         ;//TODO Maybe fix this
       }
     });
@@ -90,6 +92,9 @@ public class MinMaxCoordsNode {
 
     grid.add(new Label("  "),0,5);
     return grid;
+  }
+  public boolean isValueIsChanged() {
+    return valueIsChanged;
   }
 
   /**
