@@ -59,7 +59,8 @@ public class InputNode {
     runButton.setOnAction(e -> {
         this.controller.run(minMaxCoordsNode, fractalInputNode);
         });
-    this.inputNode.add(runButton,0,5);
+
+    this.inputNode.add(runButton, 0, 4);
 
   }
 

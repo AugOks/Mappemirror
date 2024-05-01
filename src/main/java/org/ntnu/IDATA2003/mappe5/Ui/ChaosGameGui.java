@@ -6,6 +6,8 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -138,13 +140,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     barnsleyButton.getStyleClass().add("button-rightPane");
     barnsleyButton.setOnAction(e -> controller.createBarnsleyFern());
 
-    // Button for the file chooser
-    Button fileChooserButton = new Button("Choose File");
-    fileChooserButton.getStyleClass().add("button-rightPane");
-    fileChooserButton.setOnAction(e -> controller.fileChooser());
 
     HBox buttonBox = new HBox();
-    buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton, fileChooserButton);
+    buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton);
     buttonBox.setSpacing(20);
     buttonBox.setAlignment(Pos.CENTER);
     rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
@@ -182,6 +180,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    */
 
   private VBox createTopPane(){
+    MenuBar menu = new MenuBar();
+    Menu file = new Menu("File");
+    Menu edit = new Menu("Edit");
+    Menu help = new Menu("Help");
+    menu.getMenus().addAll(file,edit,help);
+
     VBox bannerPane = new VBox();
 
     Image banner = new Image(getClass().getResource("/header.png").toExternalForm());
@@ -189,7 +193,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     ImageView bannerView = new ImageView(banner);
     bannerView.getStyleClass().add("header-logo");
 
-    bannerPane.getChildren().addAll(bannerView);
+    bannerPane.getChildren().addAll(menu, bannerView);
     bannerPane.getStyleClass().add("header");
 
     return bannerPane;
