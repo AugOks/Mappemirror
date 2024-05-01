@@ -101,7 +101,7 @@ public class ChaosCanvas {
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
     if(i >= 0 && i < this.height && j >= 0 && j < this.width) {
-      this.canvas[i][j] = 1;
+      this.canvas[i][j] += 1;
     }
   }
 

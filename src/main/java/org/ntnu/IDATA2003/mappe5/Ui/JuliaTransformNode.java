@@ -21,6 +21,7 @@ public class JuliaTransformNode implements FractalInputNode {
   private TextField imagTextField;
   private TextField realTextField;
   private Complex complex;
+  private InputNodeController controller;
   private  boolean valueChanged = true;
 
   /**
@@ -28,7 +29,8 @@ public class JuliaTransformNode implements FractalInputNode {
    *
    * @param description the description for the current game.
    */
-  public JuliaTransformNode(ChaosGameDescription description){
+  public JuliaTransformNode(ChaosGameDescription description, InputNodeController controller){
+    this.controller = controller;
     JuliaTransform julia  = (JuliaTransform) description.getTransform(0);
     this.complex = julia.getComplex();
     this.imagTextField = new TextField();
@@ -82,6 +84,7 @@ public class JuliaTransformNode implements FractalInputNode {
             }
             textField.setText(displayValue);
             this.valueChanged = true;
+            controller.changeTransform(this.getTransforms());
           }catch (Exception e){
             this.valueChanged = false;
             ;//TODO Maybe fix this

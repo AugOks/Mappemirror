@@ -253,8 +253,25 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     for (int i = 0; i < index_i; i++) {
       for (int j = 0; j < index_j; j++) {
-        if (canvasArray[i][j] == 1) {
-          writer.setColor(j, i, Color.WHITE);
+
+        if (canvasArray[i][j] != 0) {
+          int scalar = canvasArray[i][j]* 255;
+          if (canvasArray[i][j]%2 == 0) {
+            scalar = canvasArray[i][j]*30999;
+          }
+          if (canvasArray[i][j] %3 == 0) {
+            scalar = canvasArray[i][j]*51343;
+          }
+          if (canvasArray[i][j] %5 == 0) {
+            scalar = canvasArray[i][j]* 102345;
+          }
+            if (canvasArray[i][j] %7 == 0) {
+                scalar = canvasArray[i][j]* 540000;
+            }
+          String hexColor = String.format("#%06X", (0xFFFFFF & scalar));
+          Color c = Color.valueOf(hexColor);
+
+          writer.setColor(j, i, c);
         }
       }
     }
