@@ -51,7 +51,7 @@ public class AffineTransformNode implements FractalInputNode {
   private TextField createMatrixTextField(String name, double value, Matrix2x2 matrix){
     TextField field = new TextField();
     field.setPromptText(name);
-    field.setMaxWidth(60);
+    field.getStyleClass().add("matrix-field");
     field.setText(String.valueOf(value));
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
@@ -77,7 +77,7 @@ public class AffineTransformNode implements FractalInputNode {
   private TextField createVectorTextField(String name, double value, Vector2D vector){
     TextField field = new TextField();
     field.setPromptText(name);
-    field.setMaxWidth(60);
+    field.getStyleClass().add("vector-field");
     field.setText(String.valueOf(value));
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
@@ -108,28 +108,39 @@ public class AffineTransformNode implements FractalInputNode {
       AffineTransform2D transform = transforms.get(i);
       Matrix2x2 matrix = transform.getMatrix();
       Vector2D vector = transform.getVector();
-      gridPane.add(new Label("  "),0,i);
 
       GridPane firstMatrix = new GridPane();
       int transfNumber = i+1;
-      firstMatrix.add(new Label("Transform " +transfNumber),0,0);
-      firstMatrix.add(new Label("Matrix:"), 0, 1);
-      TextField field = new TextField();
 
-      firstMatrix.add(createMatrixTextField("a00", matrix.getA(),matrix), 0, 2);
-      firstMatrix.add(createMatrixTextField("a01", matrix.getB(),matrix), 1, 2);
-      firstMatrix.add(createMatrixTextField("a10", matrix.getC(),matrix), 0, 3);
-      firstMatrix.add(createMatrixTextField("a11", matrix.getD(),matrix), 1, 3);
+      Label transformLabel = new Label("Transform " +transfNumber+": ");
+      transformLabel.getStyleClass().add("input-title");
+      Label matrixLabel = new Label("Matrix:");
+      matrixLabel.getStyleClass().add("input-title");
+
+      firstMatrix.add(transformLabel,0,0);
+      firstMatrix.add(new Label("  "),0,1);
+      firstMatrix.add(matrixLabel, 0, 2);
+
+      firstMatrix.add(createMatrixTextField("a00", matrix.getA(),matrix), 0, 3);
+      firstMatrix.add(createMatrixTextField("a01", matrix.getB(),matrix), 1, 3);
+      firstMatrix.add(createMatrixTextField("a10", matrix.getC(),matrix), 0, 4);
+      firstMatrix.add(createMatrixTextField("a11", matrix.getD(),matrix), 1, 4);
+      firstMatrix.add(new Label("  "),0,5);
+      firstMatrix.add(new Label("  "),1,5);
 
       GridPane firstVector = new GridPane();
       firstVector.add(new Label("") ,0,0);
-      firstVector.add(new Label("Vector:"), 0, 1);
-      firstVector.add(createVectorTextField("b0", vector.getY0(), vector), 0, 2);
-      firstVector.add(createVectorTextField("b1", vector.getY0(), vector), 0, 3);
+      firstVector.add(new Label("") ,0,1);
+      Label vectorLabel = new Label("Vector :");
+      vectorLabel.getStyleClass().add("input-title");
+      firstVector.add(vectorLabel, 0, 2);
+      firstVector.add(createVectorTextField("b0", vector.getY0(), vector), 0, 3);
+      firstVector.add(createVectorTextField("b1", vector.getY0(), vector), 0, 4);
+      firstMatrix.add(new Label("  "),0,5);
 
-      gridPane.add(firstMatrix,0,i+2);
-      gridPane.add(new Label("  "),1,i+2);
-      gridPane.add(firstVector,2,i+2);
+      gridPane.add(firstMatrix,0,i+1);
+      gridPane.add(new Label("  "),1,i+1);
+      gridPane.add(firstVector,2,i+1);
 
 
     }
