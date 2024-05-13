@@ -3,6 +3,10 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
@@ -208,6 +212,21 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
 
   public ChaosGame getGame() {
     return theGame;
+  }
+
+  public void exitApplication() {
+    ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+    ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+    Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION,
+                            "  ",
+                            yes,
+                            no);
+    exitAlert.setHeaderText("Are you sure you want to exit the application?");
+    Optional<ButtonType> result = exitAlert.showAndWait();
+
+    if (exitAlert.getResult() == yes) {
+      System.exit(0);
+    }
   }
 }
 

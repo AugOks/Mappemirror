@@ -41,6 +41,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private Scene scene; // The scene for the chaos game app
 
 
+  //TODO remove this todo
   /**
    * Constructor for the ChaosGameGui.
    */
@@ -79,9 +80,11 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       BorderPane root = new BorderPane();
       root.getStyleClass().add("root");
       Screen screen = Screen.getPrimary();
+
       Rectangle2D bounds = screen.getVisualBounds();
       this.scene = new Scene(root,bounds.getWidth(), bounds.getHeight());
       scene.setFill(Color.BLUE);
+
       // The top pane with the
       root.setTop(createTopPane());
 
@@ -218,14 +221,21 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Menu file = new Menu("File");
     MenuItem openFile = new MenuItem("Open file");
     openFile.setOnAction(e -> controller.openFromFile());
+
+    MenuItem exit = new MenuItem("Exit app");
+    exit.setOnAction(e -> {
+      this.controller.exitApplication();
+    });
+
     MenuItem saveToFile = new MenuItem("Save file");
     saveToFile.setOnAction(e -> controller.saveToFile());
-    MenuItem exitApp = new MenuItem("exit app");
-    file.getItems().addAll(openFile, saveToFile,new SeparatorMenuItem(), exitApp);
+
+    file.getItems().addAll(openFile, saveToFile,new SeparatorMenuItem(),exit);
 
     Menu edit = new Menu("Edit");
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
     edit.getItems().add(showSliders);
+    //TODO setting options for having sliders for min max coords.
 
     Menu help = new Menu("Help");
     menu.getMenus().addAll(file,edit,help);
