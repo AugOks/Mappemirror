@@ -44,7 +44,7 @@ class ChaosGameFileHandlerTest {
   @Order(1)
   void testWriteToFile() {
     try {
-      this.handler.writeToFile(description);
+      this.handler.writeToFile(null, description);
     } catch (Exception e) {
       fail();
     }
@@ -108,7 +108,7 @@ class ChaosGameFileHandlerTest {
   @Test
   void writeToFileWithNegativeParameters() {
     try {
-      this.handler.writeToFile(null);
+      this.handler.writeToFile(null, null);
       fail();
     } catch (IllegalArgumentException e) {
       assertTrue(true);

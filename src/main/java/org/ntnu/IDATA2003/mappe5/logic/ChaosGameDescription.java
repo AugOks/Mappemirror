@@ -48,7 +48,7 @@ public class ChaosGameDescription {
    *
    * @param name the name of the fractal.
    */
-  private void setName(String name) {
+  public void setName(String name) {
     if (name == null) {
       name = "";
     }

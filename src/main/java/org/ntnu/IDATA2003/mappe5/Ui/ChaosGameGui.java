@@ -7,7 +7,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
-import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -19,6 +18,7 @@ import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -59,6 +59,14 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   }
 
   /**
+   * Gets the scene for the chaos game app.
+   * @return the scene for the chaos game app.
+   */
+  public Scene getScene() {
+    return scene;
+  }
+
+  /**
    * Starts the chaos game app with the start screen.
    *
    * @param primaryStage the primary stage for the chaos game app.
@@ -73,7 +81,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       Screen screen = Screen.getPrimary();
       Rectangle2D bounds = screen.getVisualBounds();
       this.scene = new Scene(root,bounds.getWidth(), bounds.getHeight());
-
+      scene.setFill(Color.BLUE);
       // The top pane with the
       root.setTop(createTopPane());
 
@@ -206,15 +214,19 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    */
   private MenuBar createMenuBar(){
     MenuBar menu = new MenuBar();
+
     Menu file = new Menu("File");
     MenuItem openFile = new MenuItem("Open file");
-    openFile.setOnAction(e -> controller.fileChooser());
+    openFile.setOnAction(e -> controller.openFromFile());
     MenuItem saveToFile = new MenuItem("Save file");
+    saveToFile.setOnAction(e -> controller.saveToFile());
     MenuItem exitApp = new MenuItem("exit app");
     file.getItems().addAll(openFile, saveToFile,new SeparatorMenuItem(), exitApp);
+
     Menu edit = new Menu("Edit");
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
     edit.getItems().add(showSliders);
+
     Menu help = new Menu("Help");
     menu.getMenus().addAll(file,edit,help);
     return  menu;

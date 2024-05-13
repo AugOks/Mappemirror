@@ -85,28 +85,17 @@ public class ChaosGameFileHandler {
 
   }
 
-
-
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal but
    * if no name is given a new file name with a random number will be generated to avoid any file
    * reader issues.
    */
-  public void writeToFile(ChaosGameDescription description) {
-    Path pathOfFile;
+  public void writeToFile(String path, ChaosGameDescription description) {
+    Path pathOfFile = Path.of(path);
     if (description == null) {
       throw new IllegalArgumentException("Description cannot be null");
     }
-
-    if (!description.getName().isBlank()) {
-      pathOfFile = Path.of(description.getName() + "Out.txt");
-    } else {
-      Random rand = new Random();
-      rand.nextInt(100);       //Generates a random name to give to the nameless fractal.
-      pathOfFile = Path.of("fractal" + rand + ".txt");
-    }
     try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
-
       List<String> chaosGameInfo = parser.getChaosGameInfoAsString(description);
 
       output.write(

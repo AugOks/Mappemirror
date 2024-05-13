@@ -34,16 +34,28 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
 
   }
 
+  public void saveToFile(){
+    FileChooser savefile = new FileChooser();
+    savefile.setTitle("Save fractal to file");
+    File file = savefile.showSaveDialog(gameGui.getScene().getWindow());
+    if (file != null) {
+      theGame.getDescription().setName(file.getName());
+      this.fileHandler.writeToFile(file.getPath(), theGame.getDescription());
+    }
+  }
+
+
   /**
-   * Filechooser method for choosing a file.
-   */ //TODO: MAke the button for this method.
-  public  void fileChooser() {
+   * FileChooser method for choosing a file.
+   */
+  public  void openFromFile() {
     FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Open Resource File");
-    File file = fileChooser.showOpenDialog(null);
-    //System.out.println(file.getPath());
-    this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
-    gameGui.createInputNode(theGame.getDescription(),1000000);
+    fileChooser.setTitle("Open fractal from file");
+    File file = fileChooser.showOpenDialog(gameGui.getScene().getWindow());
+    if (file != null) {
+      this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
+      gameGui.createInputNode(theGame.getDescription(),1000000);
+    }
   }
 
 
