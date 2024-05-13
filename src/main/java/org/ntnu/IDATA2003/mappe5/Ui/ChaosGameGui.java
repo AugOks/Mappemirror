@@ -214,6 +214,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
   /**
    * Creates the menu bar for the chaos game app.
+   * The menu bar contains the file, edit and help menu.
+   *
+   * @return the menu bar for the chaos game app.
    */
   private MenuBar createMenuBar(){
     MenuBar menu = new MenuBar();
@@ -238,7 +241,13 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     //TODO setting options for having sliders for min max coords.
 
     Menu help = new Menu("Help");
-    menu.getMenus().addAll(file,edit,help);
+
+    Menu danceParty = new Menu("Dance Party");
+    MenuItem dance = new MenuItem("Dance");
+    dance.setOnAction(e -> controller.danceParty());
+    danceParty.getItems().add(dance);
+
+    menu.getMenus().addAll(file,edit,help,danceParty);
     return  menu;
   }
 

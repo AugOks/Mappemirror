@@ -61,7 +61,6 @@ public class InputNode {
         });
 
     this.inputNode.add(runButton, 0, 4);
-
   }
 
 

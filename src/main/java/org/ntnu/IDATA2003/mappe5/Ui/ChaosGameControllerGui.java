@@ -8,6 +8,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.stage.FileChooser;
+import javafx.stage.Window;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
@@ -18,6 +19,7 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
+import org.ntnu.IDATA2003.mappe5.Ui.DanceParty;
 
 
 /**
@@ -26,15 +28,15 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
 public class ChaosGameControllerGui implements ChaosGameObserver {
   private ChaosGameDescriptionFactory factory;
   private ChaosGameGui gameGui;
-
   private ChaosGameFileHandler fileHandler;
-
   private ChaosGame theGame;
+  private DanceParty danceParty;
 
   public ChaosGameControllerGui(ChaosGameGui gameGui) {
     factory = new ChaosGameDescriptionFactory();
     this.fileHandler = new ChaosGameFileHandler();
     this.gameGui = gameGui;
+    this.danceParty = null;
 
   }
 
@@ -52,7 +54,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   /**
    * FileChooser method for choosing a file.
    */
-  public  void openFromFile() {
+  public void openFromFile() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open fractal from file");
     File file = fileChooser.showOpenDialog(gameGui.getScene().getWindow());
@@ -169,51 +171,14 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     }
   }
 
-  /**
-   * Changes the minimum coordinates of the current game.
-   * @param minCoords the new minimum coordinates.
-   */
-  public void changeMinCoords(Vector2D minCoords){
-    if(minCoords == null){
-      throw new IllegalArgumentException("Min coordinates cannot be null");
-    }
-    ChaosGameDescription currentGame = getDescription();
-    currentGame.setMinCoords(minCoords);
-    changeDescription(currentGame);
-  }
-
-  /**
-   * Changes the maximum coordinates of the current game.
-   * @param maxCoords the new maximum coordinates.
-   */
-  public void changeMaxCoords(Vector2D maxCoords){
-    if(maxCoords == null){
-      throw new IllegalArgumentException("Max coordinates cannot be null");
-    }
-    ChaosGameDescription currentGame = getDescription();
-    currentGame.setMaxCoords(maxCoords);
-    changeDescription(currentGame);
-  }
-
-  /**
-   * Changes the complex number of the current game.
-   * @param real the real part of the complex number.
-   * @param imag the imaginary part of the complex number.
-   */
-  public void changeComplex(double real, double imag) {
-    ChaosGameDescription currentGame = getDescription();
-    List<Transform2D> transforms = new ArrayList<>();
-    Complex complex = new Complex(real, imag);
-    transforms.add(new JuliaTransform(complex, 1));
-    transforms.add(new JuliaTransform(complex, -1));
-    currentGame.setTransforms(transforms);
-    changeDescription(currentGame);
-  }
-
   public ChaosGame getGame() {
     return theGame;
   }
 
+  /**
+   * Exits the application.
+   * If the user presses yes, the application will exit.
+   */
   public void exitApplication() {
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -228,5 +193,22 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
       System.exit(0);
     }
   }
+
+  public void danceParty(){
+    ChaosGameDescription startDescription = this.getDescription();
+    try {
+      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.setTitle("Dance party");
+      alert.setHeaderText("Do you want to have a dance party?");
+      alert.showAndWait();
+
+      if (alert.getResult().getText().equals("OK")) {
+        this.danceParty = new DanceParty(startDescription);
+        this.danceParty.danceParty(this);
+      }
+      this.changeDescription(startDescription);
+    } catch (Exception ignore) {}
+  }
+
 }
 
