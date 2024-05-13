@@ -106,12 +106,10 @@ public class MinMaxCoordsNode {
     allGrids.add(minGrid, 0, 0);
 
     if (isJulia) {
-      GridPane sliderGrid = new GridPane();
-      sliderGrid.add(createSlider(-0.5, minX, "minx"), 0, 1);
-      sliderGrid.add(createSlider(minCoords.getY0(), minY, "miny"), 0, 2);
-      sliderGrid.add(createSlider(maxCoords.getX0(), maxX,"maxx"), 0, 3);
-      sliderGrid.add(createSlider(maxCoords.getY0(), maxY, "maxy"), 0, 4);
-        allGrids.add(sliderGrid, 0, 1);
+      allGrids.add(createSlider(-0.5, minX, "minx"), 0, 1);
+      allGrids.add(createSlider(minCoords.getY0(), minY, "miny"), 0, 2);
+      allGrids.add(createSlider(maxCoords.getX0(), maxX,"maxx"), 1, 1);
+      allGrids.add(createSlider(maxCoords.getY0(), maxY, "maxy"), 1, 2);
     }
     GridPane maxGrid = new GridPane();
     maxGrid.add(maxLabel, 0, 0);

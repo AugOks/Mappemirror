@@ -43,7 +43,7 @@
     -fx-alignment: Center;
     -fx-spacing: 10;
     -fx-min-width: 300;
-    -fx-grid-lines-visible: true;
+    -fx-grid-lines-visible: false;
 }
 .minMaxField{
     -fx-min-width: 100;
@@ -51,13 +51,17 @@
     -fx-font-size: 10;
 }
 .matrix-field{
-    -fx-min-width: 50;
+    -fx-min-width: 40;
+    -fx-max-width: 90;
     -fx-min-height: 25;
+    -fx-max-height: 25;
     -fx-font-size: 10;
 }
 .vector-field{
-    -fx-min-width: 50;
+    -fx-min-width: 40;
+    -fx-max-width: 90;
     -fx-min-height: 25;
+    -fx-max-height: 25;
     -fx-font-size: 10;
 }
 .input-title{

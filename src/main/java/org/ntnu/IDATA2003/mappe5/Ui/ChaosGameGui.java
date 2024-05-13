@@ -66,6 +66,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
       //Create the root pane and maximize the size to the users screen
       BorderPane root = new BorderPane();
+      root.getStyleClass().add("root");
       Screen screen = Screen.getPrimary();
       Rectangle2D bounds = screen.getVisualBounds();
       this.scene = new Scene(root,bounds.getWidth(), bounds.getHeight());
