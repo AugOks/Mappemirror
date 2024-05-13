@@ -1,9 +1,11 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
@@ -16,6 +18,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -24,6 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
+import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
@@ -113,9 +118,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
       scene.setCursor(Cursor.DEFAULT);
       primaryStage.setTitle("Chaos Game");
+      primaryStage.setMaximized(true);
       primaryStage.setScene(scene);
       primaryStage.show();
-
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -238,7 +243,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Menu edit = new Menu("Edit");
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
     edit.getItems().add(showSliders);
-    //TODO setting options for having sliders for min max coords.
+    showSliders.setOnAction(e -> input.createInputNode(controller.getDescription(), showSliders.isSelected()));
 
     Menu help = new Menu("Help");
 
@@ -260,7 +265,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
   private HBox createCenterPane(){
     this.canvasCenterPane = new HBox();
-
+    this.setZoomScrollEvent(this.canvasCenterPane);
     this.canvasCenterPane.getStyleClass().add("centerPane");
 
     this.controller.createSierpinski();
@@ -269,6 +274,27 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     return canvasCenterPane;
   }
 
+  private void setZoomScrollEvent(Node node){
+    node.setOnScroll(event -> {
+
+      double mouseYCoords = event.getY()/(getHeightForCanvas());
+      double mouseXCoords = (event.getX()/(getWidthForCanvas()));
+      System.out.println("X value"+ mouseXCoords);
+      System.out.println("Y value"+ mouseYCoords);
+      int direction = event.getDeltaY() > 0 ? -1 : 1;
+      double zoomFactor = Math.pow(1.1, direction)*direction;
+      Vector2D maxCoords = this.controller.getDescription().getMaxCoords();
+      Vector2D minCoords = this.controller.getDescription().getMinCoords();
+      maxCoords.setX0(maxCoords.getX0());
+      maxCoords.setY0(maxCoords.getY0() );
+      minCoords.setX0(minCoords.getX0() );
+      minCoords.setY0(minCoords.getY0() + minCoords.getY0()* mouseYCoords /zoomFactor );
+      //maxCoords.setY0(maxCoords.getY0() -minCoords.getY0()* mouseYCoords);
+     // minCoords.setX0(minCoords.getX0() +  maxCoords.getX0() * mouseXCoords);
+     // minCoords.setX0(minCoords.getX0() + maxCoords.getY0() * mouseYCoords);
+      controller.changeCoords(minCoords, maxCoords);
+    });
+  }
   /**
    * Creates the input box for the chaos game.
    * It contains the input fields that is the same for both the julia and affine transformation.
@@ -309,24 +335,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     for (int i = 0; i < index_i; i++) {
       for (int j = 0; j < index_j; j++) {
-
         if (canvasArray[i][j] != 0) {
-          int scalar = canvasArray[i][j]* 255;
-          if (canvasArray[i][j]%2 == 0) {
-            scalar = canvasArray[i][j]*30999;
-          }
-          if (canvasArray[i][j] %3 == 0) {
-            scalar = canvasArray[i][j]*51343;
-          }
-          if (canvasArray[i][j] %5 == 0) {
-            scalar = canvasArray[i][j]* 102345;
-          }
-            if (canvasArray[i][j] %7 == 0) {
-                scalar = canvasArray[i][j]* 540000;
-            }
-          String hexColor = String.format("#%06X", (0xFFFFFF & scalar));
-          Color c = Color.valueOf(hexColor);
-
+         Color c = Color.rgb(canvasArray[i][j], 0, 0, 1);
           writer.setColor(j, i, c);
         }
       }

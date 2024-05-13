@@ -28,6 +28,7 @@ public class InputNode {
   private FractalInputNode fractalInputNode; // The fractal input node.
 
   private int currentSteps; // The number of steps.
+  private boolean sliders;
   private  InputNodeController controller;
 
 
@@ -52,8 +53,8 @@ public class InputNode {
       this.currentSteps = Integer.parseInt(newValue);
     });
     this.inputNode.add(steps, 0, 0);
-    boolean julia = this.findInstance(description);
-    this.createInputNode(description, julia);
+    this.findInstance(description);
+    this.createInputNode(description, false);
     Button runButton = new Button("Run");
     runButton.getStyleClass().add("button-rightPane");
     runButton.setOnAction(e -> {
@@ -69,9 +70,10 @@ public class InputNode {
    *
    * @param description the description of the fractal to be drawn.
    */
-  public void createInputNode(ChaosGameDescription description, boolean julia){
+  public void createInputNode(ChaosGameDescription description, boolean slidersOnOff){
+    this.sliders = slidersOnOff;
     this.minMaxCoordsNode = new MinMaxCoordsNode(description.getMinCoords(),
-        description.getMaxCoords(), julia, controller);
+        description.getMaxCoords(), this.sliders, controller);
     this.inputNode.getChildren().removeIf(node -> node instanceof GridPane);
     this.inputNode.add(minMaxCoordsNode.getMinMaxNode(), 0,2);
     this.inputNode.add(fractalInputNode.getFractalNode(), 0 , 3);
@@ -95,8 +97,8 @@ public class InputNode {
   public void changeInputNode(ChaosGameDescription description, int steps){
    this.controller.changeDescription(description);
     this.currentSteps = steps;
-    boolean julia = this.findInstance(description);
-    this.createInputNode(description, julia);
+    this.findInstance(description);
+    this.createInputNode(description, this.sliders);
   }
   /**
    * returns the current steps.
@@ -113,14 +115,11 @@ public class InputNode {
    * @param description the description of the fractal.
    */
 
-  private boolean findInstance(ChaosGameDescription description){
-    boolean julia = false;
+  private void findInstance(ChaosGameDescription description){
     if (description.getTransform(0) instanceof AffineTransform2D){
      this.fractalInputNode =  new  AffineTransformNode(description);
     } else {
      this.fractalInputNode = new JuliaTransformNode(description, this.controller);
-     julia = true;
     }
-    return  julia;
   }
 }

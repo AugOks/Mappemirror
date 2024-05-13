@@ -63,7 +63,7 @@ class ChaosCanvasTest {
       //int[] pos = chaosCanvas.transformCoordsToIndices(vector);
       int[][] canvas = chaosCanvas.getCanvasArray();
       assertEquals(canvas[8][1], 1);
-    }catch (PixelOutOfBoundsException p){
+    }catch (Exception e){
       fail();
     }
   }

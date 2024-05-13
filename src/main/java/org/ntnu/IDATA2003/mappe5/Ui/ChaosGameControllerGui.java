@@ -174,6 +174,15 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   public ChaosGame getGame() {
     return theGame;
   }
+  public void changeCoords(Vector2D minCoords, Vector2D maxCoords){
+    if(minCoords == null){
+      throw new IllegalArgumentException("Min coordinates cannot be null");
+    }
+    ChaosGameDescription currentGame = getDescription();
+    currentGame.setMinCoords(minCoords);
+    currentGame.setMaxCoords(maxCoords);
+    changeDescription(currentGame);
+  }
 
   /**
    * Exits the application.

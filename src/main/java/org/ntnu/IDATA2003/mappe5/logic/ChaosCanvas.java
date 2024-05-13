@@ -100,8 +100,8 @@ public class ChaosCanvas {
     Vector2D ijCoords = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
-    if(i >= 0 && i < this.height && j >= 0 && j < this.width) {
-      this.canvas[i][j] += 1;
+    if(i >= 0 && i < this.height && j >= 0 && j < this.width && this.canvas[i][j] < 245) {
+      this.canvas[i][j] += 10;
     }
   }
 

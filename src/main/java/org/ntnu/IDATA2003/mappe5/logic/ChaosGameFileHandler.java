@@ -91,7 +91,7 @@ public class ChaosGameFileHandler {
    * reader issues.
    */
   public void writeToFile(String path, ChaosGameDescription description) {
-    Path pathOfFile = Path.of(path);
+    Path pathOfFile = Path.of(path + ".txt");
     if (description == null) {
       throw new IllegalArgumentException("Description cannot be null");
     }
