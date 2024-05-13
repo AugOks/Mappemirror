@@ -6,10 +6,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.SeparatorMenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
@@ -184,12 +187,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
   private VBox createTopPane(){
     VBox topPane = new VBox();
-    MenuBar menu = new MenuBar();
-    Menu file = new Menu("File");
-    Menu edit = new Menu("Edit");
-    Menu help = new Menu("Help");
-    menu.getMenus().addAll(file,edit,help);
-
+    MenuBar menu = createMenuBar();
     VBox bannerPane = new VBox();
 
     Image banner = new Image(getClass().getResource("/header.png").toExternalForm());
@@ -203,13 +201,23 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     return topPane;
   }
 
-  private void createMenuBar(){
+  /**
+   * Creates the menu bar for the chaos game app.
+   */
+  private MenuBar createMenuBar(){
     MenuBar menu = new MenuBar();
     Menu file = new Menu("File");
+    MenuItem openFile = new MenuItem("Open file");
+    openFile.setOnAction(e -> controller.fileChooser());
+    MenuItem saveToFile = new MenuItem("Save file");
+    MenuItem exitApp = new MenuItem("exit app");
+    file.getItems().addAll(openFile, saveToFile,new SeparatorMenuItem(), exitApp);
     Menu edit = new Menu("Edit");
+    CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
+    edit.getItems().add(showSliders);
     Menu help = new Menu("Help");
     menu.getMenus().addAll(file,edit,help);
-
+    return  menu;
   }
 
   /**

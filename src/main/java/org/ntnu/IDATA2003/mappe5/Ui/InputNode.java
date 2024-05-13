@@ -100,9 +100,9 @@ public class InputNode {
     this.createInputNode(description, julia);
   }
   /**
-   * Returns the minimum coordinates of the fractal.
+   * returns the current steps.
    *
-   * @return the minimum coordinates.
+   * @return The amount of steps to run.
    */
   public int getCurrentSteps() {
 

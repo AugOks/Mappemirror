@@ -145,6 +145,14 @@ public class MinMaxCoordsNode {
     return new Vector2D(Double.parseDouble(maxX.getText()), Double.parseDouble(maxY.getText()));
   }
 
+  /**
+   * Creates a slider for the min and max coordinates.
+   *
+   * @param startValue the start value of the slider.
+   * @param textField the text field to display the value of the slider.
+   * @param id the id of the slider.
+   * @return the slider.
+   */
   private Slider createSlider(double startValue, TextField textField, String id) {
     Slider slider = new Slider(-3, 3, startValue);
     slider.setId(id);
@@ -156,6 +164,12 @@ public class MinMaxCoordsNode {
     return slider;
   }
 
+  /**
+   * Creates a listener for a given slider.
+   *
+   * @param slider the slider to add a listener to.
+   * @param textField the text field to update.
+   */
   private void sliderListener(Slider slider, TextField textField) {
     slider.valueProperty().addListener(
         (observable, oldValue, newValue) -> {
@@ -172,6 +186,7 @@ public class MinMaxCoordsNode {
             maxCoords.setY0(newValue.doubleValue());
             valueIsChanged = true;
           }
+          textField.setText(String.valueOf(newValue));
           controller.changeMinMaxCoords(this.minCoords, this.maxCoords);
         }
     );

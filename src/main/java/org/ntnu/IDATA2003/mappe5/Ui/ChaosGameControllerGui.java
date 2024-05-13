@@ -43,6 +43,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     File file = fileChooser.showOpenDialog(null);
     //System.out.println(file.getPath());
     this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
+    gameGui.createInputNode(theGame.getDescription(),1000000);
   }
 
 
