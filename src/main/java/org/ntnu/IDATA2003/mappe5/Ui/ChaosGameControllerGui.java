@@ -22,27 +22,39 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
+
 import org.ntnu.IDATA2003.mappe5.Ui.DanceParty;
+import org.ntnu.IDATA2003.mappe5.Ui.ChaosGameDialogHandler;
 
 
 /**
  * Controller for the ChaosGameGui in accordance with the MVC pattern.
  */
 public class ChaosGameControllerGui implements ChaosGameObserver {
+
   private ChaosGameDescriptionFactory factory;
   private ChaosGameGui gameGui;
   private ChaosGameFileHandler fileHandler;
   private ChaosGame theGame;
   private DanceParty danceParty;
+  private ChaosGameDialogHandler dialogHandler;
 
+  /**
+   * Constructor for the ChaosGameControllerGui.
+   *
+   * @param gameGui the ChaosGameGui to be controlled.
+   */
   public ChaosGameControllerGui(ChaosGameGui gameGui) {
     factory = new ChaosGameDescriptionFactory();
     this.fileHandler = new ChaosGameFileHandler();
     this.gameGui = gameGui;
     this.danceParty = null;
+    this.dialogHandler = new ChaosGameDialogHandler();
 
   }
 
+<<<<<<< Updated upstream
+  //TODO move this to dialog handler
   public void saveToFile(){
     FileChooser savefile = new FileChooser();
     savefile.setTitle("Save fractal to file");
@@ -51,12 +63,24 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
       theGame.getDescription().setName(file.getName());
       this.fileHandler.writeToFile(file.getPath(), theGame.getDescription());
     }
+=======
+  /**
+   * File chooser method for choosing a file.
+   */ //TODO: MAke the button for this method.
+  public  void fileChooser() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Open Resource File");
+    File file = fileChooser.showOpenDialog(null);
+    //System.out.println(file.getPath());
+    this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
+>>>>>>> Stashed changes
   }
 
 
   /**
    * FileChooser method for choosing a file.
    */
+  //TODO move this to dialog handler
   public void openFromFile() {
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open fractal from file");
@@ -131,13 +155,19 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   }
 
   /**
-   * automated update method, don't use this method!
+   * Automated update method, don't use this method!
    */
+  //TODO change the javadoc of this method.
   @Override
   public void update() {
 
   }
 
+  /**
+   * Run the game for a given amount of steps.
+   *
+   * @param steps the amount of steps to run the game.
+   */
   public void runGame(int steps){
     try {
       theGame.runSteps(steps);
@@ -164,44 +194,34 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
    * If the user presses yes, the application will exit.
    */
   public void exitApplication() {
-    ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-    ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-    Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION,
-                            "  ",
-                            yes,
-                            no);
-    exitAlert.setHeaderText("Are you sure you want to exit the application?");
-    Optional<ButtonType> result = exitAlert.showAndWait();
-
-    if (exitAlert.getResult() == yes) {
+    if ( this.dialogHandler.exitDialog()) {
       System.exit(0);
     }
   }
 
+  /**
+<<<<<<< Updated upstream
+   * Starts the dance party animation of the user presses "Yes" on the confirmation .
+   */
   public void danceParty(){
     ChaosGameDescription startDescription = this.getDescription();
-    try {
-      ButtonType yesD = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
-      ButtonType noD = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-      Alert alertDanceParty = new Alert(Alert.AlertType.CONFIRMATION, "  ", yesD, noD);
-      alertDanceParty.setTitle("Dance party");
-      alertDanceParty.setHeaderText("Do you want to have a dance party?");
-      final ImageView DIALOG_HEADER_ICON = new ImageView(getClass().getResource("/discoBall.png").toExternalForm());
-      DIALOG_HEADER_ICON.setFitHeight(48); // Set size to API recommendation.
-      DIALOG_HEADER_ICON.setFitWidth(48);
-      alertDanceParty.getDialogPane().setGraphic(DIALOG_HEADER_ICON);
-
-      Optional<ButtonType> result = alertDanceParty.showAndWait();
-      if (alertDanceParty.getResult() == yesD) {
-        this.danceParty = new DanceParty(startDescription);
-        this.danceParty.danceParty(this);
-        System.out.println();
-      }
-
-
-    } catch (Exception ignore) {}
+    if (this.dialogHandler.dancePartyDialog()) {
+      this.danceParty = new DanceParty(startDescription);
+      this.danceParty.danceParty(this);
+    }
+=======
+   * Returns the current game.
+   *
+   * @return the game.
+   */
+  public ChaosGame getGame() {
+    return theGame;
+>>>>>>> Stashed changes
   }
 
+  public void showAbout(){
+    this.dialogHandler.showAboutDialog();
+  }
 
 }
 

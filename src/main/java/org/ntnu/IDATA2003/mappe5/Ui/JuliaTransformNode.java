@@ -124,14 +124,17 @@ public class JuliaTransformNode implements FractalInputNode {
   @Override
   public Node getFractalNode() {
     GridPane grid = new GridPane();
-    grid.add(new Label("Real:"), 0, 0);
-    grid.add(this.realSlider, 1, 0);
-    grid.add(new Label("Value: "), 2, 0);
-    grid.add(this.realTextField, 3, 0);
-    grid.add(new Label("Imaginary:"), 0, 1);
-    grid.add(this.imaginarySlider, 1, 1);
-    grid.add(new Label("value: "), 2 ,1);
-    grid.add(this.imagTextField, 3, 1);
+    Label real = new Label("Real:");
+    real.getStyleClass().add("input-title");
+    grid.add(real, 0, 0);
+    grid.add(this.realSlider, 0, 1);
+    grid.add(this.realTextField, 1, 1);
+
+    Label imaginary = new Label("Imaginary:");
+    imaginary.getStyleClass().add("input-title");
+    grid.add(imaginary, 0, 2);
+    grid.add(this.imaginarySlider,0, 3);
+    grid.add(this.imagTextField, 1 ,3);
     return grid;
   }
 

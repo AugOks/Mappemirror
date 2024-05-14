@@ -4,15 +4,15 @@
 .button-rightPane{
     -fx-max-width: 200;
     -fx-max-height: 40;
+    -fx-spacing: 40;
     -fx-font-size: 15;
     -fx-font-family: "Times New Roman",serif;
     -fx-padding: 10;
 }
 .rightPane{
-    -fx-alignment: top-center;
-    -fx-spacing: 40;
+    -fx-alignment: center;
+    -fx-spacing: 20;
     -fx-padding: 10;
-    -fx-min-width: 400;
     -fx-background-color: #3b3939;
 }
 .leftPane{

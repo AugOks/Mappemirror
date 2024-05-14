@@ -7,7 +7,10 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+<<<<<<< Updated upstream
 import javafx.scene.control.CheckMenuItem;
+=======
+>>>>>>> Stashed changes
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -41,6 +44,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private InputNode input; // The right pane with the input fields
   private ChaosGameControllerGui controller; // The controller for the chaos game app
   private Scene scene; // The scene for the chaos game app
+  private ScrollPane scrollPane = new ScrollPane();
 
 
   /**
@@ -80,6 +84,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       //Create the root pane and maximize the size to the users screen
       BorderPane root = new BorderPane();
       root.getStyleClass().add("root");
+
+      //Get the screen size
       Screen screen = Screen.getPrimary();
 
       Rectangle2D bounds = screen.getVisualBounds();
@@ -94,9 +100,10 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       root.setCenter(centerPane);
 
       //The right pane
-      ScrollPane scrollPane = new ScrollPane();
-      scrollPane.setContent(createRightPane());
-      root.setRight(scrollPane);
+      this.scrollPane.setContent(createRightPane());
+      root.setRight(this.scrollPane);
+      root.getRight().getStyleClass().add("rightPane");
+      this.scrollPane.setMinHeight(getHeightForCanvas());
 
       // The left pane
       VBox leftPane = new VBox();
@@ -116,6 +123,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       primaryStage.setTitle("Chaos Game");
       primaryStage.setMaximized(true);
       primaryStage.setScene(scene);
+      primaryStage.getIcons().add(new Image(getClass().getResource("/iconChaosGame.png").toExternalForm()));
       primaryStage.show();
     } catch (Exception e) {
       e.printStackTrace();
@@ -139,6 +147,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private VBox createRightPane() {
 
     VBox rightPane = new VBox();
+    rightPane.getStyleClass().add("rightPane");
 
     // Button for the julia transformation
     Button juliaButton = new Button("Julia Set");
@@ -158,15 +167,14 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     barnsleyButton.setOnAction(e -> controller.createFractal(
         ChaosGameDescriptionFactory.Fractals.BARNSLEY));
 
-
+    // Add the buttons and the input fields to the right pane
     HBox buttonBox = new HBox();
-    buttonBox.getChildren().addAll(juliaButton,sierpinskiButton, barnsleyButton);
+    buttonBox.getChildren().addAll(juliaButton, sierpinskiButton, barnsleyButton);
     buttonBox.setSpacing(20);
     buttonBox.setPrefWidth(350);
     buttonBox.setAlignment(Pos.CENTER);
     rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
     rightPane.setAlignment(Pos.TOP_CENTER);
-    rightPane.getStyleClass().add("rightPane");
 
     return rightPane;
   }
@@ -214,6 +222,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     return topPane;
   }
 
+<<<<<<< Updated upstream
   /**
    * Creates the menu bar for the chaos game app.
    * The menu bar contains the file, edit and help menu.
@@ -221,6 +230,17 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @return the menu bar for the chaos game app.
    */
   private MenuBar createMenuBar(){
+    //TODO style the menu bar better than this...
+=======
+  //TODO what is this?
+  private void createMenuBar(){
+    MenuBar menu = new MenuBar();
+    Menu file = new Menu("File");
+    Menu edit = new Menu("Edit");
+    Menu help = new Menu("Help");
+    menu.getMenus().addAll(file,edit,help);
+>>>>>>> Stashed changes
+
     MenuBar menu = new MenuBar();
 
     Menu file = new Menu("File");
@@ -281,6 +301,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
                                                        showSliders.isSelected()));
 
     Menu help = new Menu("Help");
+    MenuItem about = new MenuItem("About");
+    about.setOnAction(e -> controller.showAbout());
+    help.getItems().add(about);
 
     Menu danceParty = new Menu("Dance Party");
     MenuItem dance = new MenuItem("Dance");
