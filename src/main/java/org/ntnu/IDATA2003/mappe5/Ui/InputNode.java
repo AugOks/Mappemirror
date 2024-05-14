@@ -1,13 +1,10 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
-import javafx.scene.control.Alert;
+
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-
 import javafx.scene.paint.Color;
-
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;

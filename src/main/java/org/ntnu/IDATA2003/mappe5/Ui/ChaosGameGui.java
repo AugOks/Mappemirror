@@ -282,16 +282,27 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       System.out.println("X value"+ mouseXCoords);
       System.out.println("Y value"+ mouseYCoords);
       int direction = event.getDeltaY() > 0 ? -1 : 1;
-      double zoomFactor = Math.pow(1.1, direction)*direction;
+      double zoomFactor = Math.pow(1.1, direction);
       Vector2D maxCoords = this.controller.getDescription().getMaxCoords();
       Vector2D minCoords = this.controller.getDescription().getMinCoords();
-      maxCoords.setX0(maxCoords.getX0());
-      maxCoords.setY0(maxCoords.getY0() );
-      minCoords.setX0(minCoords.getX0() );
-      minCoords.setY0(minCoords.getY0() + minCoords.getY0()* mouseYCoords /zoomFactor );
-      //maxCoords.setY0(maxCoords.getY0() -minCoords.getY0()* mouseYCoords);
-     // minCoords.setX0(minCoords.getX0() +  maxCoords.getX0() * mouseXCoords);
-     // minCoords.setX0(minCoords.getX0() + maxCoords.getY0() * mouseYCoords);
+      if ( mouseXCoords < 0.5 && mouseYCoords < 0.5 ) {
+        maxCoords.setX0(maxCoords.getX0() + (minCoords.getX0() - maxCoords.getX0())*(1-zoomFactor));
+        minCoords.setY0(minCoords.getY0() + (maxCoords.getY0() - minCoords.getY0())*(1-zoomFactor));
+      }
+      else if (mouseXCoords < 0.5 && mouseYCoords > 0.5 ) {
+        maxCoords.setY0(maxCoords.getY0() + (minCoords.getY0() - maxCoords.getY0())*(1-zoomFactor));
+        maxCoords.setX0(maxCoords.getX0() + (minCoords.getX0() - maxCoords.getX0())*(1-zoomFactor));
+      }
+      else if ( mouseXCoords > 0.5 && mouseYCoords < 0.5) {
+        minCoords.setX0(minCoords.getX0() + (maxCoords.getX0() - minCoords.getX0())*(1-zoomFactor));
+        minCoords.setY0(minCoords.getY0() + (maxCoords.getY0() - minCoords.getY0())*(1-zoomFactor));
+      }
+     else if (mouseXCoords > 0.5 && mouseYCoords > 0.5) {
+        maxCoords.setY0(maxCoords.getY0() + (minCoords.getY0() - maxCoords.getY0())*(1-zoomFactor));
+        minCoords.setX0(minCoords.getX0() + (maxCoords.getX0() - minCoords.getX0())*(1-zoomFactor));
+      }
+
+
       controller.changeCoords(minCoords, maxCoords);
     });
   }
