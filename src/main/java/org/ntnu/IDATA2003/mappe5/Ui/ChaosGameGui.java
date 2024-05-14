@@ -28,6 +28,7 @@ import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
+import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
 
 /**
@@ -142,19 +143,20 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     // Button for the julia transformation
     Button juliaButton = new Button("Julia Set");
     juliaButton.getStyleClass().add("button-rightPane");
-    juliaButton.setOnAction(e -> controller.createJulia());
+    juliaButton.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.JULIA));
 
     //Button for the sierpinski transformation
     Button sierpinskiButton = new Button("Sierpinski");
     sierpinskiButton.getStyleClass().add("button-rightPane");
-    sierpinskiButton.setOnAction(e -> {
-      controller.createSierpinski();
-    });
+    sierpinskiButton.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.SIERPINSKI));
 
     //Button for the barnsley fern transformation
     Button barnsleyButton = new Button("Barnsley Fern");
     barnsleyButton.getStyleClass().add("button-rightPane");
-    barnsleyButton.setOnAction(e -> controller.createBarnsleyFern());
+    barnsleyButton.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.BARNSLEY));
 
 
     HBox buttonBox = new HBox();
@@ -235,10 +237,48 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     file.getItems().addAll(openFile, saveToFile,new SeparatorMenuItem(),exit);
 
+    Menu preMade = new Menu("Pre-made");
+
+    MenuItem julia = new MenuItem("Julia");
+    julia.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.JULIA));
+
+    MenuItem sierpinski = new MenuItem("Sierpinski");
+    sierpinski.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.SIERPINSKI));
+
+    MenuItem barnsleyFern = new MenuItem("Barnsley Fern");
+    barnsleyFern.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.BARNSLEY));
+
+    MenuItem spiderweb = new MenuItem("Spiderweb");
+    spiderweb.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.SPIDERWEB));
+
+    MenuItem square = new MenuItem("Square");
+    square.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.SQUARE));
+
+    MenuItem pentagon = new MenuItem("Pentagon");
+    pentagon.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.PENTAGON));
+
+    MenuItem kochCurve = new MenuItem("Koch Curve");
+    kochCurve.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.KOCHCURVE));
+
+    MenuItem dragonFire = new MenuItem("Dragon Fire");
+    dragonFire.setOnAction(e -> controller.createFractal(
+        ChaosGameDescriptionFactory.Fractals.DRAGONFIRE));
+
+    preMade.getItems().addAll(julia,sierpinski,barnsleyFern,spiderweb,square,pentagon,kochCurve,
+                              dragonFire);
+
     Menu edit = new Menu("Edit");
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
     edit.getItems().add(showSliders);
-    showSliders.setOnAction(e -> input.createInputNode(controller.getDescription(), showSliders.isSelected()));
+    showSliders.setOnAction(e -> input.createInputNode(controller.getDescription(),
+                                                       showSliders.isSelected()));
 
     Menu help = new Menu("Help");
 
@@ -247,7 +287,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     dance.setOnAction(e -> controller.danceParty());
     danceParty.getItems().add(dance);
 
-    menu.getMenus().addAll(file,edit,help,danceParty);
+    menu.getMenus().addAll(file, edit, preMade, danceParty, help);
     return  menu;
   }
 
@@ -263,7 +303,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     this.setZoomScrollEvent(this.canvasCenterPane);
     this.canvasCenterPane.getStyleClass().add("centerPane");
 
-    this.controller.createSierpinski();
+    this.controller.createFractal(ChaosGameDescriptionFactory.Fractals.JULIA);
 
     this.canvasCenterPane.setAlignment(Pos.CENTER);
     return canvasCenterPane;

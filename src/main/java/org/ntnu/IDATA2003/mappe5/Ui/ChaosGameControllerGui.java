@@ -67,47 +67,19 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     }
   }
 
-
   /**
-   * Sets the description for the sierpinski fractal.
+   * Create a fractal from the ChaosGameDescriptionFactory based on the enum value.
+   *
+   * @param fractal the enum of the fractal to be created.
    */
-  public void createSierpinski() {
+  public void createFractal(ChaosGameDescriptionFactory.Fractals fractal) {
     ChaosGameDescription description =
-        factory.createDescription(ChaosGameDescriptionFactory.Fractals.SIERPINSKI);
+        factory.createDescription(fractal);
     theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
     gameGui.createCanvas(theGame, 1000000);
     gameGui.createInputNode(theGame.getDescription(),1000000);
     theGame.addSubscriber(gameGui);
-
   }
-
-  /**
-   * Sets the description for the mandelbrot fractal.
-   */
-  public void createJulia() {
-    ChaosGameDescription description =
-        factory.createDescription(ChaosGameDescriptionFactory.Fractals.JULIA);
-    theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
-    gameGui.createCanvas(theGame,1000000);
-    gameGui.createInputNode(theGame.getDescription(),1000000);
-    theGame.addSubscriber(gameGui);
-
-  }
-
-  /**
-   * Sets the description for the barnsley fern fractal.
-   */
-  public void createBarnsleyFern() {
-
-    ChaosGameDescription description =
-        factory.createDescription(ChaosGameDescriptionFactory.Fractals.BARNSLEY);
-    theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
-    gameGui.createCanvas(theGame, 7000000);
-    gameGui.createInputNode(theGame.getDescription(),7000000);
-    theGame.addSubscriber(gameGui);
-  }
-
-
 
   /**
    * Create a julia transform based on user input.
