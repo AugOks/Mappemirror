@@ -22,7 +22,7 @@ public class JuliaTransformNode implements FractalInputNode {
   private TextField realTextField;
   private Complex complex;
   private InputNodeController controller;
-  private  boolean valueChanged = true;
+  private  boolean isValueValid = true;
 
   /**
    * Constructor for the JuliaSliderBox class.
@@ -83,10 +83,10 @@ public class JuliaTransformNode implements FractalInputNode {
               this.complex.setY0((double) newValue);
             }
             textField.setText(displayValue);
-            this.valueChanged = true;
+            this.isValueValid = true;
             controller.changeTransform(this.getTransforms());
           }catch (Exception e){
-            this.valueChanged = false;
+            this.isValueValid = false;
             ;//TODO Maybe fix this
           }
         });
@@ -108,9 +108,9 @@ public class JuliaTransformNode implements FractalInputNode {
           this.complex.setY0(value);
           imaginarySlider.setValue(value);
         }
-        this.valueChanged = true;
+        this.isValueValid = true;
       }catch (Exception e){
-        this.valueChanged = false
+        this.isValueValid = false
         ;//TODO Maybe fix this
       }
     });
@@ -149,7 +149,7 @@ public class JuliaTransformNode implements FractalInputNode {
   }
 
   @Override
-  public boolean isValueChanged() {
-    return valueChanged;
+  public boolean isValueValid() {
+    return isValueValid;
   }
 }

@@ -211,10 +211,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     try {
       ButtonType yesD = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
       ButtonType noD = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
-      Alert alertDanceParty = new Alert(Alert.AlertType.CONFIRMATION,
-                                  "  ",
-                                  yesD,
-                                  noD);
+      Alert alertDanceParty = new Alert(Alert.AlertType.CONFIRMATION, "  ", yesD, noD);
       alertDanceParty.setTitle("Dance party");
       alertDanceParty.setHeaderText("Do you want to have a dance party?");
       final ImageView DIALOG_HEADER_ICON = new ImageView(getClass().getResource("/discoBall.png").toExternalForm());

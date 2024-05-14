@@ -21,5 +21,9 @@ public interface FractalInputNode {
    * @return the transforms for the fractal.
    */
   public List<Transform2D> getTransforms();
-  public boolean isValueChanged();
+  /**
+   * Checks if the value is valid.
+   * @return true if the value is valid, false otherwise.
+   */
+  public boolean isValueValid();
 }

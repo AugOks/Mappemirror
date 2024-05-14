@@ -1,7 +1,6 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
@@ -18,11 +17,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -273,29 +269,38 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     return canvasCenterPane;
   }
 
+  /**
+   * Sets the zoom scroll event for the canvas.
+   * The zoom scroll event will zoom in and out of the canvas in the four quadrants (-1,1), (-1,-1)
+   * (1,-1), (1,1) in an x-y plane with the origin in the middle.
+   *
+   * @param node the node to set the zoom scroll event for.
+   */
   private void setZoomScrollEvent(Node node){
     node.setOnScroll(event -> {
 
       double mouseYCoords = event.getY()/(getHeightForCanvas());
       double mouseXCoords = (event.getX()/(getWidthForCanvas()));
-      System.out.println("X value"+ mouseXCoords);
-      System.out.println("Y value"+ mouseYCoords);
       int direction = event.getDeltaY() > 0 ? -1 : 1;
       double zoomFactor = Math.pow(1.1, direction);
       Vector2D maxCoords = this.controller.getDescription().getMaxCoords();
       Vector2D minCoords = this.controller.getDescription().getMinCoords();
+      // Zoom in on the top left quadrant (-1,1)
       if ( mouseXCoords < 0.5 && mouseYCoords < 0.5 ) {
         maxCoords.setX0(maxCoords.getX0() + (minCoords.getX0() - maxCoords.getX0())*(1-zoomFactor));
         minCoords.setY0(minCoords.getY0() + (maxCoords.getY0() - minCoords.getY0())*(1-zoomFactor));
       }
+      //Zoom in on the bottom left quadrant(-1,-1)
       else if (mouseXCoords < 0.5 && mouseYCoords > 0.5 ) {
         maxCoords.setY0(maxCoords.getY0() + (minCoords.getY0() - maxCoords.getY0())*(1-zoomFactor));
         maxCoords.setX0(maxCoords.getX0() + (minCoords.getX0() - maxCoords.getX0())*(1-zoomFactor));
       }
+      //Zoom in on the top right quadrant(1,1)
       else if ( mouseXCoords > 0.5 && mouseYCoords < 0.5) {
         minCoords.setX0(minCoords.getX0() + (maxCoords.getX0() - minCoords.getX0())*(1-zoomFactor));
         minCoords.setY0(minCoords.getY0() + (maxCoords.getY0() - minCoords.getY0())*(1-zoomFactor));
       }
+      //Zoom in on the bottom right quadrant (1,-1)
      else if (mouseXCoords > 0.5 && mouseYCoords > 0.5) {
         maxCoords.setY0(maxCoords.getY0() + (minCoords.getY0() - maxCoords.getY0())*(1-zoomFactor));
         minCoords.setX0(minCoords.getX0() + (maxCoords.getX0() - minCoords.getX0())*(1-zoomFactor));

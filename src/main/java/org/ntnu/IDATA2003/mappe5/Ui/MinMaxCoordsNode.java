@@ -14,25 +14,22 @@ import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 public class MinMaxCoordsNode {
 
 
-    private  boolean valueIsChanged = true;
+    private  boolean isValueValid = true;
 
     private TextField minX;  // The text field for the minimum x coordinate
     private TextField minY; // The text field for the minimum y coordinate
     private TextField maxX; // The text field for the maximum x coordinate
     private TextField maxY; // The text field for the maximum y coordinate
-    private Vector2D minCoords; // The text field for the minimum coordinates
-    private Vector2D maxCoords; // The text field for the maximum coordinates
+    private Vector2D minCoords; // The vector for the minimum coordinates
+    private Vector2D maxCoords; // The vector for the maximum coordinates
     private  InputNodeController controller;
-    private boolean isJulia;
 
     /**
      * Constructor for the MinMaxCoordsBox class.
      * @param minCoords the minimum coordinates
      * @param maxCoords the maximum coordinates
      */
-    public MinMaxCoordsNode(Vector2D minCoords, Vector2D maxCoords, boolean julia,
-                            InputNodeController controller) {
-        this.isJulia = julia;
+    public MinMaxCoordsNode(Vector2D minCoords, Vector2D maxCoords,InputNodeController controller) {
         this.controller = controller;
         this.maxCoords = maxCoords;
         this.minCoords = minCoords;
@@ -71,9 +68,9 @@ public class MinMaxCoordsNode {
         } else if (name.equalsIgnoreCase("maxy")) {
           maxCoords.setY0(Double.parseDouble(newValue));
         }
-        this.valueIsChanged = true;
+        this.isValueValid = true;
       }catch (Exception e){
-        this.valueIsChanged = false;
+        this.isValueValid = false;
         ;//TODO Maybe fix this
       }
     });
@@ -84,8 +81,9 @@ public class MinMaxCoordsNode {
    * Creates a grid with text fields for min and max coordinates.
    *
    * @return the grid containing the min max text fields.
+   * @param sliders a boolean value to determine if sliders should be added to the grid.
    */
-  public Node getMinMaxNode(){
+  public Node getMinMaxNode(boolean sliders){
 
     GridPane allGrids = new GridPane();
 
@@ -105,7 +103,7 @@ public class MinMaxCoordsNode {
 
     allGrids.add(minGrid, 0, 0);
 
-    if (isJulia) {
+    if (sliders) {
       allGrids.add(createSlider(-0.5, minX, "minx"), 0, 1);
       allGrids.add(createSlider(minCoords.getY0(), minY, "miny"), 0, 2);
       allGrids.add(createSlider(maxCoords.getX0(), maxX,"maxx"), 1, 1);
@@ -123,8 +121,8 @@ public class MinMaxCoordsNode {
     return allGrids;
   }
 
-  public boolean isValueIsChanged() {
-    return valueIsChanged;
+  public boolean isValueValid() {
+    return isValueValid;
   }
 
   /**
@@ -175,16 +173,16 @@ public class MinMaxCoordsNode {
         (observable, oldValue, newValue) -> {
           if (slider.getId().equalsIgnoreCase("minx")) {
             minCoords.setX0(slider.getValue());
-            valueIsChanged = true;
+            isValueValid = true;
           } else if (slider.getId().equalsIgnoreCase("miny")) {
             minCoords.setY0(newValue.doubleValue());
-            valueIsChanged = true;
+            isValueValid = true;
           } else if (slider.getId().equalsIgnoreCase("maxx")) {
             maxCoords.setX0(newValue.doubleValue());
-            valueIsChanged = true;
+            isValueValid = true;
           } else if (slider.getId().equalsIgnoreCase("maxy")) {
             maxCoords.setY0(newValue.doubleValue());
-            valueIsChanged = true;
+            isValueValid = true;
           }
           textField.setText(String.valueOf(newValue));
           controller.changeMinMaxCoords(this.minCoords, this.maxCoords);

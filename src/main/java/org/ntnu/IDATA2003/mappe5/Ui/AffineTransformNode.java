@@ -157,7 +157,7 @@ public class AffineTransformNode implements FractalInputNode {
   }
 
   @Override
-  public boolean isValueChanged() {
+  public boolean isValueValid() {
     return this.valueChanged;
   }
 

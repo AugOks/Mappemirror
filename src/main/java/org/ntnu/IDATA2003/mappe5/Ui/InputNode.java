@@ -32,6 +32,7 @@ public class InputNode {
   /**
    * Constructs the input node for the user interface.
    * Initializes the input node with a text field for the number of steps and a fractal input node.
+   *
    * @param description the description of the fractal to be drawn.
    * @param stepsInt the number of steps to be drawn.
    */
@@ -70,9 +71,9 @@ public class InputNode {
   public void createInputNode(ChaosGameDescription description, boolean slidersOnOff){
     this.sliders = slidersOnOff;
     this.minMaxCoordsNode = new MinMaxCoordsNode(description.getMinCoords(),
-        description.getMaxCoords(), this.sliders, controller);
+        description.getMaxCoords(), controller);
     this.inputNode.getChildren().removeIf(node -> node instanceof GridPane);
-    this.inputNode.add(minMaxCoordsNode.getMinMaxNode(), 0,2);
+    this.inputNode.add(minMaxCoordsNode.getMinMaxNode(this.sliders), 0,2);
     this.inputNode.add(fractalInputNode.getFractalNode(), 0 , 3);
   }
 
