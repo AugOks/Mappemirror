@@ -46,7 +46,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private Scene scene; // The scene for the chaos game app
 
 
-  //TODO remove this todo
   /**
    * Constructor for the ChaosGameGui.
    */

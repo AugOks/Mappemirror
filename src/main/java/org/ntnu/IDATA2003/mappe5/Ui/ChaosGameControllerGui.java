@@ -7,7 +7,10 @@ import java.util.Optional;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.stage.Window;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
@@ -206,18 +209,30 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   public void danceParty(){
     ChaosGameDescription startDescription = this.getDescription();
     try {
-      Alert alert = new Alert(Alert.AlertType.INFORMATION);
-      alert.setTitle("Dance party");
-      alert.setHeaderText("Do you want to have a dance party?");
-      alert.showAndWait();
+      ButtonType yesD = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+      ButtonType noD = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
+      Alert alertDanceParty = new Alert(Alert.AlertType.CONFIRMATION,
+                                  "  ",
+                                  yesD,
+                                  noD);
+      alertDanceParty.setTitle("Dance party");
+      alertDanceParty.setHeaderText("Do you want to have a dance party?");
+      final ImageView DIALOG_HEADER_ICON = new ImageView(getClass().getResource("/discoBall.png").toExternalForm());
+      DIALOG_HEADER_ICON.setFitHeight(48); // Set size to API recommendation.
+      DIALOG_HEADER_ICON.setFitWidth(48);
+      alertDanceParty.getDialogPane().setGraphic(DIALOG_HEADER_ICON);
 
-      if (alert.getResult().getText().equals("OK")) {
+      Optional<ButtonType> result = alertDanceParty.showAndWait();
+      if (alertDanceParty.getResult() == yesD) {
         this.danceParty = new DanceParty(startDescription);
         this.danceParty.danceParty(this);
+        System.out.println();
       }
-      this.changeDescription(startDescription);
+
+
     } catch (Exception ignore) {}
   }
+
 
 }
 
