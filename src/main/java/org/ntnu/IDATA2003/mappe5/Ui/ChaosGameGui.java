@@ -29,7 +29,6 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
-import org.ntnu.IDATA2003.mappe5.logic.ColorChoiceDialog;
 
 /**
  * The GUI for the chaos game app.
@@ -289,12 +288,14 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
         showSliders.isSelected()));
     MenuItem colorPicker = new MenuItem("Color picker");
     colorPicker.setOnAction(e -> {
-      ColorChoiceDialog colorChoiceDialog = new ColorChoiceDialog();
+      ChaosGameDialogHandler.ColorChoiceDialog colorChoiceDialog =
+          new ChaosGameDialogHandler().getColorChoiceDialog();
       if (colorChoiceDialog.showAndWait().isPresent()){
         this.colorChoice = colorChoiceDialog.getResult();
       }else {
         this.colorChoice = null;
       }
+      controller.changeDescription(controller.getDescription());
     });
     edit.getItems().add(colorPicker);
 
