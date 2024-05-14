@@ -153,17 +153,10 @@ public class MinMaxCoordsNode {
   }
 
   /**
-   * Creates a slider for the min and max coordinates.
-<<<<<<< Updated upstream
-   *
-   * @param startValue the start value of the slider.
-   * @param textField the text field to display the value of the slider.
-=======
    * The slider is used to change the value of the text field and the min or max coordinates.
    *
    * @param startValue the start value of the slider.
    * @param textField the text field to be updated.
->>>>>>> Stashed changes
    * @param id the id of the slider.
    * @return the slider.
    */
@@ -179,19 +172,13 @@ public class MinMaxCoordsNode {
   }
 
   /**
-<<<<<<< Updated upstream
-   * Creates a listener for a given slider.
-   *
-   * @param slider the slider to add a listener to.
-   * @param textField the text field to update.
-=======
    * The listener for the sliders.
    * Changes the value of the text field when the slider is moved.
    * Also changes the value of the min or max coordinates.
    *
    * @param slider The slider to be listened to.
    * @param textField The text field to be updated.
->>>>>>> Stashed changes
+
    */
   private void sliderListener(Slider slider, TextField textField) {
     slider.valueProperty().addListener(
