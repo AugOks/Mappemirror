@@ -99,7 +99,7 @@ public class ChaosGame {
    *
    * @param steps the amount of steps to be run before halting
    */
-  public void runSteps(int steps) throws PixelOutOfBoundsException {
+  public void runSteps(int steps)  {
     if (steps < 1) {
       throw new IllegalArgumentException("Steps cannot be less than 1");
     }

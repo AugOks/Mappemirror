@@ -53,9 +53,9 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
 
   }
 
-<<<<<<< Updated upstream
+
   //TODO move this to dialog handler
-  public void saveToFile(){
+  public void saveToFile() {
     FileChooser savefile = new FileChooser();
     savefile.setTitle("Save fractal to file");
     File file = savefile.showSaveDialog(gameGui.getScene().getWindow());
@@ -63,7 +63,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
       theGame.getDescription().setName(file.getName());
       this.fileHandler.writeToFile(file.getPath(), theGame.getDescription());
     }
-=======
+  }
   /**
    * File chooser method for choosing a file.
    */ //TODO: MAke the button for this method.
@@ -73,7 +73,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     File file = fileChooser.showOpenDialog(null);
     //System.out.println(file.getPath());
     this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
->>>>>>> Stashed changes
+
   }
 
 
@@ -169,16 +169,9 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
    * @param steps the amount of steps to run the game.
    */
   public void runGame(int steps){
-    try {
       theGame.runSteps(steps);
-    } catch (PixelOutOfBoundsException e) {
-      throw new RuntimeException(e);
-    }
   }
 
-  public ChaosGame getGame() {
-    return theGame;
-  }
   public void changeCoords(Vector2D minCoords, Vector2D maxCoords){
     if(minCoords == null){
       throw new IllegalArgumentException("Min coordinates cannot be null");
@@ -203,20 +196,19 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
 <<<<<<< Updated upstream
    * Starts the dance party animation of the user presses "Yes" on the confirmation .
    */
-  public void danceParty(){
+  public void danceParty() {
     ChaosGameDescription startDescription = this.getDescription();
     if (this.dialogHandler.dancePartyDialog()) {
       this.danceParty = new DanceParty(startDescription);
       this.danceParty.danceParty(this);
     }
-=======
-   * Returns the current game.
+  }
+   /* Returns the current game.
    *
    * @return the game.
    */
   public ChaosGame getGame() {
     return theGame;
->>>>>>> Stashed changes
   }
 
   public void showAbout(){

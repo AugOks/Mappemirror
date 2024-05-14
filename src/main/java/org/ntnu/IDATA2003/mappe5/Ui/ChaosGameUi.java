@@ -146,11 +146,8 @@ public class ChaosGameUi {
     if (menuChoice == 5) {
       this.mainGame = new ChaosGame(this.userDefinedAffineTransform(), height, width);
     }
-    try {
       this.mainGame.runSteps(steps);
-    } catch (PixelOutOfBoundsException e) {
-      //Dialog for errors
-    }
+
     printCanvas();
 
   }

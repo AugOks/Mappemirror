@@ -7,10 +7,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-<<<<<<< Updated upstream
 import javafx.scene.control.CheckMenuItem;
-=======
->>>>>>> Stashed changes
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -26,13 +23,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
+import org.ntnu.IDATA2003.mappe5.logic.ColorChoiceDialog;
 
 /**
  * The GUI for the chaos game app.
@@ -45,6 +42,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private ChaosGameControllerGui controller; // The controller for the chaos game app
   private Scene scene; // The scene for the chaos game app
   private ScrollPane scrollPane = new ScrollPane();
+  private Color colorChoice = null;
+
 
 
   /**
@@ -221,8 +220,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     topPane.getChildren().addAll(menu, bannerPane);
     return topPane;
   }
-
-<<<<<<< Updated upstream
   /**
    * Creates the menu bar for the chaos game app.
    * The menu bar contains the file, edit and help menu.
@@ -231,15 +228,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    */
   private MenuBar createMenuBar(){
     //TODO style the menu bar better than this...
-=======
-  //TODO what is this?
-  private void createMenuBar(){
-    MenuBar menu = new MenuBar();
-    Menu file = new Menu("File");
-    Menu edit = new Menu("Edit");
-    Menu help = new Menu("Help");
-    menu.getMenus().addAll(file,edit,help);
->>>>>>> Stashed changes
 
     MenuBar menu = new MenuBar();
 
@@ -298,7 +286,17 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
     edit.getItems().add(showSliders);
     showSliders.setOnAction(e -> input.createInputNode(controller.getDescription(),
-                                                       showSliders.isSelected()));
+        showSliders.isSelected()));
+    MenuItem colorPicker = new MenuItem("Color picker");
+    colorPicker.setOnAction(e -> {
+      ColorChoiceDialog colorChoiceDialog = new ColorChoiceDialog();
+      if (colorChoiceDialog.showAndWait().isPresent()){
+        this.colorChoice = colorChoiceDialog.getResult();
+      }else {
+        this.colorChoice = null;
+      }
+    });
+    edit.getItems().add(colorPicker);
 
     Menu help = new Menu("Help");
     MenuItem about = new MenuItem("About");
@@ -399,27 +397,33 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   public void createCanvas(ChaosGame game, int steps){
 
     ChaosCanvas canvas = game.getCanvas();
-    int index_i = canvas.getHeight();
-    int index_j = canvas.getWidth();
+    int indexI = canvas.getHeight();
+    int indexJ = canvas.getWidth();
     int[][] canvasArray =  canvas.getCanvasArray();
-    try {
       game.runSteps(steps);
-    } catch (PixelOutOfBoundsException e) {
-      //TODO: dialog box for error
-    }
-
-    WritableImage writable_image = new WritableImage(getWidthForCanvas(), getHeightForCanvas());
-    PixelWriter writer = writable_image.getPixelWriter();
-
-    for (int i = 0; i < index_i; i++) {
-      for (int j = 0; j < index_j; j++) {
-        if (canvasArray[i][j] != 0) {
-         Color c = Color.rgb(canvasArray[i][j], 0, 0, 1);
-          writer.setColor(j, i, c);
+    WritableImage writableImage = new WritableImage(getWidthForCanvas(), getHeightForCanvas());
+    PixelWriter writer = writableImage.getPixelWriter();
+    Color c;
+    if (colorChoice == null) {
+      for (int i = 0; i < indexI; i++) {
+        for (int j = 0; j < indexJ; j++) {
+          if (canvasArray[i][j] != 0) {
+            c = Color.rgb(canvasArray[i][j], 0, 0, 1);
+            writer.setColor(j, i, c);
+          }
+        }
+      }
+    }else {
+      for (int i = 0; i < indexI; i++) {
+        for (int j = 0; j < indexJ; j++) {
+          if (canvasArray[i][j] != 0) {
+            writer.setColor(j, i, colorChoice);
+          }
         }
       }
     }
-    ImageView fractal = new ImageView(writable_image);
+
+    ImageView fractal = new ImageView(writableImage);
     this.canvasCenterPane.getChildren().clear();
     this.canvasCenterPane.getChildren().add(new HBox(fractal));
   }

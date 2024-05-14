@@ -33,7 +33,7 @@ class ChaosGameFileHandlerTest {
     transformList.add(new JuliaTransform(c, -1));
 
     this.description =
-        new ChaosGameDescription(transformList, minCoords, maxCoords, "juliaTestFile");
+        new ChaosGameDescription(transformList, minCoords, maxCoords, "juliaset");
 
   }
 
@@ -44,7 +44,7 @@ class ChaosGameFileHandlerTest {
   @Order(1)
   void testWriteToFile() {
     try {
-      this.handler.writeToFile(null, description);
+      this.handler.writeToFile("testFile", description);
     } catch (Exception e) {
       fail();
     }
@@ -68,7 +68,6 @@ class ChaosGameFileHandlerTest {
       ArrayList<String> canvasConsole = new ArrayList<>();
       StringBuilder line = new StringBuilder();
 
-      //TODO refactor this to use StringBuilder
       for (int i = 0; i < index_i; i++) {
         for (int j = 0; j < index_j; j++) {
           if (canvas[i][j] == 0) {

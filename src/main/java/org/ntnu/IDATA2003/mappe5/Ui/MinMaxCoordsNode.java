@@ -122,25 +122,23 @@ public class MinMaxCoordsNode {
     return allGrids;
   }
 
-<<<<<<< Updated upstream
-  public boolean isValueValid() {
-    return isValueValid;
-=======
+
+
   /**
    * Returns whether the value is changed.
    *
    * @return true if the value is changed, false otherwise.
    */
-  public boolean isValueIsChanged() {
-    return valueIsChanged;
->>>>>>> Stashed changes
+  public boolean isValueValid() {
+    return isValueValid;
   }
 
-  /**
-   * Returns the minimum coordinates.
-   *
-   * @return the minimum coordinates as a Vector2D object.
-   */
+
+      /**
+       * Returns the minimum coordinates.
+       *
+       * @return the minimum coordinates as a Vector2D object.
+       */
   public Vector2D getMinCoords() {
     return new Vector2D(Double.parseDouble(minX.getText()), Double.parseDouble(minY.getText()));
   }

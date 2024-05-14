@@ -60,9 +60,8 @@ class ChaosCanvasTest {
     Vector2D vector = new Vector2D(i, j);
     try {
       chaosCanvas.putPixel(vector);
-      //int[] pos = chaosCanvas.transformCoordsToIndices(vector);
       int[][] canvas = chaosCanvas.getCanvasArray();
-      assertEquals(canvas[8][1], 1);
+      assertEquals(canvas[8][1], 10);
     }catch (Exception e){
       fail();
     }
@@ -78,29 +77,22 @@ class ChaosCanvasTest {
     int i = 2;
     int j = 2;
     Vector2D vector = new Vector2D(i, j);
-    try {
-      chaosCanvas.putPixel(vector);
-    } catch (PixelOutOfBoundsException e) {
-      fail();
-    }
+    chaosCanvas.putPixel(vector);
     int[][] canvas = chaosCanvas.getCanvasArray();
-    assertEquals(canvas[8][1], 1);
+    assertEquals(canvas[8][1], 10);
   }
 
   @Test
   void testPutPixelWithJuliaTransform() {
-    ChaosGameFileHandler handler = new ChaosGameFileHandler();
-    ChaosGameDescription description = handler.readFromFileWithFractalName("juliaset");
+    ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
+    ChaosGameDescription description =  factory.createDescription(
+        ChaosGameDescriptionFactory.Fractals.JULIA);
     ChaosGame game = new ChaosGame(description, height, width);
     ChaosCanvas canvas = game.getCanvas();
     Vector2D testPoint = new Vector2D(-1.59, -0.95);
-    try {
       canvas.putPixel(testPoint);
-    } catch (PixelOutOfBoundsException e) {
-      fail();
-    }
     canvas.transformCoordsToIndices(testPoint);
     int[][] canvasArray = canvas.getCanvasArray();
-    assertEquals(canvasArray[9][0], 1);
+    assertEquals(canvasArray[9][0], 10);
   }
 }

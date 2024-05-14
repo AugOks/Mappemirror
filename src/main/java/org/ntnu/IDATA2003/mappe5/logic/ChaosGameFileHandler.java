@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
@@ -76,13 +77,12 @@ public class ChaosGameFileHandler {
     this.chaosGames.add(game);
     return game;
   }
-  public ChaosGameDescription readFromAnyFile(Path path){
-    return getcontentsOfFile(path.toString());
-  }
   public ChaosGameDescription readFromFileWithFractalName(String fractal){
-    return getcontentsOfFile(fractal + ".txt");
-
-
+    if (getClass().getClassLoader().getResource(fractal + ".txt").toExternalForm().isBlank()){
+      throw new IllegalArgumentException("fractal with this name could not be found");
+    }
+      return getcontentsOfFile((getClass().getClassLoader().getResource(fractal + ".txt"))
+          .toExternalForm().replace("file:/", ""));
   }
 
   /**
@@ -91,10 +91,11 @@ public class ChaosGameFileHandler {
    * reader issues.
    */
   public void writeToFile(String path, ChaosGameDescription description) {
-    Path pathOfFile = Path.of(path + ".txt");
     if (description == null) {
-      throw new IllegalArgumentException("Description cannot be null");
-    }
+    throw new IllegalArgumentException("Description cannot be null");
+  }
+    Path pathOfFile = Path.of(path + ".txt");
+
     try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
       List<String> chaosGameInfo = parser.getChaosGameInfoAsString(description);
 
