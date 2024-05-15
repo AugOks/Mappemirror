@@ -3,9 +3,10 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.AnimationFailedException;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
-import org.ntnu.IDATA2003.mappe5.entity.FailedToWriteToFileException;
-import org.ntnu.IDATA2003.mappe5.entity.FractalNotFoundException;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FractalNotFoundException;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
@@ -25,7 +26,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   private final ChaosGameGui gameGui;
   private final ChaosGameFileHandler fileHandler;
   private ChaosGame theGame;
-  private ChaosGameAnimations danceParty;
+  private ChaosGameAnimations chaosGameAnimations;
   private final ChaosGameDialogHandler dialogHandler;
 
   /**
@@ -36,9 +37,9 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   public ChaosGameControllerGui(ChaosGameGui gameGui) {
     factory = new ChaosGameDescriptionFactory();
     this.fileHandler = new ChaosGameFileHandler();
-    this.gameGui = gameGui;
-    this.danceParty = null;
+    this.gameGui = gameGui;;
     this.dialogHandler = new ChaosGameDialogHandler(this.gameGui);
+
 
   }
 
@@ -82,8 +83,10 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
     gameGui.createCanvas(theGame, 1000000);
     gameGui.createInputNode(theGame.getDescription(),1000000);
+    this.chaosGameAnimations = new ChaosGameAnimations(theGame.getDescription(), this);
     theGame.addSubscriber(gameGui);
   }
+
 
   /**
    * Create a julia transform based on user input.
@@ -184,8 +187,23 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   public void danceParty() {
     ChaosGameDescription startDescription = this.getDescription();
     if (this.dialogHandler.dancePartyDialog()) {
-      this.danceParty = new ChaosGameAnimations(startDescription);
-      this.danceParty.danceParty(this);
+      this.chaosGameAnimations = new ChaosGameAnimations(startDescription, this);
+      this.chaosGameAnimations.danceParty();
+    }
+  }
+
+  /**
+   * Slide into the DMs of the Julia set.
+   */
+  public void slideIntoJuliaDMs(){
+    if (!(this.getDescription().getTransform(0) instanceof JuliaTransform)) {
+      dialogHandler.genericErrorDialog("The current fractal is not a Julia set");
+      return;
+    }
+    try {
+      chaosGameAnimations.juliaSliderAnimation(this.getDescription());
+    } catch (AnimationFailedException e) {
+      dialogHandler.genericErrorDialog("Failed to animate the Julia set");
     }
   }
 

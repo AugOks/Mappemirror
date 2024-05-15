@@ -312,12 +312,15 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     about.setOnAction(e -> controller.showAbout());
     help.getItems().add(about);
 
-    Menu danceParty = new Menu("Dance Party");
+    Menu animations = new Menu("Animations");
     MenuItem dance = new MenuItem("Dance");
     dance.setOnAction(e -> controller.danceParty());
-    danceParty.getItems().add(dance);
+    animations.getItems().add(dance);
+    MenuItem juliaSlide = new MenuItem("Julia Slide");
+    juliaSlide.setOnAction(e -> controller.slideIntoJuliaDMs());
+    animations.getItems().add(juliaSlide);
 
-    menu.getMenus().addAll(file, edit, preMade, danceParty, help);
+    menu.getMenus().addAll(file, edit, preMade, animations, help);
     return  menu;
   }
 

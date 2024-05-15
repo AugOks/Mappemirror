@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.entity;
+package org.ntnu.IDATA2003.mappe5.entity.exceptions;
 
 public class FailedToWriteToFileException extends Exception{
 

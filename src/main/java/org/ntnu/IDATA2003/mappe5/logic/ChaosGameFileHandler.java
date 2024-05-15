@@ -3,16 +3,12 @@ package org.ntnu.IDATA2003.mappe5.logic;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Random;
-import org.ntnu.IDATA2003.mappe5.entity.FailedToWriteToFileException;
-import org.ntnu.IDATA2003.mappe5.entity.FractalNotFoundException;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FractalNotFoundException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
