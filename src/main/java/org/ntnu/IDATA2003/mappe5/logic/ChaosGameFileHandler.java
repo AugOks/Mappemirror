@@ -7,10 +7,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
-import org.ntnu.IDATA2003.mappe5.entity.exceptions.FractalNotFoundException;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+
 
 /**
  * Represents a class that handles the game files, including reading from and too a given file.
@@ -35,10 +37,13 @@ public class ChaosGameFileHandler {
    *
    * @param path the path to the file to read.
    * @return the contents of the file as a chaosGameDescription object.
-    * @throws FractalNotFoundException if the file could not be found.
+    * @throws ResourceNotFoundException if the file could not be found.
    * @throws NumberFormatException    if parsing doubles from string failed.
    */
-  public ChaosGameDescription getcontentsOfFile(String path) throws FractalNotFoundException {
+  public ChaosGameDescription getcontentsOfFile(String path) throws ResourceNotFoundException {
+    if (path == null) {
+      throw new IllegalArgumentException("Path cannot be null");
+    }
     Path pathOfFile = null;
       pathOfFile = Path.of(path);
 
@@ -62,7 +67,7 @@ public class ChaosGameFileHandler {
       transforms = new ArrayList<>(parser.getTransformsFromStrings(fileContent));
 
     } catch (IOException e) {
-     throw new FractalNotFoundException("Could not read the file " + e.getMessage());
+     throw new ResourceNotFoundException("Could not read the file " + e.getMessage());
     } catch (NumberFormatException e) {
       throw new NumberFormatException("Could not parse doubles from string ");
     }
@@ -77,16 +82,24 @@ public class ChaosGameFileHandler {
    * Reads the contents of a file with a given fractal name.w
    * @param fractal the name of the fractal to read from file.
    * @return the chaos game description of the fractal.
-   * @throws FractalNotFoundException
+   * @throws ResourceNotFoundException
    */
   public ChaosGameDescription readFromFileWithFractalName(String fractal)
-      throws FractalNotFoundException {
+      throws ResourceNotFoundException {
 
-    if (getClass().getClassLoader().getResource(fractal + ".txt").toExternalForm().isBlank()){
-      throw new FractalNotFoundException("Could not find fractal file with this name");
+    if (Objects.requireNonNull(getClass().getClassLoader().getResource(fractal + ".txt"))
+        .toExternalForm().isBlank()){
+      throw new ResourceNotFoundException("Could not find fractal file with this name");
     }
-      return getcontentsOfFile((getClass().getClassLoader().getResource(fractal + ".txt"))
-          .toExternalForm().replace("file:/", ""));
+    String filePath;
+    try {
+      filePath = (Objects.requireNonNull(
+          getClass().getClassLoader().getResource(fractal + ".txt")))
+          .toExternalForm().replace("file:/", "");
+    } catch (NullPointerException e) {
+      throw new ResourceNotFoundException("Could not find the file" + e.getMessage());
+    }
+    return getcontentsOfFile(filePath);
   }
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal but

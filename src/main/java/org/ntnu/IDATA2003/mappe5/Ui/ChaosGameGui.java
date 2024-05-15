@@ -1,5 +1,6 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
+import java.util.Objects;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -24,6 +25,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosCanvas;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
@@ -38,9 +40,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
   private HBox canvasCenterPane; // The canvas for the fractal
   private InputNode input; // The right pane with the input fields
-  private ChaosGameControllerGui controller; // The controller for the chaos game app
+  private final ChaosGameControllerGui controller; // The controller for the chaos game app
   private Scene scene; // The scene for the chaos game app
-  private ScrollPane scrollPane = new ScrollPane();
+  private final ScrollPane scrollPane = new ScrollPane();
   private Color colorChoice = null;
   private boolean zoomScroll = false;
 
@@ -75,6 +77,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * Starts the chaos game app with the start screen.
    *
    * @param primaryStage the primary stage for the chaos game app.
+   * @throws Exception if the app fails to start.
+   * @throws ResourceNotFoundException if the app fails to fetch a resource.
    */
   @Override
   public void start(Stage primaryStage) throws Exception  {
@@ -117,14 +121,24 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
         controller.changeDescription(controller.getDescription());
       });
 
-      scene.getStylesheets().add(getClass().getResource("/css/stylesheet.css").toExternalForm());
+        scene.getStylesheets().add(
+            Objects.requireNonNull(getClass().getResource("/css/stylesheet.css"))
+                .toExternalForm());
+
       scene.setCursor(Cursor.DEFAULT);
       primaryStage.setTitle("Chaos Game");
       primaryStage.setMaximized(true);
       primaryStage.setScene(scene);
-      primaryStage.getIcons().add(new Image(getClass().getResource("/iconChaosGame.png").toExternalForm()));
+
+        primaryStage.getIcons().add(new Image(
+            Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
+            .toExternalForm()));
+
       primaryStage.show();
-    } catch (Exception e) {
+    }catch (NullPointerException e){
+      throw new ResourceNotFoundException("failed to fetch a resource");
+    }
+    catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -203,6 +217,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * Creates the top pane with the banner.
    *
    * @return the VBox containing the banner.
+   * @throws ResourceNotFoundException if the banner is not found.
    */
 
   private VBox createTopPane(){
@@ -210,7 +225,13 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     MenuBar menu = createMenuBar();
     VBox bannerPane = new VBox();
 
-    Image banner = new Image(getClass().getResource("/header.png").toExternalForm());
+    Image banner = null;
+    try {
+      banner = new Image(Objects.requireNonNull(getClass().
+          getResource("/header.png")).toExternalForm());
+    } catch (NullPointerException e) {
+      throw new ResourceNotFoundException("Could not find the banner");
+    }
 
     ImageView bannerView = new ImageView(banner);
     bannerView.getStyleClass().add("header-logo");
@@ -291,7 +312,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     MenuItem colorPicker = new MenuItem("Color picker");
     colorPicker.setOnAction(e -> {
       ChaosGameDialogHandler.ColorChoiceDialog colorChoiceDialog =
-          new ChaosGameDialogHandler().getColorChoiceDialog();
+          ChaosGameDialogHandler.getInstance().getColorChoiceDialog();
       if (colorChoiceDialog.showAndWait().isPresent()){
         this.colorChoice = colorChoiceDialog.getResult();
       }else {

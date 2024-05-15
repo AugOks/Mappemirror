@@ -13,11 +13,18 @@ import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 
+/**
+ * Represents an animation class for the ChaosGameGui.
+ * The class contains methods for animating fractals.
+ * It is currently is using threads to accomplish simultaneous animation and drawing without impacting
+ * performance.
+ *
+ */
 public class ChaosGameAnimations {
   private ChaosGameDescription currentDescription;
-  private ChaosGameControllerGui controller;
+  private final ChaosGameControllerGui controller;
   private ChaosGameDescription startDescription;
-  private ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
+  private final ChaosGameDescriptionFactory factory;
 
   public ChaosGameAnimations(ChaosGameDescription description, ChaosGameControllerGui controller) {
     this.currentDescription = description;
@@ -28,11 +35,11 @@ public class ChaosGameAnimations {
 
   public void danceParty() {
     this.controller.changeDescription(this.currentDescription);
-    this.danceAnimation(this.currentDescription);
+    this.danceAnimation();
   }
 
   //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
-  private void danceAnimation(ChaosGameDescription description){
+  private void danceAnimation(){
     Timeline timeLine = new Timeline();
     Collection<KeyFrame> frames = timeLine.getKeyFrames();
     Duration frameGap = Duration.millis(500);

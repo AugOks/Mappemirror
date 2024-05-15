@@ -2,6 +2,7 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
@@ -15,21 +16,26 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 
 /**
  * Class for creating dialogs in the ChaosGameGui class.
  */
 public class ChaosGameDialogHandler {
 
-  private ChaosGameGui gameGui;
+  private static  ChaosGameDialogHandler instance = null;
   /**
    * Constructor for the ChaosGameDialogHandler class.
    */
-  public ChaosGameDialogHandler() {
+
+  private ChaosGameDialogHandler() {
   }
 
-  public ChaosGameDialogHandler(ChaosGameGui gameGui) {
-    this.gameGui = gameGui;
+  public static synchronized ChaosGameDialogHandler getInstance() {
+    if (instance == null) {
+      instance = new ChaosGameDialogHandler();
+    }
+    return instance;
   }
 
   /**
@@ -57,6 +63,7 @@ public class ChaosGameDialogHandler {
    * Method for creating a dialog for the user to choose whether to have a dance party.
    *
    * @return true if the user confirms the dance party, false otherwise.
+   * @throws ResourceNotFoundException if the icon for the dialog is not found.
    */
   public boolean dancePartyDialog() {
     boolean dancePartyConfirmation = false;
@@ -66,8 +73,9 @@ public class ChaosGameDialogHandler {
       Alert alertDanceParty = new Alert(Alert.AlertType.CONFIRMATION, "  ", yesD, noD);
       alertDanceParty.setTitle("Dance party");
       alertDanceParty.setHeaderText("Do you want to have a dance party?");
-      final ImageView DIALOG_HEADER_ICON = new ImageView(getClass()
-          .getResource("/discoBall.png").toExternalForm());
+      final ImageView DIALOG_HEADER_ICON;
+        DIALOG_HEADER_ICON = new ImageView(Objects.requireNonNull(getClass()
+            .getResource("/discoBall.png")).toExternalForm());
       DIALOG_HEADER_ICON.setFitHeight(48);
       DIALOG_HEADER_ICON.setFitWidth(48);
       alertDanceParty.getDialogPane().setGraphic(DIALOG_HEADER_ICON);
@@ -77,20 +85,30 @@ public class ChaosGameDialogHandler {
       if (alertDanceParty.getResult() == yesD) {
         dancePartyConfirmation=true;
       }
-    } catch (Exception ignore) {}
+    }catch (NullPointerException e){
+      throw new ResourceNotFoundException("Could not find the icon");
+    }
+    catch (Exception ignore) {}
     return dancePartyConfirmation;
   }
 
   /**
    * Method for creating an about ChaosGame dialog.
+   *
+   * @throws ResourceNotFoundException if the icon for the dialog is not found.
    */
   public void showAboutDialog() {
     //TODO write more about the application
     Alert about = new Alert(Alert.AlertType.INFORMATION);
     about.setTitle("About");
     about.setHeaderText("Chaos Game");
-    final ImageView DIALOG_HEADER_ICON = new ImageView(getClass()
-        .getResource("/iconChaosGame.png").toExternalForm());
+    final ImageView DIALOG_HEADER_ICON;
+    try {
+      DIALOG_HEADER_ICON = new ImageView(Objects.requireNonNull(getClass()
+          .getResource("/iconChaosGame.png")).toExternalForm());
+    } catch (NullPointerException e) {
+      throw new ResourceNotFoundException("Could not find the icon");
+    }
     DIALOG_HEADER_ICON.setFitHeight(48);
     DIALOG_HEADER_ICON.setFitWidth(48);
     about.getDialogPane().setGraphic(DIALOG_HEADER_ICON);
@@ -112,7 +130,7 @@ public class ChaosGameDialogHandler {
   }
 
   /**
-   * Class for creating a dialog for the user to choose a color.
+   * inner class for creating a dialog for the user to choose a color.
    * The dialog contains a combobox with the available colors.
    * The user can choose a color from the combobox.
    */
@@ -184,7 +202,7 @@ public class ChaosGameDialogHandler {
   public File readFromFileDialog(){
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Open Resource File");
-    return fileChooser.showOpenDialog(gameGui.getScene().getWindow());
+    return fileChooser.showOpenDialog(null);
   }
 
   /**
@@ -194,7 +212,7 @@ public class ChaosGameDialogHandler {
   public File saveToFileDialog(){
     FileChooser fileChooser = new FileChooser();
     fileChooser.setTitle("Save Resource File");
-    return fileChooser.showSaveDialog(gameGui.getScene().getWindow());
+    return fileChooser.showSaveDialog(null);
   }
 
   /**

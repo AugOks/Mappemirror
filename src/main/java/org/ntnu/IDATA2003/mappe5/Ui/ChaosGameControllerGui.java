@@ -6,21 +6,21 @@ import java.util.List;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.AnimationFailedException;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
-import org.ntnu.IDATA2003.mappe5.entity.exceptions.FractalNotFoundException;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
-import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
+
 
 
 /**
  * Controller for the ChaosGameGui in accordance with the MVC pattern.
  */
-public class ChaosGameControllerGui implements ChaosGameObserver {
+public class ChaosGameControllerGui {
 
   private final ChaosGameDescriptionFactory factory;
   private final ChaosGameGui gameGui;
@@ -38,7 +38,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     factory = new ChaosGameDescriptionFactory();
     this.fileHandler = new ChaosGameFileHandler();
     this.gameGui = gameGui;;
-    this.dialogHandler = new ChaosGameDialogHandler(this.gameGui);
+    this.dialogHandler = ChaosGameDialogHandler.getInstance();
 
 
   }
@@ -65,7 +65,7 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     if (file != null) {
       try {
         this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
-      } catch (FractalNotFoundException e) {
+      } catch (ResourceNotFoundException e) {
         dialogHandler.genericErrorDialog(e.getMessage());
       }
       gameGui.createInputNode(theGame.getDescription(),1000000);
@@ -137,14 +137,6 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     return theGame.getDescription();
   }
 
-  /**
-   * Automated update method, don't use this method!
-   */
-  //TODO change the javadoc of this method.
-  @Override
-  public void update() {
-
-  }
 
   /**
    * Run the game for a given amount of steps.
