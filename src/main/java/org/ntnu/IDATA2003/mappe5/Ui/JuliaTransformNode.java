@@ -16,12 +16,12 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
  * Represents the input field for a Julia transformation.
  */
 public class JuliaTransformNode implements FractalInputNode {
-  private Slider imaginarySlider;
-  private Slider realSlider;
-  private TextField imagTextField;
-  private TextField realTextField;
-  private Complex complex;
-  private InputNodeController controller;
+  private final Slider imaginarySlider;
+  private final Slider realSlider;
+  private final TextField imagTextField;
+  private final TextField realTextField;
+  private final Complex complex;
+  private final InputNodeController controller;
   private  boolean isValueValid = true;
 
   /**

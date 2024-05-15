@@ -1,4 +1,0 @@
-Julia           # type of transform
--1.6, -1.0           # lower left coordinates
-1.6, 1.0           # upper right coordinates
--0.74543, 0.11301 # real and imaginary part of constant c

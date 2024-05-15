@@ -212,7 +212,12 @@ public class ChaosGameControllerGui {
    * Show the about dialog.
    */
   public void showAbout(){
-    this.dialogHandler.showAboutDialog();
+    try {
+      this.dialogHandler.showAboutDialog();
+    } catch (ResourceNotFoundException e) {
+        dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the" +
+            "about dialog");
+    }
   }
 
 }
