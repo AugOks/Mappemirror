@@ -20,6 +20,8 @@ import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 
 /**
  * Class for creating dialogs in the ChaosGameGui class.
+ * Made this is a singleton class to avoid creating multiple instances of the class but unsure
+ * if it is necessary.
  */
 public class ChaosGameDialogHandler {
 

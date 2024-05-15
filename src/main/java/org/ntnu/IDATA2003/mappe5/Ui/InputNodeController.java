@@ -10,8 +10,7 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
  */
 public class InputNodeController {
 
-  private ChaosGameControllerGui controller;
-  private InputNode inputNode;
+  private final ChaosGameControllerGui controller;
   private ChaosGameDescription currentDescription;
   private final ChaosGameDialogHandler dialogHandler = ChaosGameDialogHandler.getInstance();
 
@@ -47,7 +46,7 @@ public class InputNodeController {
         dialogHandler.genericErrorDialog("One of the values in the fractal input is invalid");
       }
 
-      if(fractalInputNode.isValueValid() || minMaxCoordsNode.isValueValid()) {
+      if(fractalInputNode.isValueValid() && minMaxCoordsNode.isValueValid()) {
         currentDescription.setTransforms(fractalInputNode.getTransforms());
         currentDescription.setMaxCoords(minMaxCoordsNode.getMaxCoords());
         currentDescription.setMinCoords(minMaxCoordsNode.getMinCoords());

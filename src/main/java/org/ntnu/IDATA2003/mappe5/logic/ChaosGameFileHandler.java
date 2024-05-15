@@ -49,8 +49,9 @@ public class ChaosGameFileHandler {
 
     ArrayList<String> fileContent = new ArrayList<>();
     ArrayList<Transform2D> transforms;
-    Vector2D minimumCoords = new Vector2D(0, 0);
-    Vector2D maximumCoords = new Vector2D(0, 0);
+    new Vector2D(0, 0);
+    Vector2D minimumCoords;
+    Vector2D maximumCoords;
 
     try (BufferedReader reader = Files.newBufferedReader(pathOfFile)) {
       String text;
@@ -84,13 +85,8 @@ public class ChaosGameFileHandler {
    * @return the chaos game description of the fractal.
    * @throws ResourceNotFoundException
    */
-  public ChaosGameDescription readFromFileWithFractalName(String fractal)
-      throws ResourceNotFoundException {
-
-    if (Objects.requireNonNull(getClass().getClassLoader().getResource(fractal + ".txt"))
-        .toExternalForm().isBlank()){
-      throw new ResourceNotFoundException("Could not find fractal file with this name");
-    }
+  //TODO Delete if not used by the end of the project.
+  public ChaosGameDescription readFromFileWithFractalName(String fractal) {
     String filePath;
     try {
       filePath = (Objects.requireNonNull(
@@ -99,7 +95,7 @@ public class ChaosGameFileHandler {
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the file" + e.getMessage());
     }
-    return getcontentsOfFile(filePath);
+      return getcontentsOfFile(filePath);
   }
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal but

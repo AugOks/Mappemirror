@@ -65,7 +65,7 @@ public class ChaosGameControllerGui {
     if (file != null) {
       try {
         this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
-      } catch (ResourceNotFoundException e) {
+      } catch (ResourceNotFoundException | NumberFormatException e) {
         dialogHandler.genericErrorDialog(e.getMessage());
       }
       gameGui.createInputNode(theGame.getDescription(),1000000);

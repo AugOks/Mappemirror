@@ -26,7 +26,7 @@ public class InputNode {
 
   private int currentSteps; // The number of steps.
   private boolean sliders;
-  private  InputNodeController controller;
+  private final InputNodeController controller;
 
 
   /**
