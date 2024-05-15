@@ -232,10 +232,13 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     exit.setOnAction(e -> {
       this.controller.exitApplication();
     });
-
     MenuItem saveToFile = new MenuItem("Save file");
     saveToFile.setOnAction(e -> controller.saveToFile());
 
+    MenuItem newFractal = new MenuItem("New fractal");
+    newFractal.setOnAction(e -> {
+      controller.createNewFractal();
+    });
     file.getItems().addAll(openFile, saveToFile,new SeparatorMenuItem(),exit);
 
     Menu preMade = new Menu("Pre-made");
@@ -306,10 +309,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Menu animations = new Menu("Animations");
     MenuItem dance = new MenuItem("Dance");
     dance.setOnAction(e -> controller.danceParty());
-    animations.getItems().add(dance);
     MenuItem juliaSlide = new MenuItem("Julia Slide");
-    juliaSlide.setOnAction(e -> controller.slideIntoJuliaDMs());
-    animations.getItems().add(juliaSlide);
+    juliaSlide.setOnAction(e -> {
+      controller.createFractal(ChaosGameDescriptionFactory.Fractals.JULIA);
+      controller.slideIntoJuliaDMs();
+    });
+    animations.getItems().addAll(dance, juliaSlide);
 
     menu.getMenus().addAll(file, edit, preMade, animations, help);
     menu.getStyleClass().add("menu-bar");

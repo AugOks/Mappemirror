@@ -173,6 +173,10 @@ public class ChaosGameControllerGui {
     }
   }
 
+  public void createNewFractal(){
+    this.dialogHandler.createNewFractalDialog();
+  }
+
   /**
    * Starts the dance party animation of the user presses "Yes" on the confirmation .
    */

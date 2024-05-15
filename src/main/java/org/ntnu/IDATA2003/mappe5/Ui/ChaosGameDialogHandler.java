@@ -155,6 +155,14 @@ public class ChaosGameDialogHandler {
     about.showAndWait();
   }
 
+  public void createNewFractalDialog(){
+    Alert createNewFractal = new Alert(Alert.AlertType.CONFIRMATION);
+    createNewFractal.setTitle("Create new fractal");
+    GridPane grid = new GridPane();
+
+
+  }
+
   public ColorChoiceDialog getColorChoiceDialog(){
     return new ColorChoiceDialog();
   }
