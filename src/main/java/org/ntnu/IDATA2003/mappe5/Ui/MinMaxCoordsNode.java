@@ -105,7 +105,7 @@ public class MinMaxCoordsNode {
     allGrids.add(minGrid, 0, 0);
 
     if (sliders) {
-      allGrids.add(createSlider(-0.5, minX, "minx"), 0, 1);
+      allGrids.add(createSlider(minCoords.getX0(), minX, "minx"), 0, 1);
       allGrids.add(createSlider(minCoords.getY0(), minY, "miny"), 0, 2);
       allGrids.add(createSlider(maxCoords.getX0(), maxX,"maxx"), 1, 1);
       allGrids.add(createSlider(maxCoords.getY0(), maxY, "maxy"), 1, 2);
@@ -161,7 +161,18 @@ public class MinMaxCoordsNode {
    * @return the slider.
    */
   private Slider createSlider(double startValue, TextField textField, String id) {
-    Slider slider = new Slider(-3, 3, startValue);
+    Slider slider;
+    Double minvalue = -(startValue*1.5);
+    Double maxvalue = (startValue*1.5);
+    if (Math.signum(startValue) == 1){
+     slider = new Slider(minvalue, maxvalue, startValue);
+    }
+    else if(Math.signum(startValue) == -1){
+      slider = new Slider(maxvalue, minvalue, startValue);
+    }
+    else{
+      slider = new Slider(-1, 1, startValue);
+    }
     slider.setId(id);
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
