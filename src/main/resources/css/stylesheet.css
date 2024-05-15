@@ -59,21 +59,11 @@
     -fx-text-fill: black;
     -fx-font-family: sans-serif;
 }
-.matrix-field{
+.matrix-vector-field{
     -fx-min-width: 40;
     -fx-max-width: 90;
-    -fx-min-height: 25;
-    -fx-max-height: 25;
-    -fx-font-size: 12;
-    -fx-font-weight: 500;
-    -fx-text-fill: black;
-    -fx-font-family: sans-serif;
-}
-.vector-field{
-    -fx-min-width: 40;
-    -fx-max-width: 90;
-    -fx-min-height: 25;
-    -fx-max-height: 25;
+    -fx-min-height: 26;
+    -fx-max-height: 26;
     -fx-font-size: 12;
     -fx-font-weight: 500;
     -fx-text-fill: black;

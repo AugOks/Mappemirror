@@ -80,12 +80,12 @@ public class ChaosGameDialogHandler {
       Alert alertDanceParty = new Alert(Alert.AlertType.CONFIRMATION, "  ", yesD, noD);
       alertDanceParty.setTitle("Dance party");
       alertDanceParty.setHeaderText("Do you want to have a dance party?");
-      final ImageView DIALOG_HEADER_ICON;
-        DIALOG_HEADER_ICON = new ImageView(Objects.requireNonNull(getClass()
+      final ImageView dialogHeaderIcon;
+        dialogHeaderIcon = new ImageView(Objects.requireNonNull(getClass()
             .getResource("/discoBall.png")).toExternalForm());
-      DIALOG_HEADER_ICON.setFitHeight(48);
-      DIALOG_HEADER_ICON.setFitWidth(48);
-      alertDanceParty.getDialogPane().setGraphic(DIALOG_HEADER_ICON);
+      dialogHeaderIcon.setFitHeight(48);
+      dialogHeaderIcon.setFitWidth(48);
+      alertDanceParty.getDialogPane().setGraphic(dialogHeaderIcon);
 
       Optional<ButtonType> result = alertDanceParty.showAndWait();
 
@@ -190,6 +190,7 @@ public class ChaosGameDialogHandler {
 
   /**
    * Method for creating a file chooser dialog.
+   *
    * @return the file chosen by the user.
    */
   public File readFromFileDialog(){
@@ -200,6 +201,7 @@ public class ChaosGameDialogHandler {
 
   /**
    * Method for saving current fractal to file.
+   *
    * @return the file chosen by the user.
    */
   public File saveToFileDialog(){
@@ -210,7 +212,8 @@ public class ChaosGameDialogHandler {
 
   /**
    * Method for creating a generic error dialog.
-   * @param message
+   *
+   * @param message the message to display in the dialog.
    */
   public void genericErrorDialog(String message){
     Alert alert = new Alert(Alert.AlertType.ERROR);
