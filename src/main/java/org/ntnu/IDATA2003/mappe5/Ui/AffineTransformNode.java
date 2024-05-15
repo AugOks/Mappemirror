@@ -113,6 +113,7 @@ public class AffineTransformNode implements FractalInputNode {
       Label transformLabel = new Label("Transform " +transfNumber+": ");
       transformLabel.getStyleClass().add("input-title");
       entireTransform.add(transformLabel,0,0);
+      entireTransform.add(new Label(""),0,1);
 
       Matrix2x2 matrix = transform.getMatrix();
       Vector2D vector = transform.getVector();
@@ -136,10 +137,11 @@ public class AffineTransformNode implements FractalInputNode {
       firstVector.add(createVectorTextField("b1", vector.getY0(), vector), 0, 2);
       firstMatrix.add(new Label("  "),0,3);
 
-      gridPane.add(firstMatrix,0,i+1);
-      gridPane.add(new Label("  "),1,i+1);
-      gridPane.add(firstVector,2,i+1);
+      entireTransform.add(firstMatrix,0,i+1);
+      entireTransform.add(new Label("  "),1,i+1);
+      entireTransform.add(firstVector,2,i+1);
 
+      gridPane.add(entireTransform,0,i);
     }
     return gridPane;
   }

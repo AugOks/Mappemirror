@@ -239,7 +239,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     newFractal.setOnAction(e -> {
       controller.createNewFractal();
     });
-    file.getItems().addAll(openFile, saveToFile,new SeparatorMenuItem(),exit);
+    file.getItems().addAll(openFile, saveToFile,newFractal,new SeparatorMenuItem(),exit);
 
     Menu preMade = new Menu("Pre-made");
 
@@ -402,7 +402,6 @@ wackySlide.setOnAction(e -> {
     } else {
       this.input.changeInputNode(description, stepsInt);
     }
-
   }
 
   /**

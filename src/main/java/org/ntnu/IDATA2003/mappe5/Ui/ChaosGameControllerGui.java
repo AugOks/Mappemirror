@@ -3,6 +3,8 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.AnimationFailedException;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
@@ -174,9 +176,33 @@ public class ChaosGameControllerGui {
   }
 
   public void createNewFractal(){
-    this.dialogHandler.createNewFractalDialog();
+    int transforms = this.dialogHandler.createNewFractalDialog();
+    if (transforms == 0){
+      this.createFractal(ChaosGameDescriptionFactory.Fractals.BLANKJULIA);
+    } else {
+      this.createBlankAffineFractal(transforms);
+    }
   }
 
+  //TODO refactor this piece of absolute shit
+  private void createBlankAffineFractal(int numberTransforms) {
+    Vector2D minCoords = new Vector2D(0, 0);
+    Vector2D maxCoords = new Vector2D(0.1, 0.1);
+    List<Transform2D> transforms = new ArrayList<>();
+    for (int i = 0; i < numberTransforms; i++) {
+      Matrix2x2 Matrix = new Matrix2x2(0, 0, 0, 0);
+      Vector2D Vector = new Vector2D(0, 0);
+      transforms.add(new AffineTransform2D(Matrix, Vector));
+    }
+    ChaosGameDescription description = new ChaosGameDescription(transforms, minCoords, maxCoords,
+                                                                "BlankAffine");
+    theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
+    gameGui.createCanvas(theGame, 1);
+    gameGui.createInputNode(theGame.getDescription(),1);
+    this.chaosGameAnimations = new ChaosGameAnimations(theGame.getDescription(), this);
+    theGame.addSubscriber(gameGui);
+
+  }
   /**
    * Starts the dance party animation of the user presses "Yes" on the confirmation .
    */

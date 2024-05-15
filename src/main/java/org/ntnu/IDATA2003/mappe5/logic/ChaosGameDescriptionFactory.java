@@ -19,7 +19,8 @@ public class ChaosGameDescriptionFactory {
    * An enum containing all currently available pre-defined fractals the factory can output.
    */
   public enum Fractals {
-    JULIA, BARNSLEY, SIERPINSKI, SPIDERWEB, SQUARE, PENTAGON, KOCHCURVE, DRAGONFIRE
+    JULIA, BARNSLEY, SIERPINSKI, SPIDERWEB, SQUARE, PENTAGON, KOCHCURVE, DRAGONFIRE, BLANKJULIA,
+    BLANKAFFINE
   }
 
   /**
@@ -63,6 +64,14 @@ public class ChaosGameDescriptionFactory {
 
       case DRAGONFIRE:
         description = this.createDragonFire();
+        break;
+
+      case BLANKJULIA:
+        description = this.createBlankJulia();
+        break;
+
+      case BLANKAFFINE:
+       // description = this.createBlankAffine(numberTransforms);
         break;
 
       default:
@@ -253,6 +262,29 @@ public class ChaosGameDescriptionFactory {
     transforms.add(new AffineTransform2D(secondMatrix, secondVector));
     transforms.add(new AffineTransform2D(thirdMatrix, thirdVector));
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "DragonFire");
+  }
+
+  private ChaosGameDescription createBlankJulia(){
+    Vector2D minCoords = new Vector2D(0,0);
+    Vector2D maxCoords = new Vector2D(0.1, 0.1);
+    Complex c = new Complex(0,0);
+    List<Transform2D> transformList = new ArrayList<>();
+    transformList.add(new JuliaTransform(c, 1));
+    transformList.add(new JuliaTransform(c, -1));
+
+    return new ChaosGameDescription(transformList, minCoords, maxCoords, "BlankJulia");
+  }
+
+  private ChaosGameDescription createBlankAffine(int numberTransforms){
+    Vector2D minCoords = new Vector2D(0, 0);
+    Vector2D maxCoords = new Vector2D(0.1, 0.1);
+    List<Transform2D> transforms = new ArrayList<>();
+    for (int i=0; i< numberTransforms; i++){
+      Matrix2x2 Matrix = new Matrix2x2(0, 0, 0, 0);
+      Vector2D Vector = new Vector2D(0, 0);
+      transforms.add(new AffineTransform2D(Matrix, Vector));
+    }
+    return new ChaosGameDescription(transforms, minCoords, maxCoords, "BlankAffine");
   }
 }
 

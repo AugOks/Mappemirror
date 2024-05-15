@@ -5,13 +5,21 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 import javafx.collections.FXCollections;
+import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.Separator;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -21,6 +29,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javax.sound.sampled.Line;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 
 /**
@@ -31,6 +40,7 @@ import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 public class ChaosGameDialogHandler {
 
   private static  ChaosGameDialogHandler instance = null;
+  private int numberOfTransforms;
   /**
    * Constructor for the ChaosGameDialogHandler class.
    */
@@ -109,16 +119,7 @@ public class ChaosGameDialogHandler {
     Alert about = new Alert(Alert.AlertType.INFORMATION);
     about.setTitle("About");
     about.setHeaderText("Chaos Game");
-    final ImageView DIALOG_HEADER_ICON;
-    try {
-      DIALOG_HEADER_ICON = new ImageView(Objects.requireNonNull(getClass()
-          .getResource("/iconChaosGame.png")).toExternalForm());
-    } catch (NullPointerException e) {
-      throw new ResourceNotFoundException("Could not find the icon");
-    }
-    DIALOG_HEADER_ICON.setFitHeight(48);
-    DIALOG_HEADER_ICON.setFitWidth(48);
-    about.getDialogPane().setGraphic(DIALOG_HEADER_ICON);
+    setIconToCGDialog(about);
     about.getDialogPane().setMinSize(700, 400);
 
     VBox dialogPaneContent = new VBox();
@@ -155,13 +156,76 @@ public class ChaosGameDialogHandler {
     about.showAndWait();
   }
 
-  public void createNewFractalDialog(){
+  public int createNewFractalDialog(){
+
     Alert createNewFractal = new Alert(Alert.AlertType.CONFIRMATION);
+    createNewFractal.getDialogPane().setMinSize(300, 300);
+    setIconToCGDialog(createNewFractal);
     createNewFractal.setTitle("Create new fractal");
     GridPane grid = new GridPane();
 
+    final ToggleGroup group = new ToggleGroup();
+    RadioButton radioButtonJulia = new RadioButton("Julia Set");
+    RadioButton radioButtonAffine = new RadioButton("Affine Transformation");
+    radioButtonJulia.setToggleGroup(group);
+    radioButtonAffine.setToggleGroup(group);
+    radioButtonAffine.isSelected();
 
+    createNewFractal.setTitle("New fractal");
+    createNewFractal.setHeaderText("Create a new fractal");
+    grid.add(new Label("Choose the type of fractal you want to create"), 0, 0);
+    grid.add(new Label(""), 0, 1);
+    grid.add(radioButtonJulia, 0, 2);
+    grid.add(radioButtonAffine, 0, 3);
+
+    Separator line = new Separator(Orientation.HORIZONTAL);
+
+    Spinner spinner = new Spinner();
+    spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20));
+    spinner.setEditable(true);
+
+    radioButtonJulia.setOnAction(event -> {
+      if (radioButtonJulia.isSelected()) {
+        if (grid.getChildren().contains(spinner)){
+          removeNodesFromGrid(grid, 4, 7);
+          this.numberOfTransforms = 0;
+        }
+      }
+    });
+
+    radioButtonAffine.setOnAction(event -> {
+      if (radioButtonAffine.isSelected()) {
+        grid.add(new Label("  "), 0, 4);
+        grid.add(line, 0, 5);
+        grid.add(new Label("Number of transforms"), 0, 6);
+        grid.add(spinner, 0, 7);
+      }
+    });
+
+    createNewFractal.getDialogPane().setContent(grid);
+    createNewFractal.showAndWait();
+    if (radioButtonAffine.isSelected()){
+      this.numberOfTransforms = (int) spinner.getValue();
+    }
+    System.out.println(this.numberOfTransforms);
+    return this.numberOfTransforms;
   }
+
+  /**
+   *
+   * @param grid
+   * @param startRow
+   * @param endRow
+   */
+  private void removeNodesFromGrid(GridPane grid, int startRow, int endRow) {
+    for (int i = startRow; i <= endRow; i++) {
+      final int row = i;
+      grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row &&
+                                          GridPane.getColumnIndex(node) == 0);
+    }
+  }
+
+
 
   public ColorChoiceDialog getColorChoiceDialog(){
     return new ColorChoiceDialog();
@@ -183,9 +247,9 @@ public class ChaosGameDialogHandler {
       this.getDialogPane().setMinSize(220, 150);
       this.setHeaderText("Choose a color for the fractal");
       ColorPicker colorPicker = new ColorPicker();
-        colorPicker.setOnAction(event -> this.setResult(colorPicker.getValue()));
-        this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-        this.getDialogPane().setContent(colorPicker);
+      colorPicker.setOnAction(event -> this.setResult(colorPicker.getValue()));
+      this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+      this.getDialogPane().setContent(colorPicker);
       this.setResultConverter(buttonType -> {
         if (buttonType == ButtonType.OK) {
           return this.getResult();
@@ -227,5 +291,19 @@ public class ChaosGameDialogHandler {
     Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setContentText(message);
     alert.showAndWait();
+  }
+
+  private void setIconToCGDialog(Alert alert) {
+    final ImageView dialogHeaderIcon;
+    try {
+      dialogHeaderIcon = new ImageView(
+          Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
+                 .toExternalForm());
+    } catch (NullPointerException e) {
+      throw new ResourceNotFoundException("Could not find the icon");
+    }
+    dialogHeaderIcon.setFitHeight(48);
+    dialogHeaderIcon.setFitWidth(48);
+    alert.getDialogPane().setGraphic(dialogHeaderIcon);
   }
 }
