@@ -1,5 +1,5 @@
 .root{
-    -fx-background-color: lightgray;
+    -fx-background-color: #424040;
 }
 .button-rightPane{
     -fx-min-width: 200;
@@ -18,20 +18,20 @@
     -fx-alignment: center;
     -fx-spacing: 20;
     -fx-padding: 10;
-    -fx-background-color: #3b3939;
+    -fx-background-color: #363535;
 }
 .leftPane{
     -fx-alignment: center;
     -fx-min-width: 10;
-    -fx-background-color: #3f3d3d;
+    -fx-background-color: #363535;
 }
 .bottomPane{
     -fx-min-height: 10;
-    -fx-background-color: #3f3d3d;
+    -fx-background-color: #424040;
 }
 .header{
     -fx-alignment: center;
-    -fx-background-color: #3f3d3d;
+    -fx-background-color: #424040;
     -fx-max-height: 100;
     -fx-min-height: 100;
 }
@@ -44,15 +44,14 @@
     -fx-background-color: white;
 }
 .inputNode{
-    -fx-background-color: #3b3939;
     -fx-alignment: Center;
     -fx-spacing: 12;
     -fx-min-width: 300;
     -fx-grid-lines-visible: false;
 }
 .minMaxField{
-    -fx-min-width: 130;
-    -fx-max-width: 130;
+    -fx-min-width: 135;
+    -fx-max-width: 135;
     -fx-min-height: 25;
     -fx-max-height: 25;
     -fx-font-size: 12;
@@ -81,11 +80,11 @@
     -fx-font-family: sans-serif;
 }
 .input-title{
-    -fx-font-size: 12;
-    -fx-padding: 1;
-    -fx-font-weight: bold;
+    -fx-font-size: 14.0;
+    -fx-font-family: "sans-serif";
     -fx-text-fill: white;
-    -fx-font-family: sans-serif;
+    -fx-font-weight: bold;
+    -fx-padding: 2;
 }
 .menu-bar{
     -fx-background-color: #2d2b2b ;
@@ -120,5 +119,8 @@
     -fx-font-size: 14.0;
     -fx-background: black ;
     -fx-text-fill: white;
+}
+.scroll-pane > .viewport {
+    -fx-background-color: #363535;
 }
 

@@ -97,9 +97,9 @@ public class MinMaxCoordsNode {
     minGrid.add(minLabel, 0, 0);
 
     minGrid.add(minX, 0, 1);
-    minGrid.add(new Label(" x0"), 1, 1);
+    minGrid.add(new Label(" "), 1, 1);
     minGrid.add(minY, 0, 2);
-    minGrid.add(new Label(" y0"), 1, 2);
+    minGrid.add(new Label(" "), 1, 2);
     minGrid.add(new Label("  "),0,3);
 
     allGrids.add(minGrid, 0, 0);
@@ -113,9 +113,9 @@ public class MinMaxCoordsNode {
     GridPane maxGrid = new GridPane();
     maxGrid.add(maxLabel, 0, 0);
     maxGrid.add(maxX, 0, 1);
-    maxGrid.add(new Label(" x1"), 1, 1);
+    maxGrid.add(new Label(" "), 1, 1);
     maxGrid.add(maxY, 0, 2);
-    maxGrid.add(new Label(" y1"), 1, 2);
+    maxGrid.add(new Label(" "), 1, 2);
 
     allGrids.add(maxGrid, 1, 0);
 
@@ -165,8 +165,8 @@ public class MinMaxCoordsNode {
     slider.setId(id);
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
-    slider.setMajorTickUnit(0.5f);
-    slider.setBlockIncrement(0.2f);
+    slider.setMajorTickUnit(1.5f);
+    slider.setBlockIncrement(1.5f);
     slider.setMaxWidth(130);
     this.sliderListener(slider,textField);
     return slider;

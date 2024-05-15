@@ -103,6 +103,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
       //The right pane
       this.scrollPane.setContent(createRightPane());
+      this.scrollPane.getStyleClass().add("scroll-pane");
       root.setRight(this.scrollPane);
       root.getRight().getStyleClass().add("rightPane");
       this.scrollPane.setMinHeight(getHeightForCanvas());
@@ -128,11 +129,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       primaryStage.setTitle("Chaos Game");
       primaryStage.setMaximized(true);
       primaryStage.setScene(scene);
-
-        primaryStage.getIcons().add(new Image(
+      primaryStage.getIcons().add(new Image(
             Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
             .toExternalForm()));
-
       primaryStage.show();
     }catch (NullPointerException e){
       throw new ResourceNotFoundException("failed to fetch a resource");
@@ -157,37 +156,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @return HBox a HBox containing the components for the right pane.
    */
   private VBox createRightPane() {
-
     VBox rightPane = new VBox();
     rightPane.getStyleClass().add("rightPane");
-
-    /*
-    // Button for the julia transformation
-    Button juliaButton = new Button("Julia Set");
-    juliaButton.getStyleClass().add("button-rightPane");
-    juliaButton.setOnAction(e -> controller.createFractal(
-        ChaosGameDescriptionFactory.Fractals.JULIA));
-
-    //Button for the sierpinski transformation
-    Button sierpinskiButton = new Button("Sierpinski");
-    sierpinskiButton.getStyleClass().add("button-rightPane");
-    sierpinskiButton.setOnAction(e -> controller.createFractal(
-        ChaosGameDescriptionFactory.Fractals.SIERPINSKI));
-
-    //Button for the barnsley fern transformation
-    Button barnsleyButton = new Button("Barnsley Fern");
-    barnsleyButton.getStyleClass().add("button-rightPane");
-    barnsleyButton.setOnAction(e -> controller.createFractal(
-        ChaosGameDescriptionFactory.Fractals.BARNSLEY));
-
-    // Add the buttons and the input fields to the right pane
-    HBox buttonBox = new HBox();
-    buttonBox.getChildren().addAll(juliaButton, sierpinskiButton, barnsleyButton);
-    buttonBox.setSpacing(20);
-    buttonBox.setPrefWidth(350);
-    buttonBox.setAlignment(Pos.CENTER);
-    rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
-     */
     rightPane.getChildren().addAll(this.input.getInputNode());
     rightPane.setAlignment(Pos.TOP_CENTER);
 

@@ -35,9 +35,9 @@ public class JuliaTransformNode implements FractalInputNode {
     this.complex = julia.getComplex();
     this.imagTextField = new TextField();
     this.imagTextField.setId("imag");
-    this.imagTextField.setMaxWidth(70);
+    this.imagTextField.setMaxWidth(100);
     this.realTextField = new TextField();
-    this.realTextField.setMaxWidth(70);
+    this.realTextField.setMaxWidth(100);
     this.realTextField.setId("real");
 
     this.imaginarySlider = createSlider(this.complex.getY0(),-1, 1.0,this.imagTextField);
@@ -59,9 +59,10 @@ public class JuliaTransformNode implements FractalInputNode {
     Slider slider = new Slider(min, max,startValue); //starts at 0 just for construction.
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
-    slider.setMajorTickUnit(0.1f);
-    slider.setBlockIncrement(0.1f);
-    slider.setMaxWidth(200);
+    slider.setMajorTickUnit(0.5f);
+    slider.setBlockIncrement(0.5f);
+    slider.setMaxWidth(180);
+    slider.setMinWidth(180);
     textField.textProperty().setValue(String.valueOf(startValue));
     slider.setId(textField.getText());
     this.sliderListener(slider,textField);

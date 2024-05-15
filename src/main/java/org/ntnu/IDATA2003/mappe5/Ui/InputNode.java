@@ -8,9 +8,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 
@@ -20,9 +17,7 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
  */
 public class InputNode {
 
-  private VBox inputNode; // The input node for the user interface.
-
-  private GridPane inputNodeGrid; // The input node for the user interface.
+  private GridPane inputNode; // The input node for the user interface.
 
   private ChaosGameDescription currentDescription; // The current description of the fractal.
 
@@ -45,13 +40,8 @@ public class InputNode {
   public InputNode(ChaosGameDescription description, int stepsInt, ChaosGameControllerGui controller) {
     this.controller = new InputNodeController(controller, description, this);
     this.currentSteps = stepsInt;
-    this.inputNodeGrid = new GridPane();
-    this.inputNode = new VBox(inputNodeGrid);
-
-    this.inputNodeGrid.getStyleClass().add("inputNode");
-    this.inputNodeGrid.setBackground(new Background(new BackgroundFill(Color.DARKGREY,
-        null,null)));
-
+    this.inputNode = new GridPane();
+    this.inputNode.getStyleClass().add("inputNode");
     TextField steps = new TextField();
     steps.setPromptText("Steps");
     steps.setText(String.valueOf(stepsInt));
@@ -62,9 +52,9 @@ public class InputNode {
     });
     Label runStepsLabel = new Label("Run steps:");
     runStepsLabel.getStyleClass().add("input-title");
-    this.inputNodeGrid.add(runStepsLabel, 0, 0);
-    this.inputNodeGrid.add(steps, 0, 1);
-    this.inputNodeGrid.add(new Label(""),0,2);
+    this.inputNode.add(runStepsLabel, 0, 0);
+    this.inputNode.add(steps, 0, 1);
+    this.inputNode.add(new Label(""), 0, 2);
 
     this.findInstance(description);
     this.createInputNode(description, false);
@@ -81,9 +71,9 @@ public class InputNode {
     this.sliders = slidersOnOff;
     this.minMaxCoordsNode = new MinMaxCoordsNode(description.getMinCoords(),
         description.getMaxCoords(), controller);
-    this.inputNodeGrid.getChildren().removeIf(node -> node instanceof GridPane);
-    this.inputNodeGrid.add(minMaxCoordsNode.getMinMaxNode(this.sliders),0,3);
-    this.inputNodeGrid.add(fractalInputNode.getFractalNode(),0,4);
+    this.inputNode.getChildren().removeIf(node -> node instanceof GridPane);
+    this.inputNode.add(minMaxCoordsNode.getMinMaxNode(this.sliders), 0, 3);
+    this.inputNode.add(fractalInputNode.getFractalNode(), 0, 4);
   }
 
 
@@ -93,7 +83,7 @@ public class InputNode {
    * @return GridPane: the input node.
    */
   public VBox getInputNode() {
-    return this.inputNode;
+    return new VBox(this.inputNode);
   }
 
   /**
@@ -138,6 +128,7 @@ public class InputNode {
     });
     HBox runButtonBox = new HBox(runButton);
     runButtonBox.setAlignment(Pos.CENTER);
-    this.inputNodeGrid.add(runButtonBox,0,5);
+    this.inputNode.add(new Label(""), 0, 5);
+    this.inputNode.add(runButtonBox, 0, 6);
   }
 }
