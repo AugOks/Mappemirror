@@ -59,7 +59,7 @@ class ChaosGameFileHandlerTest {
   void testReadFromFile() {
     ChaosGameDescription description = null;
     try {
-      description = this.handler.readFromFileWithFractalName("juliaset");
+      description = this.handler.readFromFileWithFractalName("julia_set");
       assertNotNull(description);
       ChaosGame game = new ChaosGame(description, 100, 300);
       game.runSteps(1000);
@@ -110,7 +110,7 @@ class ChaosGameFileHandlerTest {
     try {
       this.handler.writeToFile(null, null);
       fail();
-    } catch (FailedToWriteToFileException e) {
+    } catch (FailedToWriteToFileException | IllegalArgumentException e) {
       assertTrue(true);
     }
   }

@@ -2,9 +2,11 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -41,15 +43,13 @@ public class InputNode {
     this.controller = new InputNodeController(controller, description, this);
     this.currentSteps = stepsInt;
     this.inputNode = new GridPane();
+    this.runWhenEnterPressed(inputNode);
     this.inputNode.getStyleClass().add("inputNode");
     TextField steps = new TextField();
     steps.setPromptText("Steps");
     steps.setText(String.valueOf(stepsInt));
     steps.setMaxWidth(275);
     steps.setMinWidth(275);
-    steps.textProperty().addListener((observable, oldValue, newValue) -> {
-      this.currentSteps = Integer.parseInt(newValue);
-    });
     Label runStepsLabel = new Label("Run steps:");
     runStepsLabel.getStyleClass().add("input-title");
     this.inputNode.add(runStepsLabel, 0, 0);
@@ -59,8 +59,33 @@ public class InputNode {
     this.findInstance(description);
     this.createInputNode(description, false);
     this.createRunButton();
+
+    steps.textProperty().addListener((observable, oldValue, newValue) -> {
+      try {
+        this.currentSteps = Integer.parseInt(newValue);
+      } catch (NumberFormatException e) {
+        steps.setText(oldValue);
+      }
+    });
+    steps.setOnKeyPressed(e -> {
+      if (e.getCode().equals(KeyCode.ENTER)) {
+        this.currentSteps = Integer.parseInt(steps.getText());
+      }
+    });
   }
 
+  /**
+   * Runs the fractal when the enter key is pressed.
+   *
+   * @param node the node to run the fractal.
+   */
+  private void runWhenEnterPressed(Node node){
+    node.setOnKeyPressed(e -> {
+      if (e.getCode().equals(KeyCode.ENTER)) {
+        this.controller.run(minMaxCoordsNode, fractalInputNode);
+      }
+    });
+  }
 
   /**
    * Creates the input node for the user interface, regardless of the type of fractal.
