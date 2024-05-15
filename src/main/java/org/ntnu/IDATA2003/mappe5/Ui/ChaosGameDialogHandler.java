@@ -12,8 +12,12 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
@@ -100,7 +104,7 @@ public class ChaosGameDialogHandler {
    * @throws ResourceNotFoundException if the icon for the dialog is not found.
    */
   public void showAboutDialog() {
-    //TODO write more about the application
+
     Alert about = new Alert(Alert.AlertType.INFORMATION);
     about.setTitle("About");
     about.setHeaderText("Chaos Game");
@@ -114,15 +118,38 @@ public class ChaosGameDialogHandler {
     DIALOG_HEADER_ICON.setFitHeight(48);
     DIALOG_HEADER_ICON.setFitWidth(48);
     about.getDialogPane().setGraphic(DIALOG_HEADER_ICON);
-    about.getDialogPane().setMinSize(900, 600);
-
-    //Todo add all information about the application here
+    about.getDialogPane().setMinSize(700, 400);
 
     VBox dialogPaneContent = new VBox();
-    Text text = new Text("This application is a chaos game application that allows you to" +
-        " create fractals using affine transformations.");
+    GridPane grid = new GridPane();
 
-    dialogPaneContent.getChildren().add(text);
+    String header = "Welcome to chaos game!";
+    Text text1 = new Text("Chaos game is one of many established methods for generating fractals "
+                          +  "online.\n"
+                          +  "A fractal can be defined as complex pattern that are self-similar "
+                          + "across different scales. In other word, beautiful figure \n"
+                          + "that will repeat the same pattern "
+                          + "regardless of how much you zoom and your viewpoint.\n");
+    Text text2 = new Text("The application creates fractals choosing a initial starting point, "
+                          + "and so transforming that point using \n"
+                          +" a predefined mathematical operation."
+                          + "Iteratively creating a long sequence of points later on drawn on a "
+                          + "canvas to create a fractal.\n"
+                          + "The most known fractals includes the "
+                          + "Julia set and the Sierpinski triangle. \n");
+    Text text3 = new Text("This particular Chaos Game was created by students as NTNU as a part "
+                          + " of their exam for the course IDATx2024. \n"
+                          + "The main objective was to show competence in newly learned knowledge "
+                          + "such as design patterns,\n"
+                          + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
+    text1.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
+    text2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
+    text3.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
+    about.setHeaderText(header);
+    grid.add(text1,0,1);
+    grid.add(text2,0,2);
+    grid.add(text3,0,3);
+    dialogPaneContent.getChildren().add(grid);
     about.getDialogPane().setContent(dialogPaneContent);
     about.showAndWait();
   }

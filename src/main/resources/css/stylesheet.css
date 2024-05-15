@@ -2,12 +2,17 @@
     -fx-background-color: lightgray;
 }
 .button-rightPane{
-    -fx-max-width: 200;
+    -fx-min-width: 200;
+    -fx-min-height: 30;
     -fx-max-height: 40;
     -fx-spacing: 40;
-    -fx-font-size: 15;
-    -fx-font-family: "Times New Roman",serif;
-    -fx-padding: 10;
+    -fx-font-size: 12;
+    -fx-font-family: sans-serif;
+    -fx-padding: 5;
+    -fx-alignment: center;
+}
+.button-rightPane:hover{
+    -fx-font-weight: bold;
 }
 .rightPane{
     -fx-alignment: center;
@@ -41,31 +46,79 @@
 .inputNode{
     -fx-background-color: #3b3939;
     -fx-alignment: Center;
-    -fx-spacing: 10;
+    -fx-spacing: 12;
     -fx-min-width: 300;
     -fx-grid-lines-visible: false;
 }
 .minMaxField{
-    -fx-min-width: 100;
+    -fx-min-width: 130;
+    -fx-max-width: 130;
     -fx-min-height: 25;
-    -fx-font-size: 10;
+    -fx-max-height: 25;
+    -fx-font-size: 12;
+    -fx-font-weight: 500;
+    -fx-text-fill: black;
+    -fx-font-family: sans-serif;
 }
 .matrix-field{
     -fx-min-width: 40;
     -fx-max-width: 90;
     -fx-min-height: 25;
     -fx-max-height: 25;
-    -fx-font-size: 10;
+    -fx-font-size: 12;
+    -fx-font-weight: 500;
+    -fx-text-fill: black;
+    -fx-font-family: sans-serif;
 }
 .vector-field{
     -fx-min-width: 40;
     -fx-max-width: 90;
     -fx-min-height: 25;
     -fx-max-height: 25;
-    -fx-font-size: 10;
+    -fx-font-size: 12;
+    -fx-font-weight: 500;
+    -fx-text-fill: black;
+    -fx-font-family: sans-serif;
 }
 .input-title{
     -fx-font-size: 12;
+    -fx-padding: 1;
     -fx-font-weight: bold;
     -fx-text-fill: white;
+    -fx-font-family: sans-serif;
 }
+.menu-bar{
+    -fx-background-color: #2d2b2b ;
+    -fx-opacity: 1.2;
+    -fx-border-width: 2.0;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: sans-serif;
+    -fx-font-size: 13;
+}
+.menu-bar .label {
+    -fx-font-size: 14.0;
+    -fx-font-family: "sans-serif";
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10.0;
+}
+.menu-bar .menu-button:hover, .menu-bar .menu-button:focused, .menu-bar .menu-button:showing {
+    -fx-background: #2d2b2b ;
+    -fx-opacity: 0.5;
+    -fx-text-fill: white;
+}
+.menu-item {
+    -fx-text-fill: #2d2b2b;
+    -fx-background: darkgray ;
+}
+.menu-item .label{
+    -fx-font-size: 14.0;
+    -fx-text-fill: black;
+}
+.menu-item .label:hover{
+    -fx-font-size: 14.0;
+    -fx-background: black ;
+    -fx-text-fill: white;
+}
+

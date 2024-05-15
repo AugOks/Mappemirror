@@ -165,8 +165,9 @@ public class MinMaxCoordsNode {
     slider.setId(id);
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
-    slider.setMajorTickUnit(0.25f);
-    slider.setBlockIncrement(0.1f);
+    slider.setMajorTickUnit(0.5f);
+    slider.setBlockIncrement(0.2f);
+    slider.setMaxWidth(130);
     this.sliderListener(slider,textField);
     return slider;
   }

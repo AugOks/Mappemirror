@@ -162,6 +162,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     VBox rightPane = new VBox();
     rightPane.getStyleClass().add("rightPane");
 
+    /*
     // Button for the julia transformation
     Button juliaButton = new Button("Julia Set");
     juliaButton.getStyleClass().add("button-rightPane");
@@ -187,6 +188,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     buttonBox.setPrefWidth(350);
     buttonBox.setAlignment(Pos.CENTER);
     rightPane.getChildren().addAll(buttonBox, this.input.getInputNode());
+     */
+    rightPane.getChildren().addAll(this.input.getInputNode());
     rightPane.setAlignment(Pos.TOP_CENTER);
 
     return rightPane;
@@ -305,7 +308,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     Menu edit = new Menu("Edit");
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
-    edit.getItems().add(showSliders);
     showSliders.setOnAction(e -> input.createInputNode(controller.getDescription(),
         showSliders.isSelected()));
 
@@ -320,13 +322,12 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       }
       controller.changeDescription(controller.getDescription());
     });
-    edit.getItems().add(colorPicker);
 
     CheckMenuItem zoomScroll = new CheckMenuItem("Zoom scroll");
     zoomScroll.setOnAction(e -> {
       this.zoomScroll = zoomScroll.isSelected();
     });
-    edit.getItems().add(zoomScroll);
+    edit.getItems().addAll(showSliders, zoomScroll, colorPicker);
 
     Menu help = new Menu("Help");
     MenuItem about = new MenuItem("About");
@@ -342,6 +343,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     animations.getItems().add(juliaSlide);
 
     menu.getMenus().addAll(file, edit, preMade, animations, help);
+    menu.getStyleClass().add("menu-bar");
     return  menu;
   }
 
