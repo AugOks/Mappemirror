@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -164,64 +165,27 @@ public class ChaosGameDialogHandler {
    * The user can choose a color from the combobox.
    */
   public static class ColorChoiceDialog extends Dialog<Color> {
-    private HashMap<String, Color> availableColors;
 
     /**
      * Constructor for the ColorChoiceDialog class.
      * Creates a dialog for the user to choose a color.
      */
     public ColorChoiceDialog() {
-      this.setAvailableColors();
       this.setTitle("Choose a color");
-
-      ComboBox<String> colorComboBox = new ComboBox<>();
-      colorComboBox.setPlaceholder(new Label("Choose a color"));
-      colorComboBox.setItems(FXCollections.observableArrayList(availableColors.keySet()));
+      this.getDialogPane().setMinSize(220, 150);
       this.setHeaderText("Choose a color for the fractal");
-      this.getDialogPane().setContent(colorComboBox);
-      this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+      ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setOnAction(event -> this.setResult(colorPicker.getValue()));
+        this.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        this.getDialogPane().setContent(colorPicker);
       this.setResultConverter(buttonType -> {
         if (buttonType == ButtonType.OK) {
-          return availableColors.get(colorComboBox.getValue());
+          return this.getResult();
         }
         return null;
       });
     }
 
-    /**
-     * Sets the available colors for the dialog.
-     */
-    public void setAvailableColors() {
-      this.availableColors = new HashMap<>();
-      this.availableColors.put("default", null);
-      this.availableColors.put("Red", Color.RED);
-      this.availableColors.put("Blue", Color.BLUE);
-      this.availableColors.put("Green", Color.GREEN);
-      this.availableColors.put("Yellow", Color.YELLOW);
-      this.availableColors.put("Black", Color.BLACK);
-      this.availableColors.put("White", Color.WHITE);
-      this.availableColors.put("Purple", Color.PURPLE);
-      this.availableColors.put("Orange", Color.ORANGE);
-      this.availableColors.put("Pink", Color.PINK);
-      this.availableColors.put("Brown", Color.BROWN);
-      this.availableColors.put("Cyan", Color.CYAN);
-      this.availableColors.put("Gray", Color.GRAY);
-      this.availableColors.put("Light Gray", Color.LIGHTGRAY);
-      this.availableColors.put("Dark Gray", Color.DARKGRAY);
-      this.availableColors.put("Magenta", Color.MAGENTA);
-      this.availableColors.put("Aliceblue",Color.ALICEBLUE);
-      this.availableColors.put("Antiquewhite",Color.ANTIQUEWHITE);
-      this.availableColors.put("Aqua",Color.AQUA);
-      this.availableColors.put("Aquamarine",Color.AQUAMARINE);
-      this.availableColors.put("Azure",Color.AZURE);
-      this.availableColors.put("Beige",Color.BEIGE);
-      this.availableColors.put("Bisque",Color.BISQUE);
-      this.availableColors.put("Blanchedalmond",Color.BLANCHEDALMOND);
-      this.availableColors.put("Blueviolet",Color.BLUEVIOLET);
-      this.availableColors.put("Burlywood",Color.BURLYWOOD);
-
-
-    }
   }
 
   /**

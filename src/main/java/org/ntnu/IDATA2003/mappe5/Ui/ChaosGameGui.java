@@ -7,7 +7,6 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -313,8 +312,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     MenuItem colorPicker = new MenuItem("Color picker");
     colorPicker.setOnAction(e -> {
-      ChaosGameDialogHandler.ColorChoiceDialog colorChoiceDialog =
-          ChaosGameDialogHandler.getInstance().getColorChoiceDialog();
+     ChaosGameDialogHandler handler = ChaosGameDialogHandler.getInstance();
+     ChaosGameDialogHandler.ColorChoiceDialog colorChoiceDialog = handler.getColorChoiceDialog();
       if (colorChoiceDialog.showAndWait().isPresent()){
         this.colorChoice = colorChoiceDialog.getResult();
       }else {
