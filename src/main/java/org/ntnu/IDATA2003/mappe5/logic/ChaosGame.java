@@ -2,7 +2,6 @@ package org.ntnu.IDATA2003.mappe5.logic;
 
 import java.util.ArrayList;
 import java.util.Random;
-import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 

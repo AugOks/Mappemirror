@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**

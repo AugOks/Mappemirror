@@ -3,18 +3,10 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.entity.FailedToWriteToFileException;
+import org.ntnu.IDATA2003.mappe5.entity.FractalNotFoundException;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
-import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
@@ -23,21 +15,18 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
 
-import org.ntnu.IDATA2003.mappe5.Ui.DanceParty;
-import org.ntnu.IDATA2003.mappe5.Ui.ChaosGameDialogHandler;
-
 
 /**
  * Controller for the ChaosGameGui in accordance with the MVC pattern.
  */
 public class ChaosGameControllerGui implements ChaosGameObserver {
 
-  private ChaosGameDescriptionFactory factory;
-  private ChaosGameGui gameGui;
-  private ChaosGameFileHandler fileHandler;
+  private final ChaosGameDescriptionFactory factory;
+  private final ChaosGameGui gameGui;
+  private final ChaosGameFileHandler fileHandler;
   private ChaosGame theGame;
-  private DanceParty danceParty;
-  private ChaosGameDialogHandler dialogHandler;
+  private ChaosGameAnimations danceParty;
+  private final ChaosGameDialogHandler dialogHandler;
 
   /**
    * Constructor for the ChaosGameControllerGui.
@@ -49,44 +38,35 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
     this.fileHandler = new ChaosGameFileHandler();
     this.gameGui = gameGui;
     this.danceParty = null;
-    this.dialogHandler = new ChaosGameDialogHandler();
+    this.dialogHandler = new ChaosGameDialogHandler(this.gameGui);
 
   }
 
-
-  //TODO move this to dialog handler
+  /**
+   * Save the current game to a file.
+   */
   public void saveToFile() {
-    FileChooser savefile = new FileChooser();
-    savefile.setTitle("Save fractal to file");
-    File file = savefile.showSaveDialog(gameGui.getScene().getWindow());
+    File file = dialogHandler.saveToFileDialog();
     if (file != null) {
       theGame.getDescription().setName(file.getName());
-      this.fileHandler.writeToFile(file.getPath(), theGame.getDescription());
+      try {
+        this.fileHandler.writeToFile(file.getPath(), theGame.getDescription());
+      } catch (FailedToWriteToFileException e) {
+        dialogHandler.genericErrorDialog(e.getMessage());
+      }
     }
   }
   /**
-   * File chooser method for choosing a file.
-   */ //TODO: MAke the button for this method.
-  public  void fileChooser() {
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Open Resource File");
-    File file = fileChooser.showOpenDialog(null);
-    //System.out.println(file.getPath());
-    this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
-
-  }
-
-
-  /**
    * FileChooser method for choosing a file.
    */
-  //TODO move this to dialog handler
   public void openFromFile() {
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Open fractal from file");
-    File file = fileChooser.showOpenDialog(gameGui.getScene().getWindow());
+    File file = dialogHandler.readFromFileDialog();
     if (file != null) {
-      this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
+      try {
+        this.changeDescription(this.fileHandler.getcontentsOfFile(file.getPath()));
+      } catch (FractalNotFoundException e) {
+        dialogHandler.genericErrorDialog(e.getMessage());
+      }
       gameGui.createInputNode(theGame.getDescription(),1000000);
     }
   }
@@ -172,6 +152,12 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
       theGame.runSteps(steps);
   }
 
+  /**
+   * Change the coordinates of the current game.
+   *
+   * @param minCoords the new minimum coordinates.
+   * @param maxCoords the new maximum coordinates.
+   */
   public void changeCoords(Vector2D minCoords, Vector2D maxCoords){
     if(minCoords == null){
       throw new IllegalArgumentException("Min coordinates cannot be null");
@@ -193,24 +179,28 @@ public class ChaosGameControllerGui implements ChaosGameObserver {
   }
 
   /**
-<<<<<<< Updated upstream
    * Starts the dance party animation of the user presses "Yes" on the confirmation .
    */
   public void danceParty() {
     ChaosGameDescription startDescription = this.getDescription();
     if (this.dialogHandler.dancePartyDialog()) {
-      this.danceParty = new DanceParty(startDescription);
+      this.danceParty = new ChaosGameAnimations(startDescription);
       this.danceParty.danceParty(this);
     }
   }
-   /* Returns the current game.
+
+  /**
+   * Get the current game.
    *
-   * @return the game.
+   * @return the current game.
    */
   public ChaosGame getGame() {
     return theGame;
   }
 
+  /**
+   * Show the about dialog.
+   */
   public void showAbout(){
     this.dialogHandler.showAboutDialog();
   }

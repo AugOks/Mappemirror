@@ -1,6 +1,5 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
-import static org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory.Fractals.BARNSLEY;
 import static org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory.Fractals.JULIA;
 
 import java.util.Collection;
@@ -10,13 +9,13 @@ import javafx.util.Duration;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 
-public class DanceParty {
+public class ChaosGameAnimations {
   private ChaosGameDescription currentDescription;
   private ChaosGameControllerGui controller;
   private ChaosGameDescription startDescription;
   private ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
 
-  public DanceParty(ChaosGameDescription description) {
+  public ChaosGameAnimations(ChaosGameDescription description) {
     this.currentDescription = description;
     this.startDescription = description;
     this.factory = new ChaosGameDescriptionFactory();

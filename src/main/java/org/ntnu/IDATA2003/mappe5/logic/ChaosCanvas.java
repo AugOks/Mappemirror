@@ -2,7 +2,6 @@ package org.ntnu.IDATA2003.mappe5.logic;
 
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
-import org.ntnu.IDATA2003.mappe5.entity.PixelOutOfBoundsException;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 /**

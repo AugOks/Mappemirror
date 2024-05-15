@@ -1,5 +1,6 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Optional;
 import javafx.collections.FXCollections;
@@ -13,17 +14,22 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
 /**
  * Class for creating dialogs in the ChaosGameGui class.
  */
 public class ChaosGameDialogHandler {
 
+  private ChaosGameGui gameGui;
   /**
    * Constructor for the ChaosGameDialogHandler class.
    */
   public ChaosGameDialogHandler() {
-    ;
+  }
+
+  public ChaosGameDialogHandler(ChaosGameGui gameGui) {
+    this.gameGui = gameGui;
   }
 
   /**
@@ -171,5 +177,33 @@ public class ChaosGameDialogHandler {
     }
   }
 
+  /**
+   * Method for creating a file chooser dialog.
+   * @return the file chosen by the user.
+   */
+  public File readFromFileDialog(){
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Open Resource File");
+    return fileChooser.showOpenDialog(gameGui.getScene().getWindow());
+  }
 
+  /**
+   * Method for saving current fractal to file.
+   * @return the file chosen by the user.
+   */
+  public File saveToFileDialog(){
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save Resource File");
+    return fileChooser.showSaveDialog(gameGui.getScene().getWindow());
+  }
+
+  /**
+   * Method for creating a generic error dialog.
+   * @param message
+   */
+  public void genericErrorDialog(String message){
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setContentText(message);
+    alert.showAndWait();
+  }
 }

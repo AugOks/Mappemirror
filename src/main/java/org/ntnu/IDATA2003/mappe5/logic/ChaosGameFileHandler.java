@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
+import org.ntnu.IDATA2003.mappe5.entity.FailedToWriteToFileException;
+import org.ntnu.IDATA2003.mappe5.entity.FractalNotFoundException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
@@ -37,15 +39,15 @@ public class ChaosGameFileHandler {
    *
    * @param path the path to the file to read.
    * @return the contents of the file as a chaosGameDescription object.
-   * @throws IllegalArgumentException if no file with the given fractal name could be found.
+    * @throws FractalNotFoundException if the file could not be found.
    * @throws NumberFormatException    if parsing doubles from string failed.
    */
-  public ChaosGameDescription getcontentsOfFile(String path) {
+  public ChaosGameDescription getcontentsOfFile(String path) throws FractalNotFoundException {
     Path pathOfFile = null;
       pathOfFile = Path.of(path);
 
     ArrayList<String> fileContent = new ArrayList<>();
-    ArrayList<Transform2D> transforms = new ArrayList<>();
+    ArrayList<Transform2D> transforms;
     Vector2D minimumCoords = new Vector2D(0, 0);
     Vector2D maximumCoords = new Vector2D(0, 0);
 
@@ -61,36 +63,42 @@ public class ChaosGameFileHandler {
       }
       minimumCoords = parser.getVectorFromString(fileContent.get(1));
       maximumCoords = parser.getVectorFromString(fileContent.get(2));
-      transforms.addAll(parser.getTransformsFromStrings(fileContent));
+      transforms = new ArrayList<>(parser.getTransformsFromStrings(fileContent));
 
     } catch (IOException e) {
-      throw new IllegalArgumentException(
-          "File with this name could not be found " + e.getMessage());
+     throw new FractalNotFoundException("Could not read the file " + e.getMessage());
     } catch (NumberFormatException e) {
       throw new NumberFormatException("Could not parse doubles from string ");
-    } catch (IndexOutOfBoundsException e) {
-      //TODO do something here
     }
-    String name = path.split(".txt")[0];
+      String name = path.split(".txt")[0];
     ChaosGameDescription game = new ChaosGameDescription(transforms, minimumCoords, maximumCoords,
         name);
     this.chaosGames.add(game);
     return game;
   }
-  public ChaosGameDescription readFromFileWithFractalName(String fractal){
+
+  /**
+   * Reads the contents of a file with a given fractal name.w
+   * @param fractal the name of the fractal to read from file.
+   * @return the chaos game description of the fractal.
+   * @throws FractalNotFoundException
+   */
+  public ChaosGameDescription readFromFileWithFractalName(String fractal)
+      throws FractalNotFoundException {
+
     if (getClass().getClassLoader().getResource(fractal + ".txt").toExternalForm().isBlank()){
-      throw new IllegalArgumentException("fractal with this name could not be found");
+      throw new FractalNotFoundException("Could not find fractal file with this name");
     }
       return getcontentsOfFile((getClass().getClassLoader().getResource(fractal + ".txt"))
           .toExternalForm().replace("file:/", ""));
   }
-
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal but
    * if no name is given a new file name with a random number will be generated to avoid any file
    * reader issues.
    */
-  public void writeToFile(String path, ChaosGameDescription description) {
+  public void writeToFile(String path, ChaosGameDescription description)
+      throws FailedToWriteToFileException {
     if (description == null) {
     throw new IllegalArgumentException("Description cannot be null");
   }
@@ -104,7 +112,7 @@ public class ChaosGameFileHandler {
               + chaosGameInfo.get(4));
 
     } catch (IOException e) {
-      throw new IllegalArgumentException("Could not write to file " + e.getMessage());
+      throw new FailedToWriteToFileException("something went wrong when writing to file");
       //TODO needs to be fixed?
     }
 
