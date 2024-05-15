@@ -192,16 +192,23 @@ public class ChaosGameControllerGui {
    * Slide into the DMs of the Julia set.
    */
   public void slideIntoJuliaDMs(){
-    if (!(this.getDescription().getTransform(0) instanceof JuliaTransform)) {
-      dialogHandler.genericErrorDialog("The current fractal is not a Julia set");
-      return;
-    }
     try {
-      chaosGameAnimations.juliaSliderAnimation(this.getDescription());
+      chaosGameAnimations.chooseJuliaAnimation("normal");
     } catch (AnimationFailedException e) {
       dialogHandler.genericErrorDialog("Failed to animate the Julia set");
     }
   }
+  /**
+   * Wacky slider animation for the Julia set.
+   */
+  public void wackySliderAnimation(){
+    try {
+      chaosGameAnimations.chooseJuliaAnimation("wacky");
+    } catch (AnimationFailedException e) {
+      dialogHandler.genericErrorDialog("Failed to animate the Julia set");
+    }
+  }
+
 
   /**
    * Get the current game.
@@ -213,7 +220,7 @@ public class ChaosGameControllerGui {
   }
 
   /**
-   * Show the about dialog.
+   * Show the 'about' dialog.
    */
   public void showAbout(){
     try {

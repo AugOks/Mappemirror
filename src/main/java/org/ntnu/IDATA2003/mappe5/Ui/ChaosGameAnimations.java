@@ -26,6 +26,11 @@ public class ChaosGameAnimations {
   private ChaosGameDescription startDescription;
   private final ChaosGameDescriptionFactory factory;
 
+  /**
+   * Constructor for the ChaosGameAnimations class.
+   * @param description the description of the fractal.
+   * @param controller the controller for the ChaosGameGui.
+   */
   public ChaosGameAnimations(ChaosGameDescription description, ChaosGameControllerGui controller) {
     this.currentDescription = description;
     this.startDescription = description;
@@ -33,12 +38,19 @@ public class ChaosGameAnimations {
     this.factory = new ChaosGameDescriptionFactory();
   }
 
+  /**
+   * Exposes a method for choosing the dance party animation.
+   */
   public void danceParty() {
     this.controller.changeDescription(this.currentDescription);
     this.danceAnimation();
   }
 
   //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
+
+  /**
+   * Animates the fractal by changing the min and max coordinates of the fractal.
+   */
   private void danceAnimation(){
     Timeline timeLine = new Timeline();
     Collection<KeyFrame> frames = timeLine.getKeyFrames();
@@ -53,6 +65,10 @@ public class ChaosGameAnimations {
     timeLine.play();
   }
 
+  /**
+   * Changes the description of the fractal based on the dance move.
+   * @param danceMove the dance move to be performed.
+   */
   private void danceMoves(int danceMove){
     switch(danceMove){
       case 1:
@@ -81,37 +97,59 @@ public class ChaosGameAnimations {
   }
 
   /**
+   * Exposes a method for choosing the Julia set animation based on which type is wanted.
+   * @param choice the type of animation to be chosen.
+   */
+  public void chooseJuliaAnimation(String choice){
+    switch (choice){
+      case "normal":
+        this.juliaSliderAnimation(this.currentDescription, -1, -1, true,true);
+        break;
+      case "wacky":
+        this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
+            false, true);
+        break;
+      default:
+        break;
+    }
+  }
+  /**
    * Animates the Julia set by changing the complex number of the JuliaTransform.
    * @param description the description of the Julia set.
    * @throws AnimationFailedException if the animation fails.
    */
-  public void juliaSliderAnimation(ChaosGameDescription description){
-    Thread slideThread = new Thread(() -> {
+  private void juliaSliderAnimation(ChaosGameDescription description, double X0, double Y0,
+                                   boolean deltaX, boolean deltaY){
+    Thread slideThread = new Thread(() -> { //creates a new thread to perform the animation on
      JuliaTransform transform1 = (JuliaTransform) description.getTransform(0);
      JuliaTransform transform2 = (JuliaTransform) description.getTransform(1);
       Complex complex1 = transform1.getComplex();
-      complex1.setY0(-1.0);
-      complex1.setX0(-1.0);
+      complex1.setX0(X0);
+      complex1.setY0(Y0);
       Complex complex2 = transform2.getComplex();
-      complex2.setX0(-1.0);
-      complex2.setY0(-1.0);
-      while(complex1.getX0() < 1 && complex1.getY0() < 1){
-        try {
-          Thread.sleep(100);
-        } catch (InterruptedException e) {
+      complex2.setX0(X0);
+      complex2.setY0(Y0);
+      while(complex1.getX0() < 1 && complex1.getY0() < 1){ //looping while the values are not
+        try {                                             // at the max
+          Thread.sleep(100);         //pauses the animation at set intervals to give
+        } catch (InterruptedException e) {// a smooth transition
            throw new AnimationFailedException("Failed to animate the Julia set");
+           //throws a new exception if the animation fails
         }
-        Platform.runLater(() -> {
-          complex1.setX0(complex1.getX0() + 0.05);
-          complex1.setY0(complex1.getY0() + 0.05);
-          complex2.setX0(complex2.getX0() + 0.05);
-          complex2.setY0(complex2.getY0() + 0.05);
+        Platform.runLater(() -> { //Updates the values in the complex incrementally.
+                                  // Controls the thread that is changing the values.
+          if(deltaY){
+            complex1.setY0(complex1.getY0() + 0.05);
+            complex2.setY0(complex2.getY0() + 0.05);
+          }if(deltaX){
+            complex1.setX0(complex1.getX0() + 0.05);
+            complex2.setX0(complex2.getX0() + 0.05);
+          }
           controller.changeDescription(currentDescription);
         });
       }
     });
-    slideThread.start();
+    slideThread.start();            //starts the animation.
   }
-
 
 }

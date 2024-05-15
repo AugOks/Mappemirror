@@ -314,7 +314,14 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       controller.createFractal(ChaosGameDescriptionFactory.Fractals.JULIA);
       controller.slideIntoJuliaDMs();
     });
-    animations.getItems().addAll(dance, juliaSlide);
+
+    MenuItem wackySlide = new MenuItem("Wacky Slide");
+wackySlide.setOnAction(e -> {
+      controller.createFractal(ChaosGameDescriptionFactory.Fractals.JULIA);
+      controller.wackySliderAnimation();
+    });
+
+    animations.getItems().addAll(dance, juliaSlide, wackySlide);
 
     menu.getMenus().addAll(file, edit, preMade, animations, help);
     menu.getStyleClass().add("menu-bar");
