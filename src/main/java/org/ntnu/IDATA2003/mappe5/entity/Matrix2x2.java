@@ -26,6 +26,12 @@ public class Matrix2x2 {
     this.setC(c1);
     this.setD(d1);
   }
+  public Matrix2x2(Matrix2x2 matrix){
+    this.a = matrix.getA();
+    this.b = matrix.getB();
+    this.c = matrix.getC();
+    this.d = matrix.getD();
+  }
 
   /**
    * Performs matrix multiplication on this matrix with other 2D Vector.

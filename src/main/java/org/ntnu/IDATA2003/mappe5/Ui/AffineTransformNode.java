@@ -2,12 +2,10 @@ package org.ntnu.IDATA2003.mappe5.Ui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
@@ -133,7 +131,7 @@ public class AffineTransformNode implements FractalInputNode {
 
       vectorLabel.getStyleClass().add("input-title");
       firstVector.add(vectorLabel, 0, 0);
-      firstVector.add(createVectorTextField("b0", vector.getY0(), vector), 0, 1);
+      firstVector.add(createVectorTextField("b0", vector.getX0(), vector), 0, 1);
       firstVector.add(createVectorTextField("b1", vector.getY0(), vector), 0, 2);
       firstMatrix.add(new Label("  "),0,3);
 
@@ -170,7 +168,7 @@ public class AffineTransformNode implements FractalInputNode {
   private void conditionalSetValue(String name, Matrix2x2 matrix, String newValue){
     if(name.equals("a00")){
       matrix.setA(Double.parseDouble(newValue));
-    } else if(name.equals("a01")){
+    }else if(name.equals("a01")){
       matrix.setB(Double.parseDouble(newValue));
     }else if(name.equals("a10")){
       matrix.setC(Double.parseDouble(newValue));

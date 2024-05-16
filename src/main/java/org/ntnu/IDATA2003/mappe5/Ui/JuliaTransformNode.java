@@ -104,14 +104,15 @@ public class JuliaTransformNode implements FractalInputNode {
       try {
         double value = Double.parseDouble(newValue);
         if (field.getId().equalsIgnoreCase("real")) {
-          this.complex.setX0(value);
-          realSlider.setValue(value);
+            this.complex.setX0(Double.parseDouble(newValue));
+            realSlider.setValue(Double.parseDouble(newValue));
+
         } else {
           this.complex.setY0(value);
           imaginarySlider.setValue(value);
         }
         this.isValueValid = true;
-      }catch (Exception e){
+      } catch (Exception e){
         this.isValueValid = false
         ;//TODO Maybe fix this
       }

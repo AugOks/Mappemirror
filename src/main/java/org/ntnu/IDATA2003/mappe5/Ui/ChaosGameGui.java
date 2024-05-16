@@ -147,6 +147,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   public void update(){
     this.canvasCenterPane.getChildren().clear();
     createCanvas(controller.getGame(), input.getCurrentSteps());
+    createInputNode(controller.getDescription(), input.getCurrentSteps());
   }
 
   /**

@@ -112,8 +112,8 @@ public class ChaosGameDescriptionFactory {
 
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(matrix, firstVector));
-    transforms.add(new AffineTransform2D(matrix, secondVector));
-    transforms.add(new AffineTransform2D(matrix, thirdVector));
+    transforms.add(new AffineTransform2D(new Matrix2x2(matrix), secondVector));
+    transforms.add(new AffineTransform2D(new Matrix2x2(matrix), thirdVector));
     return new  ChaosGameDescription(transforms, minCoords,maxCoords, "Sierpinski");
   }
   /**
