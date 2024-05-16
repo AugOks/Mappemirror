@@ -1,0 +1,6 @@
+Affine2D                            # Type of fractal
+-200, -200                          # lower left
+200, 200                            # upper right
+0.5, 0.0, 0.0, 0.8, 0.0, 50         # transforms
+0.5, 0.2, -0.2, 0.5, -100, -100
+0.5, -0.2, 0.2, 0.5, 100, -100

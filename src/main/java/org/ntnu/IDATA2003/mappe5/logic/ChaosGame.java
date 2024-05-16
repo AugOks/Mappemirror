@@ -1,5 +1,6 @@
 package org.ntnu.IDATA2003.mappe5.logic;
 
+import java.util.ArrayList;
 import java.util.Random;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
@@ -14,6 +15,9 @@ public class ChaosGame {
   private ChaosGameDescription description; //The description of the chaosGame.
   private Vector2D currentPoint; //The current point
   private Random random;
+  private ArrayList<ChaosGameObserver> subscribers;
+  private int currentHeight;
+  private int currentWidth;
 
   /**
    * Creates an instance of ChaosGame and initializes fields with values.
@@ -31,7 +35,11 @@ public class ChaosGame {
       throw new IllegalArgumentException("The canvas cannot have size smaller than 1x1");
     }
     this.random = new Random();
-    this.setDescription(description);
+    //TODO refactor this to gui when making canvas dynamic
+    this.currentHeight = height;
+    this.currentWidth = width;
+    this.subscribers = new ArrayList<>();
+    this.setDescription(description, currentHeight, currentWidth);
     Vector2D maxCoords = this.description.getMaxCoords();
     Vector2D minCoords = this.description.getMinCoords();
     this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
@@ -48,7 +56,39 @@ public class ChaosGame {
    */
   public ChaosCanvas getCanvas() {
 
-    return canvas;
+    return this.canvas;
+  }
+
+  private void setCanvas(){
+    this.canvas = new ChaosCanvas(this.currentHeight, this.currentWidth, this.description.getMinCoords()
+    , this.description.getMaxCoords());
+  }
+  /**
+   * Gets the description of the game being played.
+   *
+   * @return the description of the game.
+   */
+  public ChaosGameDescription getDescription(){
+
+    return this.description;
+  }
+
+  /**
+   * Adds a new subscriber to obeserve the changes in this class.
+   * @param subscriber The new subscriber to be added to the list.
+   * @throws IllegalArgumentException if the subscriber is a null object.
+   */
+  public void addSubscriber(ChaosGameObserver subscriber){
+    if(subscriber == null){
+      throw new IllegalArgumentException("new subscriber cannot be null");
+    }
+    this.subscribers.add(subscriber);
+  }
+  private void updateSubscriber(){
+    for (ChaosGameObserver sub: this.subscribers){
+      this.canvas.clear();
+      sub.update();
+    }
   }
 
   /**
@@ -58,22 +98,37 @@ public class ChaosGame {
    *
    * @param steps the amount of steps to be run before halting
    */
-  public void runSteps(int steps) {
-    for (int i = 0; i < steps; i++) {
-      int dice = this.random.nextInt(
-          this.description.getTransformSize());    // throws a die for a random number
-      Transform2D transform = this.description.getTransform(
-          dice); // gets a random transform based on die
-      Vector2D point = transform.transform(this.currentPoint); // transforms current position.
-      canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
-      this.currentPoint = point; //Sets the current pont to the result of the transformation
+  public void runSteps(int steps)  {
+    if (steps < 1) {
+      throw new IllegalArgumentException("Steps cannot be less than 1");
     }
+      for (int i = 0; i < steps; i++) {
+        int dice = this.random.nextInt(
+            this.description.getTransformSize());    // throws a die for a random number
+        Transform2D transform = this.description.getTransform(
+            dice); // gets a random transform based on die
+        Vector2D point = transform.transform(this.currentPoint); // transforms current position.
+        canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
+        this.currentPoint = point; //Sets the current pont to the result of the transformation
+      }
+
   }
 
-  public void setDescription(ChaosGameDescription description) {
-
+  /**
+   * Sets the description of the game.
+   *
+   * @param description the new description of the game.
+   * @throws IllegalArgumentException if the description is a null object.
+   */
+  public void setDescription(ChaosGameDescription description, int height, int width) {
+    if (description == null) {
+      throw new IllegalArgumentException("Description cannot be null");
+    }
+    currentWidth = width;
+    currentHeight = height;
     this.description = description;
+    this.setCanvas();
+    this.updateSubscriber();
   }
-
 
 }

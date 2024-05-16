@@ -35,19 +35,19 @@ public class ChaosGameUi {
    * <li> mainGame is the instance of the Chaos Game.</li>
    * </ul>
    */
-  private final static int SIERPINSKI = 1;
-  private final static int JULIASET = 2;
-  private final static int BARNSLEY_FERN = 3;
-  private final static int USER_AFFINE = 4;
-  private final static int USER_JULIA = 5;
-  private final static int QUIT = 6;
+  private static final  int SIERPINSKI = 1;
+  private static final  int JULIASET = 2;
+  private static final  int BARNSLEY_FERN = 3;
+  private static final  int USER_AFFINE = 4;
+  private static final  int USER_JULIA = 5;
+  private static final  int QUIT = 6;
   private static final int height = 50;
   private static final int width = 150;
   private final ChaosGameController controller;
   private ChaosGame mainGame;
 
   public ChaosGameUi() {
-    this.controller = new ChaosGameController(this);
+    this.controller = new ChaosGameController(new ChaosGameGui());
   }
 
   /**
@@ -105,7 +105,6 @@ public class ChaosGameUi {
     ArrayList<String> canvasConsole = new ArrayList<>();
     StringBuilder line = new StringBuilder();
 
-    //TODO refactor this to use StringBuilder
     for (int i = 0; i < index_i; i++) {
       for (int j = 0; j < index_j; j++) {
         if (canvas[i][j] == 0) {
@@ -146,7 +145,8 @@ public class ChaosGameUi {
     if (menuChoice == 5) {
       this.mainGame = new ChaosGame(this.userDefinedAffineTransform(), height, width);
     }
-    this.mainGame.runSteps(steps);
+      this.mainGame.runSteps(steps);
+
     printCanvas();
 
   }
@@ -235,7 +235,7 @@ public class ChaosGameUi {
     TransformsParser parser = new TransformsParser();
     List<Transform2D> transforms = parser.parseAffineTransforms(dirtyArrayList);
 
-    return controller.createuserDefinedAffine(name, minCoords, maxCoords, transforms);
+    return controller.createUserDefinedAffine(name, minCoords, maxCoords, transforms);
   }
 
   /**

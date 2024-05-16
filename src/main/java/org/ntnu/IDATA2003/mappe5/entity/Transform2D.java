@@ -13,6 +13,12 @@ public interface Transform2D {
    */
   public Vector2D transform(Vector2D point);
 
+  /**
+   * Interface method to be implemented.
+   *
+   * @return the transformed vector as a string.
+   */
   public String transformToString();
+
 
 }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
@@ -33,7 +34,7 @@ class ChaosGameFileHandlerTest {
     transformList.add(new JuliaTransform(c, -1));
 
     this.description =
-        new ChaosGameDescription(transformList, minCoords, maxCoords, "juliaTestFile");
+        new ChaosGameDescription(transformList, minCoords, maxCoords, "juliaset");
 
   }
 
@@ -44,7 +45,7 @@ class ChaosGameFileHandlerTest {
   @Order(1)
   void testWriteToFile() {
     try {
-      this.handler.writeToFile(description);
+      this.handler.writeToFile("testFile", description);
     } catch (Exception e) {
       fail();
     }
@@ -58,27 +59,26 @@ class ChaosGameFileHandlerTest {
   void testReadFromFile() {
     ChaosGameDescription description = null;
     try {
-      description = this.handler.readFromFile("juliaTestFileOut");
+      description = this.handler.readFromFileWithFractalName("julia_set");
       assertNotNull(description);
-      ChaosGame game = new ChaosGame(description, 100, 100);
+      ChaosGame game = new ChaosGame(description, 100, 300);
       game.runSteps(1000);
       int index_i = game.getCanvas().getHeight();
       int index_j = game.getCanvas().getWidth();
       int[][] canvas = game.getCanvas().getCanvasArray();
       ArrayList<String> canvasConsole = new ArrayList<>();
-      String line = "";
+      StringBuilder line = new StringBuilder();
 
-      //TODO refactor this to use StringBuilder
       for (int i = 0; i < index_i; i++) {
         for (int j = 0; j < index_j; j++) {
           if (canvas[i][j] == 0) {
-            line += "-";
+            line.append("-");
           } else {
-            line += "X";
+            line.append("X");
           }
         }
-        canvasConsole.add(line);
-        line = "";
+        canvasConsole.add(line.toString());
+        line = new StringBuilder();
       }
       for (String s : canvasConsole) {
         System.out.println(s);
@@ -95,9 +95,9 @@ class ChaosGameFileHandlerTest {
   @Test
   void testReadFromFileWithNegativeParameters() {
     try {
-      this.handler.readFromFile("negativeValue");
+      this.handler.readFromFileWithFractalName("negativeValue");
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (Exception e) {
       assertTrue(true);
     }
   }
@@ -108,9 +108,9 @@ class ChaosGameFileHandlerTest {
   @Test
   void writeToFileWithNegativeParameters() {
     try {
-      this.handler.writeToFile(null);
+      this.handler.writeToFile(null, null);
       fail();
-    } catch (IllegalArgumentException e) {
+    } catch (FailedToWriteToFileException | IllegalArgumentException e) {
       assertTrue(true);
     }
   }
