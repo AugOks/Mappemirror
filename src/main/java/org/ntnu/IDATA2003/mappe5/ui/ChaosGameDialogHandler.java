@@ -65,9 +65,9 @@ public class ChaosGameDialogHandler {
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
     Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION,
-        "  ",
-        yes,
-        no);
+                                "  ",
+                                yes,
+                                no);
     exitAlert.setHeaderText("Are you sure you want to exit the application?");
     Optional<ButtonType> result = exitAlert.showAndWait();
     if (exitAlert.getResult() == yes) {
@@ -92,7 +92,8 @@ public class ChaosGameDialogHandler {
       alertDanceParty.setHeaderText("Do you want to have a dance party?");
       final ImageView dialogHeaderIcon;
       dialogHeaderIcon = new ImageView(Objects.requireNonNull(getClass()
-          .getResource("/discoBall.png")).toExternalForm());
+                                                                  .getResource("/discoBall.png"))
+                                              .toExternalForm());
       dialogHeaderIcon.setFitHeight(48);
       dialogHeaderIcon.setFitWidth(48);
       alertDanceParty.getDialogPane().setGraphic(dialogHeaderIcon);
@@ -123,23 +124,23 @@ public class ChaosGameDialogHandler {
 
 
     Text text1 = new Text("Chaos game is one of many established methods for generating fractals "
-        + "online.\n"
-        + "A fractal can be defined as complex pattern that are self-similar "
-        + "across different scales. In other word, beautiful figure \n"
-        + "that will repeat the same pattern "
-        + "regardless of how much you zoom and your viewpoint.\n");
+                          + "online.\n"
+                          + "A fractal can be defined as complex pattern that are self-similar "
+                          + "across different scales. In other word, beautiful figure \n"
+                          + "that will repeat the same pattern "
+                          + "regardless of how much you zoom and your viewpoint.\n");
     Text text2 = new Text("The application creates fractals choosing a initial starting point, "
-        + "and so transforming that point using \n"
-        + " a predefined mathematical operation."
-        + "Iteratively creating a long sequence of points later on drawn on a "
-        + "canvas to create a fractal.\n"
-        + "The most known fractals includes the "
-        + "Julia set and the Sierpinski triangle. \n");
+                          + "and so transforming that point using \n"
+                          + " a predefined mathematical operation."
+                          + "Iteratively creating a long sequence of points later on drawn on a "
+                          + "canvas to create a fractal.\n"
+                          + "The most known fractals includes the "
+                          + "Julia set and the Sierpinski triangle. \n");
     Text text3 = new Text("This particular Chaos Game was created by students as NTNU as a part "
-        + " of their exam for the course IDATx2024. \n"
-        + "The main objective was to show competence in newly learned knowledge "
-        + "such as design patterns,\n"
-        + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
+                          + " of their exam for the course IDATx2024. \n"
+                          + "The main objective was to show competence in newly learned knowledge "
+                          + "such as design patterns,\n"
+                          + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
 
     text1.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     text2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
@@ -188,7 +189,6 @@ public class ChaosGameDialogHandler {
     grid.add(radioButtonAffine, 0, 3);
 
 
-
     Spinner spinner = new Spinner();
     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20));
     spinner.setEditable(true);
@@ -231,7 +231,7 @@ public class ChaosGameDialogHandler {
     for (int i = startRow; i <= endRow; i++) {
       final int row = i;
       grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row
-          && GridPane.getColumnIndex(node) == 0);
+                                          && GridPane.getColumnIndex(node) == 0);
     }
   }
 
@@ -283,7 +283,7 @@ public class ChaosGameDialogHandler {
     try {
       dialogHeaderIcon = new ImageView(
           Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
-              .toExternalForm());
+                 .toExternalForm());
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the icon");
     }

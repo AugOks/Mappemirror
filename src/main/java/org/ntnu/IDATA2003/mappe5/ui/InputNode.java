@@ -92,7 +92,7 @@ public class InputNode {
   public void createInputNode(ChaosGameDescription description, boolean slidersOnOff) {
     this.sliders = slidersOnOff;
     this.minMaxCoordsNode = new MinMaxCoordsNode(description.getMinCoords(),
-        description.getMaxCoords(), controller);
+                                                 description.getMaxCoords(), controller);
     this.inputNode.getChildren().removeIf(node -> node instanceof GridPane);
     this.inputNode.add(minMaxCoordsNode.getMinMaxNode(this.sliders), 0, 3);
     this.inputNode.add(fractalInputNode.getFractalNode(), 0, 4);

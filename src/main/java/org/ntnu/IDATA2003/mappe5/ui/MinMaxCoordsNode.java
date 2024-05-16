@@ -87,8 +87,6 @@ public class MinMaxCoordsNode {
    */
   public Node getMinMaxNode(boolean sliders) {
 
-    GridPane allGrids = new GridPane();
-
     Label minLabel = new Label("Min coords:");
     minLabel.getStyleClass().add("input-title");
     Label maxLabel = new Label("Max coords:");
@@ -103,6 +101,7 @@ public class MinMaxCoordsNode {
     minGrid.add(new Label(" "), 1, 2);
     minGrid.add(new Label("  "), 0, 3);
 
+    GridPane allGrids = new GridPane();
     allGrids.add(minGrid, 0, 0);
 
     if (sliders) {

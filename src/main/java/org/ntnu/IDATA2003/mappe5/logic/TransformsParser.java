@@ -35,9 +35,9 @@ public class TransformsParser {
 
       affineTransf.add(new AffineTransform2D(
           new Matrix2x2(transfValues.get(0), transfValues.get(1), transfValues.get(2),
-              transfValues.get(3)), // first four values contain the matrix
+                        transfValues.get(3)), // first four values contain the matrix
           new Vector2D(transfValues.get(4),
-              transfValues.get(5))));  // last two values contain the vector.
+                       transfValues.get(5))));  // last two values contain the vector.
       transfValues.clear();
     }
     return affineTransf;
@@ -159,8 +159,8 @@ public class TransformsParser {
 
     String transform =
         description.getTransform(0).getClass().getSimpleName()
-            .replace("Transform", "");
-    String compare = transform;
+                   .replace("Transform", "");
+
     transform += "           # type of transform" + '\n';
     String minCoords =
         description.getMinCoords().getX0() + ", " + description.getMinCoords().getY0();
@@ -169,6 +169,7 @@ public class TransformsParser {
         description.getMaxCoords().getX0() + ", " + description.getMaxCoords().getY0();
     maxCoords += "           # upper right coordinates" + '\n';
     ArrayList<String> transformInfo = new ArrayList<>();
+    String compare = transform;
     transformInfo.add(compare);
     transformInfo.add(transform);
     transformInfo.add(minCoords);
@@ -179,7 +180,7 @@ public class TransformsParser {
       transformsAsStrings = this.writeAffineToString(description.getAllTransforms());
     } else if (compare.equals("Julia")) {
       transformsAsStrings = description.getTransform(0).transformToString()
-          + " # real and imaginary part of constant c";
+                            + " # real and imaginary part of constant c";
     }
     transformInfo.add(transformsAsStrings);
     return transformInfo;

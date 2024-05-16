@@ -30,7 +30,7 @@ public class Complex extends Vector2D {
     double sqrt = Math.sqrt(x * x + y * y); //finds the length of the vector.
     double firstOperation = Math.sqrt(0.5 * (sqrt + x)); //finds the real number of the vector.
     double secondOperation = Math.signum(y) * Math.sqrt(0.5 * (sqrt - x));
-                                                    //finds the imaginary number for the vector.
+    //finds the imaginary number for the vector.
 
     return new Complex(firstOperation, secondOperation);
   }

@@ -27,16 +27,16 @@ public class Vector2D {
   }
 
   /**
-
-   Constructor.
-   initializes the fields based on the vector2D.
-   Essentially a copy constructor.
+   * Constructor.
+   * initializes the fields based on the vector2D.
+   * Essentially a copy constructor.
    *
-   @param vector the vector to be copied.
+   * @param vector the vector to be copied.
    */
-  public Vector2D (Vector2D vector){
+  public Vector2D(Vector2D vector) {
     this.x0 = vector.getX0();
-    this.y0 = vector.getY0();}
+    this.y0 = vector.getY0();
+  }
 
   /**
    * Returns the X0 value of the vector.
@@ -93,9 +93,9 @@ public class Vector2D {
     if (otherVector == null) {
       throw new IllegalArgumentException("Vector is null");
     }
-    double xValue = this.x0 + otherVector.getX0();
-    double yValue = this.y0 + otherVector.getY0();
-    return new Vector2D(xValue, yValue);
+    double valueX = this.x0 + otherVector.getX0();
+    double valueY = this.y0 + otherVector.getY0();
+    return new Vector2D(valueX, valueY);
   }
 
   /**
@@ -108,9 +108,9 @@ public class Vector2D {
     if (otherVector == null) {
       throw new IllegalArgumentException("Vector is null");
     }
-    double xValue = this.x0 - otherVector.getX0();
-    double yValue = this.y0 - otherVector.getY0();
-    return new Vector2D(xValue, yValue);
+    double valueX = this.x0 - otherVector.getX0();
+    double valueY = this.y0 - otherVector.getY0();
+    return new Vector2D(valueX, valueY);
 
   }
 

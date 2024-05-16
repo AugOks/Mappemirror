@@ -38,7 +38,7 @@ public class InputNodeController {
   public void run(MinMaxCoordsNode minMaxCoordsNode, FractalInputNode fractalInputNode) {
     if (!minMaxCoordsNode.isValueValid() && !fractalInputNode.isValueValid()) {
       dialogHandler.genericErrorDialog("The values in the min/max coordinates and "
-          + "fractal input are invalid");
+                                       + "fractal input are invalid");
     } else if (!minMaxCoordsNode.isValueValid()) {
       dialogHandler.genericErrorDialog("One of the values in the min/max coordinates is invalid");
     } else if (!fractalInputNode.isValueValid()) {

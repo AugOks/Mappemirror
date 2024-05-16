@@ -123,7 +123,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
       scene.getStylesheets().add(
           Objects.requireNonNull(getClass().getResource("/css/stylesheet.css"))
-              .toExternalForm());
+                 .toExternalForm());
 
       scene.setCursor(Cursor.DEFAULT);
       primaryStage.setTitle("Chaos Game");
@@ -131,7 +131,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       primaryStage.setScene(scene);
       primaryStage.getIcons().add(new Image(
           Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
-              .toExternalForm()));
+                 .toExternalForm()));
       primaryStage.show();
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("failed to fetch a resource");
@@ -197,7 +197,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Image banner = null;
     try {
       banner = new Image(Objects.requireNonNull(getClass()
-          .getResource("/header.png")).toExternalForm());
+                                                    .getResource("/header.png")).toExternalForm());
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the banner");
     }
@@ -221,7 +221,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     //TODO style the menu bar better than this...
 
 
-
     MenuItem openFile = new MenuItem("Open file");
     openFile.setOnAction(e -> controller.openFromFile());
 
@@ -238,7 +237,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     });
     Menu file = new Menu("File");
     file.getItems().addAll(openFile, saveToFile, newFractal, new SeparatorMenuItem(), exit);
-
 
 
     MenuItem julia = new MenuItem("Julia");
@@ -275,13 +273,13 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     Menu preMade = new Menu("Pre-made");
     preMade.getItems()
-        .addAll(julia, sierpinski, barnsleyFern, spiderweb, square, pentagon, kochCurve,
-            dragonFire);
+           .addAll(julia, sierpinski, barnsleyFern, spiderweb, square, pentagon, kochCurve,
+                   dragonFire);
 
 
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
     showSliders.setOnAction(e -> input.createInputNode(controller.getDescription(),
-        showSliders.isSelected()));
+                                                       showSliders.isSelected()));
 
     MenuItem colorPicker = new MenuItem("Color picker");
     colorPicker.setOnAction(e -> {

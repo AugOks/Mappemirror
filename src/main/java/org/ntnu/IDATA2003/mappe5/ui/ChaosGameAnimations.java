@@ -109,7 +109,7 @@ public class ChaosGameAnimations {
         break;
       case "wacky":
         this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
-            false, true);
+                                  false, true);
         break;
       default:
         break;

@@ -27,7 +27,13 @@ public class Matrix2x2 {
     this.setD(d1);
   }
 
-
+  /**
+   * Constructor.
+   * Initializes the fields based on the matrix.
+   * Essentially a copy constructor.
+   *
+   * @param matrix the matrix to be copied.
+   */
   public Matrix2x2(Matrix2x2 matrix) {
     this.a = matrix.getA();
     this.b = matrix.getB();

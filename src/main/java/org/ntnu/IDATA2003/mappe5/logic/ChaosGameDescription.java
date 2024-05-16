@@ -110,7 +110,7 @@ public class ChaosGameDescription {
   public Transform2D getTransform(int index) {
     if (index < 0 || index >= this.getTransformSize()) {
       throw new IndexOutOfBoundsException("index cannot be negative or larger than the amount "
-          + "transforms.");
+                                          + "transforms.");
     }
     return this.transforms.get(index);
   }
