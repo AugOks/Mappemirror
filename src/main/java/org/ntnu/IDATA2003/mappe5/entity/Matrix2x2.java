@@ -27,7 +27,7 @@ public class Matrix2x2 {
     this.setD(d1);
   }
 
-  
+
   public Matrix2x2(Matrix2x2 matrix) {
     this.a = matrix.getA();
     this.b = matrix.getB();

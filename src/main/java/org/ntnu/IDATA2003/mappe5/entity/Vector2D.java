@@ -27,6 +27,18 @@ public class Vector2D {
   }
 
   /**
+
+   Constructor.
+   initializes the fields based on the vector2D.
+   Essentially a copy constructor.
+   *
+   @param vector the vector to be copied.
+   */
+  public Vector2D (Vector2D vector){
+    this.x0 = vector.getX0();
+    this.y0 = vector.getY0();}
+
+  /**
    * Returns the X0 value of the vector.
    *
    * @return The X0 value of the vector.
