@@ -7,7 +7,8 @@ package org.ntnu.IDATA2003.mappe5.logic;
 public interface ChaosGameObserver {
 
   /**
-   * Called whenever the observed object needs to signal to its observers that a change has occurred.
+   * Called whenever the observed object needs to signal to its observers that a change
+   * has occurred.
    */
   void update();
 }

@@ -99,7 +99,7 @@ public class ChaosCanvas {
     Vector2D ijCoords = transformCoordsToIndices.transform(point);
     int i = (int) Math.round(ijCoords.getX0());
     int j = (int) Math.round(ijCoords.getY0());
-    if(i >= 0 && i < this.height && j >= 0 && j < this.width && this.canvas[i][j] < 245) {
+    if (i >= 0 && i < this.height && j >= 0 && j < this.width && this.canvas[i][j] < 245) {
       this.canvas[i][j] += 10;
     }
   }
@@ -127,15 +127,15 @@ public class ChaosCanvas {
    * (i,j) = A*(x0,y0) + b
    */
   private void setCoordsToIndices() {
-    double Ab1 = (this.height - 1) / (this.minCoords.getY0() - this.maxCoords.getY0());
-    double Ac1 = (this.width - 1) / (this.maxCoords.getX0() - this.minCoords.getX0());
-    Matrix2x2 matrixA = new Matrix2x2(0, Ab1, Ac1, 0);
+    double matrixValueB = (this.height - 1) / (this.minCoords.getY0() - this.maxCoords.getY0());
+    double matrixValueC = (this.width - 1) / (this.maxCoords.getX0() - this.minCoords.getX0());
+    Matrix2x2 matrixA = new Matrix2x2(0, matrixValueB, matrixValueC, 0);
 
-    double Bx = ((this.height - 1) * this.maxCoords.getY0()) / (this.maxCoords.getY0()
+    double vectorValueX = ((this.height - 1) * this.maxCoords.getY0()) / (this.maxCoords.getY0()
         - this.minCoords.getY0());
-    double By = ((this.width - 1) * this.minCoords.getX0()) / (this.minCoords.getX0()
+    double vectorValueY = ((this.width - 1) * this.minCoords.getX0()) / (this.minCoords.getX0()
         - this.maxCoords.getX0());
-    Vector2D vectorB = new Vector2D(Bx, By);
+    Vector2D vectorB = new Vector2D(vectorValueX, vectorValueY);
 
     this.transformCoordsToIndices = new AffineTransform2D(matrixA, vectorB);
   }

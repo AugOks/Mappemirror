@@ -61,7 +61,7 @@ class ChaosCanvasTest {
       chaosCanvas.putPixel(vector);
       int[][] canvas = chaosCanvas.getCanvasArray();
       assertEquals(canvas[8][1], 10);
-    }catch (Exception e){
+    } catch (Exception e) {
       fail();
     }
   }
@@ -84,12 +84,12 @@ class ChaosCanvasTest {
   @Test
   void testPutPixelWithJuliaTransform() {
     ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
-    ChaosGameDescription description =  factory.createDescription(
+    ChaosGameDescription description = factory.createDescription(
         ChaosGameDescriptionFactory.Fractals.JULIA);
     ChaosGame game = new ChaosGame(description, height, width);
     ChaosCanvas canvas = game.getCanvas();
     Vector2D testPoint = new Vector2D(-1.59, -0.95);
-      canvas.putPixel(testPoint);
+    canvas.putPixel(testPoint);
     canvas.transformCoordsToIndices(testPoint);
     int[][] canvasArray = canvas.getCanvasArray();
     assertEquals(canvasArray[9][0], 10);

@@ -1,16 +1,9 @@
-package org.ntnu.IDATA2003.mappe5.Ui;
+package org.ntnu.IDATA2003.mappe5.ui;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
-import org.ntnu.IDATA2003.mappe5.entity.Matrix2x2;
-import org.ntnu.IDATA2003.mappe5.entity.exceptions.AnimationFailedException;
-import org.ntnu.IDATA2003.mappe5.entity.Complex;
-import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
-import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
-import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.AnimationFailedException;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
@@ -25,9 +18,9 @@ public class ChaosGameControllerGui {
   private final ChaosGameDescriptionFactory factory;
   private final ChaosGameGui gameGui;
   private final ChaosGameFileHandler fileHandler;
+  private final ChaosGameDialogHandler dialogHandler;
   private ChaosGame theGame;
   private ChaosGameAnimations chaosGameAnimations;
-  private final ChaosGameDialogHandler dialogHandler;
 
   /**
    * Constructor for the ChaosGameControllerGui.
@@ -67,7 +60,7 @@ public class ChaosGameControllerGui {
       } catch (ResourceNotFoundException | NumberFormatException e) {
         dialogHandler.genericErrorDialog(e.getMessage());
       }
-      gameGui.createInputNode(theGame.getDescription(),1000000);
+      gameGui.createInputNode(theGame.getDescription(), 1000000);
     }
   }
 
@@ -88,8 +81,8 @@ public class ChaosGameControllerGui {
    */
   private void createNewFractal(ChaosGameDescription description) {
     theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
-    gameGui.createCanvas(theGame, 1);
-    gameGui.createInputNode(theGame.getDescription(),1);
+    gameGui.createCanvas(theGame, 1000000);
+    gameGui.createInputNode(theGame.getDescription(), 1000000);
     this.chaosGameAnimations = new ChaosGameAnimations(theGame.getDescription(), this);
     theGame.addSubscriber(gameGui);
   }
@@ -118,8 +111,8 @@ public class ChaosGameControllerGui {
    *
    * @param steps the amount of steps to run the game.
    */
-  public void runGame(int steps){
-      theGame.runSteps(steps);
+  public void runGame(int steps) {
+    theGame.runSteps(steps);
   }
 
   /**
@@ -128,8 +121,8 @@ public class ChaosGameControllerGui {
    * @param minCoords the new minimum coordinates.
    * @param maxCoords the new maximum coordinates.
    */
-  public void changeCoords(Vector2D minCoords, Vector2D maxCoords){
-    if(minCoords == null){
+  public void changeCoords(Vector2D minCoords, Vector2D maxCoords) {
+    if (minCoords == null) {
       throw new IllegalArgumentException("Min coordinates cannot be null");
     }
     ChaosGameDescription currentGame = getDescription();
@@ -143,7 +136,7 @@ public class ChaosGameControllerGui {
    * If the user presses yes, the application will exit.
    */
   public void exitApplication() {
-    if ( this.dialogHandler.exitDialog()) {
+    if (this.dialogHandler.exitDialog()) {
       System.exit(0);
     }
   }
@@ -151,9 +144,9 @@ public class ChaosGameControllerGui {
   /**
    * Create a new blank fractal based on the user input.
    */
-  public void createBlankFractal(){
+  public void createBlankFractal() {
     int transforms = this.dialogHandler.createNewFractalDialog();
-    if (transforms == 0){
+    if (transforms == 0) {
       this.createNewFractalDescription(ChaosGameDescriptionFactory.Fractals.BLANKJULIA);
     } else {
       this.changeDescription(this.factory.createDescription(
@@ -176,17 +169,18 @@ public class ChaosGameControllerGui {
   /**
    * Slide into the DMs of the Julia set.
    */
-  public void slideIntoJuliaDMs(){
+  public void slideIntoJuliaDms() {
     try {
       chaosGameAnimations.chooseJuliaAnimation("normal");
     } catch (AnimationFailedException e) {
       dialogHandler.genericErrorDialog("Failed to animate the Julia set");
     }
   }
+
   /**
    * Wacky slider animation for the Julia set.
    */
-  public void wackySliderAnimation(){
+  public void wackySliderAnimation() {
     try {
       chaosGameAnimations.chooseJuliaAnimation("wacky");
     } catch (AnimationFailedException e) {
@@ -206,12 +200,12 @@ public class ChaosGameControllerGui {
   /**
    * Show the 'about' dialog.
    */
-  public void showAbout(){
+  public void showAbout() {
     try {
       this.dialogHandler.showAboutDialog();
     } catch (ResourceNotFoundException e) {
-        dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the" +
-            "about dialog");
+      dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
+          + "about dialog");
     }
   }
 

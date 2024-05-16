@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.Ui;
+package org.ntnu.IDATA2003.mappe5.ui;
 
 
 import javafx.geometry.Pos;
@@ -19,17 +19,13 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
  */
 public class InputNode {
 
+  private final InputNodeController controller;
   private GridPane inputNode; // The input node for the user interface.
-
   private ChaosGameDescription currentDescription; // The current description of the fractal.
-
   private MinMaxCoordsNode minMaxCoordsNode; // The min and max coordinates of the fractal.
-
   private FractalInputNode fractalInputNode; // The fractal input node.
-
   private int currentSteps; // The number of steps.
   private boolean sliders;
-  private final InputNodeController controller;
 
 
   /**
@@ -37,9 +33,10 @@ public class InputNode {
    * Initializes the input node with a text field for the number of steps and a fractal input node.
    *
    * @param description the description of the fractal to be drawn.
-   * @param stepsInt the number of steps to be drawn.
+   * @param stepsInt    the number of steps to be drawn.
    */
-  public InputNode(ChaosGameDescription description, int stepsInt, ChaosGameControllerGui controller) {
+  public InputNode(ChaosGameDescription description, int stepsInt,
+                   ChaosGameControllerGui controller) {
     this.controller = new InputNodeController(controller, description, this);
     this.currentSteps = stepsInt;
     this.inputNode = new GridPane();
@@ -79,7 +76,7 @@ public class InputNode {
    *
    * @param node the node to run the fractal.
    */
-  private void runWhenEnterPressed(Node node){
+  private void runWhenEnterPressed(Node node) {
     node.setOnKeyPressed(e -> {
       if (e.getCode().equals(KeyCode.ENTER)) {
         this.controller.run(minMaxCoordsNode, fractalInputNode);
@@ -92,7 +89,7 @@ public class InputNode {
    *
    * @param description the description of the fractal to be drawn.
    */
-  public void createInputNode(ChaosGameDescription description, boolean slidersOnOff){
+  public void createInputNode(ChaosGameDescription description, boolean slidersOnOff) {
     this.sliders = slidersOnOff;
     this.minMaxCoordsNode = new MinMaxCoordsNode(description.getMinCoords(),
         description.getMaxCoords(), controller);
@@ -116,12 +113,13 @@ public class InputNode {
    *
    * @param description the description of the fractal.
    */
-  public void changeInputNode(ChaosGameDescription description, int steps){
-   this.controller.changeDescription(description);
+  public void changeInputNode(ChaosGameDescription description, int steps) {
+    this.controller.changeDescription(description);
     this.currentSteps = steps;
     this.findInstance(description);
     this.createInputNode(description, this.sliders);
   }
+
   /**
    * returns the current steps.
    *
@@ -131,21 +129,22 @@ public class InputNode {
 
     return currentSteps;
   }
+
   /**
    * Finds the instance of the fractal input node.
    *
    * @param description the description of the fractal.
    */
 
-  private void findInstance(ChaosGameDescription description){
-    if (description.getTransform(0) instanceof AffineTransform2D){
-     this.fractalInputNode =  new  AffineTransformNode(description);
+  private void findInstance(ChaosGameDescription description) {
+    if (description.getTransform(0) instanceof AffineTransform2D) {
+      this.fractalInputNode = new AffineTransformNode(description);
     } else {
-     this.fractalInputNode = new JuliaTransformNode(description, this.controller);
+      this.fractalInputNode = new JuliaTransformNode(description, this.controller);
     }
   }
 
-  private void createRunButton(){
+  private void createRunButton() {
     Button runButton = new Button("Run");
     runButton.getStyleClass().add("button-rightPane");
     runButton.setOnAction(e -> {

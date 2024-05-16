@@ -99,6 +99,7 @@ public class TransformsParser {
     return new Vector2D(x, y);
 
   }
+
   /**
    * Gets all transforms read in from file and returns it as a list of transform2Ds.
    *
@@ -136,6 +137,7 @@ public class TransformsParser {
     }
     return matrices.toString();
   }
+
   /**
    * Turns the information of the ChaosGame description into writable strings and returns it.
    * <ul>
@@ -154,7 +156,7 @@ public class TransformsParser {
     if (description == null) {
       throw new IllegalArgumentException("description cannot be null");
     }
-    ArrayList<String> transformInfo = new ArrayList<>();
+
     String transform =
         description.getTransform(0).getClass().getSimpleName()
             .replace("Transform", "");
@@ -166,6 +168,7 @@ public class TransformsParser {
     String maxCoords =
         description.getMaxCoords().getX0() + ", " + description.getMaxCoords().getY0();
     maxCoords += "           # upper right coordinates" + '\n';
+    ArrayList<String> transformInfo = new ArrayList<>();
     transformInfo.add(compare);
     transformInfo.add(transform);
     transformInfo.add(minCoords);
@@ -181,7 +184,6 @@ public class TransformsParser {
     transformInfo.add(transformsAsStrings);
     return transformInfo;
   }
-
 
 
 }

@@ -1,7 +1,6 @@
 package org.ntnu.IDATA2003.mappe5;
 
-import org.ntnu.IDATA2003.mappe5.Ui.ChaosGameUi;
-import org.ntnu.IDATA2003.mappe5.Ui.ChaosGameGui;
+import org.ntnu.IDATA2003.mappe5.ui.ChaosGameGui;
 
 /**
  * This class initializes and starts the application for Chaos Game.

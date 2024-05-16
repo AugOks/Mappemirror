@@ -59,33 +59,37 @@ public class ChaosGame {
     return this.canvas;
   }
 
-  private void setCanvas(){
-    this.canvas = new ChaosCanvas(this.currentHeight, this.currentWidth, this.description.getMinCoords()
-    , this.description.getMaxCoords());
+  private void setCanvas() {
+    this.canvas =
+        new ChaosCanvas(this.currentHeight, this.currentWidth, this.description.getMinCoords(),
+            this.description.getMaxCoords());
   }
+
   /**
    * Gets the description of the game being played.
    *
    * @return the description of the game.
    */
-  public ChaosGameDescription getDescription(){
+  public ChaosGameDescription getDescription() {
 
     return this.description;
   }
 
   /**
    * Adds a new subscriber to obeserve the changes in this class.
+   *
    * @param subscriber The new subscriber to be added to the list.
    * @throws IllegalArgumentException if the subscriber is a null object.
    */
-  public void addSubscriber(ChaosGameObserver subscriber){
-    if(subscriber == null){
+  public void addSubscriber(ChaosGameObserver subscriber) {
+    if (subscriber == null) {
       throw new IllegalArgumentException("new subscriber cannot be null");
     }
     this.subscribers.add(subscriber);
   }
-  private void updateSubscriber(){
-    for (ChaosGameObserver sub: this.subscribers){
+
+  private void updateSubscriber() {
+    for (ChaosGameObserver sub : this.subscribers) {
       this.canvas.clear();
       sub.update();
     }
@@ -98,19 +102,19 @@ public class ChaosGame {
    *
    * @param steps the amount of steps to be run before halting
    */
-  public void runSteps(int steps)  {
+  public void runSteps(int steps) {
     if (steps < 1) {
       throw new IllegalArgumentException("Steps cannot be less than 1");
     }
-      for (int i = 0; i < steps; i++) {
-        int dice = this.random.nextInt(
-            this.description.getTransformSize());    // throws a die for a random number
-        Transform2D transform = this.description.getTransform(
-            dice); // gets a random transform based on die
-        Vector2D point = transform.transform(this.currentPoint); // transforms current position.
-        canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
-        this.currentPoint = point; //Sets the current pont to the result of the transformation
-      }
+    for (int i = 0; i < steps; i++) {
+      int dice = this.random.nextInt(
+          this.description.getTransformSize());    // throws a die for a random number
+      Transform2D transform = this.description.getTransform(
+          dice); // gets a random transform based on die
+      Vector2D point = transform.transform(this.currentPoint); // transforms current position.
+      canvas.putPixel(point); //Sets the results of the transformation as a pixel on the canvas
+      this.currentPoint = point; //Sets the current pont to the result of the transformation
+    }
 
   }
 

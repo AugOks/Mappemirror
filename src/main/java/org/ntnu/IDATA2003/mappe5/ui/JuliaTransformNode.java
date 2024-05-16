@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.Ui;
+package org.ntnu.IDATA2003.mappe5.ui;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,16 +22,16 @@ public class JuliaTransformNode implements FractalInputNode {
   private final TextField realTextField;
   private final Complex complex;
   private final InputNodeController controller;
-  private  boolean isValueValid = true;
+  private boolean isValueValid = true;
 
   /**
    * Constructor for the JuliaSliderBox class.
    *
    * @param description the description for the current game.
    */
-  public JuliaTransformNode(ChaosGameDescription description, InputNodeController controller){
+  public JuliaTransformNode(ChaosGameDescription description, InputNodeController controller) {
     this.controller = controller;
-    JuliaTransform julia  = (JuliaTransform) description.getTransform(0);
+    JuliaTransform julia = (JuliaTransform) description.getTransform(0);
     this.complex = julia.getComplex();
     this.imagTextField = new TextField();
     this.imagTextField.setId("imag");
@@ -40,8 +40,8 @@ public class JuliaTransformNode implements FractalInputNode {
     this.realTextField.setMaxWidth(100);
     this.realTextField.setId("real");
 
-    this.imaginarySlider = createSlider(this.complex.getY0(),-1, 1.0,this.imagTextField);
-    this.realSlider = createSlider(this.complex.getX0(),-1, 1.0,  this.realTextField);
+    this.imaginarySlider = createSlider(this.complex.getY0(), -1, 1.0, this.imagTextField);
+    this.realSlider = createSlider(this.complex.getX0(), -1, 1.0, this.realTextField);
     this.textFieldListener(this.imagTextField);
     this.textFieldListener(this.realTextField);
   }
@@ -50,13 +50,13 @@ public class JuliaTransformNode implements FractalInputNode {
    * Creates a slider with a start value and a label to display the value of the slider.
    *
    * @param startValue The initial value of the complex number.
-   * @param min The minimum value of the slider.
-   * @param max The maximum value of the slider.
-   * @param textField The label to display the value of the slider.
+   * @param min        The minimum value of the slider.
+   * @param max        The maximum value of the slider.
+   * @param textField  The label to display the value of the slider.
    * @return the slider.
    */
-  private Slider createSlider(double startValue,double min, double max, TextField textField) {
-    Slider slider = new Slider(min, max,startValue); //starts at 0 just for construction.
+  private Slider createSlider(double startValue, double min, double max, TextField textField) {
+    Slider slider = new Slider(min, max, startValue); //starts at 0 just for construction.
     slider.setShowTickLabels(true);
     slider.setShowTickMarks(true);
     slider.setMajorTickUnit(0.5f);
@@ -65,19 +65,20 @@ public class JuliaTransformNode implements FractalInputNode {
     slider.setMinWidth(180);
     textField.textProperty().setValue(String.valueOf(startValue));
     slider.setId(textField.getText());
-    this.sliderListener(slider,textField);
+    this.sliderListener(slider, textField);
     return slider;
   }
+
   /**
    * Listens to the slider and updates the label with the value of the slider.
    *
-   * @param slider the slider to listen to.
+   * @param slider    the slider to listen to.
    * @param textField the label to update.
    */
-  private void sliderListener(Slider slider, TextField textField){
+  private void sliderListener(Slider slider, TextField textField) {
     slider.valueProperty().addListener(
         (observable, oldValue, newValue) -> {
-          String displayValue =  String.valueOf(newValue);
+          String displayValue = String.valueOf(newValue);
           try {
             if (slider.getId().equalsIgnoreCase("real")) {
               this.complex.setX0((double) newValue);
@@ -87,7 +88,7 @@ public class JuliaTransformNode implements FractalInputNode {
             textField.setText(displayValue);
             this.isValueValid = true;
             controller.changeTransform(this.getTransforms());
-          }catch (Exception e){
+          } catch (Exception e) {
             this.isValueValid = false;
             ;//TODO Maybe fix this
           }
@@ -99,22 +100,21 @@ public class JuliaTransformNode implements FractalInputNode {
    *
    * @param field the text field to assign a listener to.
    */
-  private void textFieldListener(TextField field){
+  private void textFieldListener(TextField field) {
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
         double value = Double.parseDouble(newValue);
         if (field.getId().equalsIgnoreCase("real")) {
-            this.complex.setX0(Double.parseDouble(newValue));
-            realSlider.setValue(Double.parseDouble(newValue));
+          this.complex.setX0(Double.parseDouble(newValue));
+          realSlider.setValue(Double.parseDouble(newValue));
 
         } else {
           this.complex.setY0(value);
           imaginarySlider.setValue(value);
         }
         this.isValueValid = true;
-      } catch (Exception e){
-        this.isValueValid = false
-        ;//TODO Maybe fix this
+      } catch (Exception e) {
+        this.isValueValid = false;
       }
     });
   }
@@ -136,8 +136,8 @@ public class JuliaTransformNode implements FractalInputNode {
     Label imaginary = new Label("Imaginary:");
     imaginary.getStyleClass().add("input-title");
     grid.add(imaginary, 0, 2);
-    grid.add(this.imaginarySlider,0, 3);
-    grid.add(this.imagTextField, 1 ,3);
+    grid.add(this.imaginarySlider, 0, 3);
+    grid.add(this.imagTextField, 1, 3);
     return grid;
   }
 
@@ -151,7 +151,7 @@ public class JuliaTransformNode implements FractalInputNode {
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new JuliaTransform(complex, 1));
     transforms.add(new JuliaTransform(complex, -1));
-    return  transforms;
+    return transforms;
   }
 
   @Override

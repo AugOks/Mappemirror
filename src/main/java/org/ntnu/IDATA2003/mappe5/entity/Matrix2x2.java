@@ -26,7 +26,9 @@ public class Matrix2x2 {
     this.setC(c1);
     this.setD(d1);
   }
-  public Matrix2x2(Matrix2x2 matrix){
+
+  
+  public Matrix2x2(Matrix2x2 matrix) {
     this.a = matrix.getA();
     this.b = matrix.getB();
     this.c = matrix.getC();
@@ -52,6 +54,14 @@ public class Matrix2x2 {
     return matrixProduct;
   }
 
+  public String matrixToString() {
+    return this.a + ", " + this.b + ", " + this.c + ", " + this.d;
+  }
+
+  public double getA() {
+    return a;
+  }
+
   /**
    * Sets the value of the top left element in the matrix.
    *
@@ -60,6 +70,10 @@ public class Matrix2x2 {
   public void setA(double value) {
 
     this.a = value;
+  }
+
+  public double getB() {
+    return b;
   }
 
   /**
@@ -72,6 +86,10 @@ public class Matrix2x2 {
     this.b = value;
   }
 
+  public double getC() {
+    return c;
+  }
+
   /**
    * sets the value of the bottom left element in the matrix.
    *
@@ -80,6 +98,10 @@ public class Matrix2x2 {
   public void setC(double value) {
 
     this.c = value;
+  }
+
+  public double getD() {
+    return d;
   }
 
   /**
@@ -91,27 +113,5 @@ public class Matrix2x2 {
 
     this.d = value;
 
-  }
-
-
-
-  public String matrixToString() {
-    return this.a + ", " + this.b + ", " + this.c + ", " + this.d;
-  }
-
-  public double getA() {
-    return a;
-  }
-
-  public double getB() {
-    return b;
-  }
-
-  public double getC() {
-    return c;
-  }
-
-  public double getD() {
-    return d;
   }
 }

@@ -53,6 +53,7 @@ public class JuliaTransform implements Transform2D {
 
   /**
    * Gets the complex number of the julia transformation.
+   *
    * @return the complex number.
    */
   public Complex getComplex() {
@@ -61,10 +62,11 @@ public class JuliaTransform implements Transform2D {
 
   /**
    * Sets the complex number of the julia transformation.
+   *
    * @param complex the complex number.
    */
-    public void setComplex(Complex complex) {
-      this.julia = complex;
-    }
+  public void setComplex(Complex complex) {
+    this.julia = complex;
+  }
 
 }

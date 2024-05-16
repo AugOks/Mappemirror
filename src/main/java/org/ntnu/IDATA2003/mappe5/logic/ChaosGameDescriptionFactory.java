@@ -10,30 +10,22 @@ import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
 
 //TODO wright javadoc for this chaos game description factory
+
 /**
  * A factory implementation for creating pre-defined fractals for the chaos game.
  */
 
 public class ChaosGameDescriptionFactory {
   /**
-   * An enum containing all currently available pre-defined fractals the factory can output.
-   */
-  public enum Fractals {
-    JULIA, BARNSLEY, SIERPINSKI, SPIDERWEB, SQUARE, PENTAGON, KOCHCURVE, DRAGONFIRE, BLANKJULIA,
-    BLANKAFFINE
-  }
-
-  /**
    * Takes an input and creates a fractal based on the name given.
    *
    * @param fractal the name of the fractal to create.
-   * @return null if no fractal with the given name could be found,
-   * otherwise a complete chaos game description for the given fractal
+   * @return a complete chaos game description for the given fractal.
    */
-  public ChaosGameDescription createDescription(Fractals fractal){
+  public ChaosGameDescription createDescription(Fractals fractal) {
 
     ChaosGameDescription description = null;
-    switch (fractal){
+    switch (fractal) {
       case BARNSLEY:
         description = this.createBarnsleyFern();
         break;
@@ -76,9 +68,16 @@ public class ChaosGameDescriptionFactory {
     return description;
   }
 
-  public ChaosGameDescription createDescription(Fractals fractal, int numberTransforms){
+  /**
+   * Creates a fractal based on the name given and the number of transforms.
+   *
+   * @param fractal the name of the fractal to create.
+   * @param numberTransforms the number of transforms to create.
+   * @return a complete chaos game description for the given fractal.
+   */
+  public ChaosGameDescription createDescription(Fractals fractal, int numberTransforms) {
     ChaosGameDescription description = null;
-    if (fractal == Fractals.BLANKAFFINE){
+    if (fractal == Fractals.BLANKAFFINE) {
       description = this.createBlankAffine(numberTransforms);
     }
     return description;
@@ -89,15 +88,13 @@ public class ChaosGameDescriptionFactory {
    *
    * @return the complete chaos game description for the Julia set.
    */
-  private ChaosGameDescription createJulia(){
-
-    Vector2D minCoords = new Vector2D(-1.6, -1);
-    Vector2D maxCoords = new Vector2D(1.6, 1);
+  private ChaosGameDescription createJulia() {
     Complex c = new Complex(-0.74543, 0.11301);
     List<Transform2D> transformList = new ArrayList<>();
     transformList.add(new JuliaTransform(c, 1));
     transformList.add(new JuliaTransform(c, -1));
-
+    Vector2D minCoords = new Vector2D(-1.6, -1);
+    Vector2D maxCoords = new Vector2D(1.6, 1);
     return new ChaosGameDescription(transformList, minCoords, maxCoords, "Julia");
   }
 
@@ -107,42 +104,45 @@ public class ChaosGameDescriptionFactory {
    * @return the complete chaos game description for the Sierpinski triangle.
    */
   private ChaosGameDescription createSierpinksi() {
-    Vector2D minCoords = new Vector2D(0, 0);
-    Vector2D maxCoords = new Vector2D(1, 1);
+
     Matrix2x2 matrix = new Matrix2x2(.5, 0, 0, .5);
-    Vector2D firstVector = new Vector2D(0,0);
-    Vector2D secondVector = new Vector2D(.25,.5);
-    Vector2D thirdVector = new Vector2D(.5,0);
+    Vector2D firstVector = new Vector2D(0, 0);
+    Vector2D secondVector = new Vector2D(.25, .5);
+    Vector2D thirdVector = new Vector2D(.5, 0);
 
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(matrix, firstVector));
     transforms.add(new AffineTransform2D(new Matrix2x2(matrix), secondVector));
     transforms.add(new AffineTransform2D(new Matrix2x2(matrix), thirdVector));
-    return new  ChaosGameDescription(transforms, minCoords,maxCoords, "Sierpinski");
+    Vector2D minCoords = new Vector2D(0, 0);
+    Vector2D maxCoords = new Vector2D(1, 1);
+    return new ChaosGameDescription(transforms, minCoords, maxCoords, "Sierpinski");
   }
+
   /**
    * Creates a Barnsley fern based on pre-defined values.
    *
    * @return the complete chaos game description for the Barnsley fern.
    */
-  private  ChaosGameDescription createBarnsleyFern(){
-    Vector2D minCoords = new Vector2D(-2.65, 0);
-    Vector2D maxCoords = new Vector2D(2.65, 10);
+  private ChaosGameDescription createBarnsleyFern() {
+
     Matrix2x2 firstMatrix = new Matrix2x2(0, 0, 0, .16);
     Matrix2x2 secondMatrix = new Matrix2x2(.85, .04, -.04, .85);
     Matrix2x2 thirdMatrix = new Matrix2x2(.2, -.26, .23, .22);
     Matrix2x2 fourthMatrix = new Matrix2x2(-.15, .28, .26, .24);
-    Vector2D firstVector = new Vector2D(0,0);
+    Vector2D firstVector = new Vector2D(0, 0);
     Vector2D secondVector = new Vector2D(0, 1.6);
-    Vector2D thirdVector = new Vector2D(0,1.6);
-    Vector2D fourthVector = new Vector2D(0,.44);
+    Vector2D thirdVector = new Vector2D(0, 1.6);
+    Vector2D fourthVector = new Vector2D(0, .44);
 
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(firstMatrix, firstVector));
     transforms.add(new AffineTransform2D(secondMatrix, secondVector));
     transforms.add(new AffineTransform2D(thirdMatrix, thirdVector));
     transforms.add(new AffineTransform2D(fourthMatrix, fourthVector));
-    return new  ChaosGameDescription(transforms, minCoords,maxCoords, "Sierpinski");
+    Vector2D minCoords = new Vector2D(-2.65, 0);
+    Vector2D maxCoords = new Vector2D(2.65, 10);
+    return new ChaosGameDescription(transforms, minCoords, maxCoords, "Sierpinski");
   }
 
   /**
@@ -150,22 +150,24 @@ public class ChaosGameDescriptionFactory {
    *
    * @return the complete chaos game description for the SpiderNet.
    */
-  private ChaosGameDescription createSpiderweb(){
-    Vector2D minCoords = new Vector2D(-150, -150);
-    Vector2D maxCoords = new Vector2D(150, 150);
+  private ChaosGameDescription createSpiderweb() {
+
     Matrix2x2 firstMatrix = new Matrix2x2(.4, 0, 0, .4);
     Matrix2x2 secondMatrix = new Matrix2x2(.4, -0.5, 0.5, .4);
-    Matrix2x2 thirdMatrix =  new Matrix2x2(.4, 0.5, -0.5, .4);
-    Vector2D firstVector = new Vector2D(-160,0);
-    Vector2D secondVector = new Vector2D(160,0);
-    Vector2D thirdVector = new Vector2D(0,0);
+    Matrix2x2 thirdMatrix = new Matrix2x2(.4, 0.5, -0.5, .4);
+    Vector2D firstVector = new Vector2D(-160, 0);
+    Vector2D secondVector = new Vector2D(160, 0);
+    Vector2D thirdVector = new Vector2D(0, 0);
 
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(firstMatrix, firstVector));
     transforms.add(new AffineTransform2D(firstMatrix, secondVector));
     transforms.add(new AffineTransform2D(secondMatrix, thirdVector));
     transforms.add(new AffineTransform2D(thirdMatrix, thirdVector));
-    return new  ChaosGameDescription(transforms, minCoords,maxCoords, "SpiderNet");
+
+    Vector2D minCoords = new Vector2D(-150, -150);
+    Vector2D maxCoords = new Vector2D(150, 150);
+    return new ChaosGameDescription(transforms, minCoords, maxCoords, "SpiderNet");
   }
 
   /**
@@ -174,8 +176,7 @@ public class ChaosGameDescriptionFactory {
    * @return the complete chaos game description for the Square.
    */
   private ChaosGameDescription createSquare() {
-    Vector2D minCoords = new Vector2D(-200, -200);
-    Vector2D maxCoords = new Vector2D(200, 200);
+
     Matrix2x2 matrix = new Matrix2x2(.3333, 0, 0, .3333);
     Vector2D firstVector = new Vector2D(0, 150);
     Vector2D secondVector = new Vector2D(0, -150);
@@ -195,6 +196,9 @@ public class ChaosGameDescriptionFactory {
     transforms.add(new AffineTransform2D(matrix, sixthVector));
     transforms.add(new AffineTransform2D(matrix, seventhVector));
     transforms.add(new AffineTransform2D(matrix, eightVector));
+
+    Vector2D minCoords = new Vector2D(-200, -200);
+    Vector2D maxCoords = new Vector2D(200, 200);
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "Square");
   }
 
@@ -204,8 +208,7 @@ public class ChaosGameDescriptionFactory {
    * @return the complete chaos game description for the Pentagon.
    */
   private ChaosGameDescription createPentagon() {
-    Vector2D minCoords = new Vector2D(-200, -200);
-    Vector2D maxCoords = new Vector2D(200, 200);
+
     Matrix2x2 matrix = new Matrix2x2(.38, 0, 0, .38);
     Vector2D firstVector = new Vector2D(100, 0);
     Vector2D secondVector = new Vector2D(30.9017, 95.1057);
@@ -219,6 +222,9 @@ public class ChaosGameDescriptionFactory {
     transforms.add(new AffineTransform2D(matrix, thirdVector));
     transforms.add(new AffineTransform2D(matrix, fourthVector));
     transforms.add(new AffineTransform2D(matrix, fifthVector));
+
+    Vector2D minCoords = new Vector2D(-200, -200);
+    Vector2D maxCoords = new Vector2D(200, 200);
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "Pentagon");
   }
 
@@ -228,8 +234,7 @@ public class ChaosGameDescriptionFactory {
    * @return the complete chaos game description for the Snowflake.
    */
   private ChaosGameDescription createKochCurve() {
-    Vector2D minCoords = new Vector2D(-200, -200);
-    Vector2D maxCoords = new Vector2D(200, 200);
+
     Matrix2x2 firstMatrix = new Matrix2x2(.3333, 0, 0, .3333);
     Matrix2x2 secondMatrix = new Matrix2x2(0.16667, -0.288675, 0.288675, 0.16667);
     Matrix2x2 thirdMatrix = new Matrix2x2(0.16667, 0.288675, -0.288675, 0.16667);
@@ -243,6 +248,8 @@ public class ChaosGameDescriptionFactory {
     transforms.add(new AffineTransform2D(firstMatrix, secondVector));
     transforms.add(new AffineTransform2D(secondMatrix, thirdVector));
     transforms.add(new AffineTransform2D(thirdMatrix, fourthVector));
+    Vector2D minCoords = new Vector2D(-200, -200);
+    Vector2D maxCoords = new Vector2D(200, 200);
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "KochCurve");
   }
 
@@ -251,9 +258,8 @@ public class ChaosGameDescriptionFactory {
    *
    * @return the complete chaos game description for the DragonFire.
    */
-  private ChaosGameDescription createDragonFire(){
-    Vector2D minCoords = new Vector2D(-200, -200);
-    Vector2D maxCoords = new Vector2D(200, 200);
+  private ChaosGameDescription createDragonFire() {
+
     Matrix2x2 firstMatrix = new Matrix2x2(.5, 0, 0, 0.8);
     Matrix2x2 secondMatrix = new Matrix2x2(0.5, 0.2, -0.2, 0.5);
     Matrix2x2 thirdMatrix = new Matrix2x2(0.5, -0.2, 0.2, 0.5);
@@ -265,30 +271,43 @@ public class ChaosGameDescriptionFactory {
     transforms.add(new AffineTransform2D(firstMatrix, firstVector));
     transforms.add(new AffineTransform2D(secondMatrix, secondVector));
     transforms.add(new AffineTransform2D(thirdMatrix, thirdVector));
+
+    Vector2D minCoords = new Vector2D(-200, -200);
+    Vector2D maxCoords = new Vector2D(200, 200);
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "DragonFire");
   }
 
-  private ChaosGameDescription createBlankJulia(){
-    Vector2D minCoords = new Vector2D(0,0);
-    Vector2D maxCoords = new Vector2D(0.1, 0.1);
-    Complex c = new Complex(0,0);
+  private ChaosGameDescription createBlankJulia() {
+
+    Complex c = new Complex(0, 0);
     List<Transform2D> transformList = new ArrayList<>();
     transformList.add(new JuliaTransform(c, 1));
     transformList.add(new JuliaTransform(c, -1));
 
+    Vector2D minCoords = new Vector2D(0, 0);
+    Vector2D maxCoords = new Vector2D(0.1, 0.1);
     return new ChaosGameDescription(transformList, minCoords, maxCoords, "BlankJulia");
   }
 
-  private ChaosGameDescription createBlankAffine(int numberTransforms){
+  private ChaosGameDescription createBlankAffine(int numberTransforms) {
+
+    List<Transform2D> transforms = new ArrayList<>();
+    for (int i = 0; i < numberTransforms; i++) {
+      Matrix2x2 matrix = new Matrix2x2(0, 0, 0, 0);
+      Vector2D vector = new Vector2D(0, 0);
+      transforms.add(new AffineTransform2D(matrix, vector));
+    }
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(0.1, 0.1);
-    List<Transform2D> transforms = new ArrayList<>();
-    for (int i=0; i< numberTransforms; i++){
-      Matrix2x2 Matrix = new Matrix2x2(0, 0, 0, 0);
-      Vector2D Vector = new Vector2D(0, 0);
-      transforms.add(new AffineTransform2D(Matrix, Vector));
-    }
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "BlankAffine");
+  }
+
+  /**
+   * An enum containing all currently available pre-defined fractals the factory can output.
+   */
+  public enum Fractals {
+    JULIA, BARNSLEY, SIERPINSKI, SPIDERWEB, SQUARE, PENTAGON, KOCHCURVE, DRAGONFIRE, BLANKJULIA,
+    BLANKAFFINE
   }
 }
 

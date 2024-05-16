@@ -10,10 +10,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.ntnu.IDATA2003.mappe5.entity.Complex;
-import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
 import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
 
 class ChaosGameFileHandlerTest {
   /**

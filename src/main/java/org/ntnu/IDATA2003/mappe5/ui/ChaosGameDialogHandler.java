@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.Ui;
+package org.ntnu.IDATA2003.mappe5.ui;
 
 import java.io.File;
 import java.util.Objects;
@@ -33,8 +33,9 @@ import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
  */
 public class ChaosGameDialogHandler {
 
-  private static  ChaosGameDialogHandler instance = null;
+  private static ChaosGameDialogHandler instance = null;
   private int numberOfTransforms;
+
   /**
    * Constructor for the ChaosGameDialogHandler class.
    */
@@ -42,6 +43,11 @@ public class ChaosGameDialogHandler {
   private ChaosGameDialogHandler() {
   }
 
+  /**
+   * Method for getting the instance of the ChaosGameDialogHandler class.
+   *
+   * @return the instance of the ChaosGameDialogHandler class.
+   */
   public static synchronized ChaosGameDialogHandler getInstance() {
     if (instance == null) {
       instance = new ChaosGameDialogHandler();
@@ -54,14 +60,14 @@ public class ChaosGameDialogHandler {
    *
    * @return true if the user confirms the exit, false otherwise.
    */
-  public boolean exitDialog(){
+  public boolean exitDialog() {
     boolean exitConfirmation = false;
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
     Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION,
-                                "  ",
-                                yes,
-                                no);
+        "  ",
+        yes,
+        no);
     exitAlert.setHeaderText("Are you sure you want to exit the application?");
     Optional<ButtonType> result = exitAlert.showAndWait();
     if (exitAlert.getResult() == yes) {
@@ -85,8 +91,8 @@ public class ChaosGameDialogHandler {
       alertDanceParty.setTitle("Dance party");
       alertDanceParty.setHeaderText("Do you want to have a dance party?");
       final ImageView dialogHeaderIcon;
-        dialogHeaderIcon = new ImageView(Objects.requireNonNull(getClass()
-            .getResource("/discoBall.png")).toExternalForm());
+      dialogHeaderIcon = new ImageView(Objects.requireNonNull(getClass()
+          .getResource("/discoBall.png")).toExternalForm());
       dialogHeaderIcon.setFitHeight(48);
       dialogHeaderIcon.setFitWidth(48);
       alertDanceParty.getDialogPane().setGraphic(dialogHeaderIcon);
@@ -94,12 +100,11 @@ public class ChaosGameDialogHandler {
       Optional<ButtonType> result = alertDanceParty.showAndWait();
 
       if (alertDanceParty.getResult() == yesD) {
-        dancePartyConfirmation=true;
+        dancePartyConfirmation = true;
       }
-    }catch (NullPointerException e){
+    } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the icon");
     }
-    catch (Exception ignore) {}
     return dancePartyConfirmation;
   }
 
@@ -113,51 +118,58 @@ public class ChaosGameDialogHandler {
     Alert about = new Alert(Alert.AlertType.INFORMATION);
     about.setTitle("About");
     about.setHeaderText("Chaos Game");
-    setIconToCGDialog(about);
+    setIconToCgDialog(about);
     about.getDialogPane().setMinSize(700, 400);
 
-    VBox dialogPaneContent = new VBox();
-    GridPane grid = new GridPane();
 
-    String header = "Welcome to chaos game!";
     Text text1 = new Text("Chaos game is one of many established methods for generating fractals "
-                          +  "online.\n"
-                          +  "A fractal can be defined as complex pattern that are self-similar "
-                          + "across different scales. In other word, beautiful figure \n"
-                          + "that will repeat the same pattern "
-                          + "regardless of how much you zoom and your viewpoint.\n");
+        + "online.\n"
+        + "A fractal can be defined as complex pattern that are self-similar "
+        + "across different scales. In other word, beautiful figure \n"
+        + "that will repeat the same pattern "
+        + "regardless of how much you zoom and your viewpoint.\n");
     Text text2 = new Text("The application creates fractals choosing a initial starting point, "
-                          + "and so transforming that point using \n"
-                          +" a predefined mathematical operation."
-                          + "Iteratively creating a long sequence of points later on drawn on a "
-                          + "canvas to create a fractal.\n"
-                          + "The most known fractals includes the "
-                          + "Julia set and the Sierpinski triangle. \n");
+        + "and so transforming that point using \n"
+        + " a predefined mathematical operation."
+        + "Iteratively creating a long sequence of points later on drawn on a "
+        + "canvas to create a fractal.\n"
+        + "The most known fractals includes the "
+        + "Julia set and the Sierpinski triangle. \n");
     Text text3 = new Text("This particular Chaos Game was created by students as NTNU as a part "
-                          + " of their exam for the course IDATx2024. \n"
-                          + "The main objective was to show competence in newly learned knowledge "
-                          + "such as design patterns,\n"
-                          + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
+        + " of their exam for the course IDATx2024. \n"
+        + "The main objective was to show competence in newly learned knowledge "
+        + "such as design patterns,\n"
+        + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
 
     text1.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     text2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     text3.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
+    String header = "Welcome to chaos game!";
     about.setHeaderText(header);
-    grid.add(text1,0,1);
-    grid.add(text2,0,2);
-    grid.add(text3,0,3);
+
+    GridPane grid = new GridPane();
+    grid.add(text1, 0, 1);
+    grid.add(text2, 0, 2);
+    grid.add(text3, 0, 3);
+
+    VBox dialogPaneContent = new VBox();
     dialogPaneContent.getChildren().add(grid);
     about.getDialogPane().setContent(dialogPaneContent);
     about.showAndWait();
   }
 
-  public int createNewFractalDialog(){
+  /**
+   * Method for creating a new fractal dialog.
+   *
+   * @return the number of transforms for the new fractal.
+   */
+  public int createNewFractalDialog() {
 
     Alert createNewFractal = new Alert(Alert.AlertType.CONFIRMATION);
     createNewFractal.getDialogPane().setMinSize(300, 300);
-    setIconToCGDialog(createNewFractal);
+    setIconToCgDialog(createNewFractal);
     createNewFractal.setTitle("Create new fractal");
-    GridPane grid = new GridPane();
+
 
     final ToggleGroup group = new ToggleGroup();
     RadioButton radioButtonJulia = new RadioButton("Julia Set");
@@ -168,12 +180,14 @@ public class ChaosGameDialogHandler {
 
     createNewFractal.setTitle("New fractal");
     createNewFractal.setHeaderText("Create a new fractal");
+
+    GridPane grid = new GridPane();
     grid.add(new Label("Choose the type of fractal you want to create"), 0, 0);
     grid.add(new Label(""), 0, 1);
     grid.add(radioButtonJulia, 0, 2);
     grid.add(radioButtonAffine, 0, 3);
 
-    Separator line = new Separator(Orientation.HORIZONTAL);
+
 
     Spinner spinner = new Spinner();
     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20));
@@ -181,11 +195,12 @@ public class ChaosGameDialogHandler {
 
     radioButtonJulia.setOnAction(event -> {
       if (radioButtonJulia.isSelected()) {
-        if (grid.getChildren().contains(spinner)){
+        if (grid.getChildren().contains(spinner)) {
           removeNodesFromGrid(grid, 4, 7);
         }
       }
     });
+    Separator line = new Separator(Orientation.HORIZONTAL);
     radioButtonAffine.setOnAction(event -> {
       if (radioButtonAffine.isSelected()) {
         grid.add(new Label("  "), 0, 4);
@@ -196,9 +211,9 @@ public class ChaosGameDialogHandler {
     });
     createNewFractal.getDialogPane().setContent(grid);
     createNewFractal.showAndWait();
-    if (radioButtonAffine.isSelected()){
+    if (radioButtonAffine.isSelected()) {
       this.numberOfTransforms = (int) spinner.getValue();
-    } else if (radioButtonJulia.isSelected()){
+    } else if (radioButtonJulia.isSelected()) {
       this.numberOfTransforms = 0;
     }
     System.out.println(this.numberOfTransforms);
@@ -208,20 +223,73 @@ public class ChaosGameDialogHandler {
   /**
    * Method for removing the node for affine transformation from the grid in the dialog.
    *
-   * @param grid the grid to add the nodes to.
+   * @param grid     the grid to add the nodes to.
    * @param startRow the row to start adding nodes.
-   * @param endRow the row to end adding nodes.
+   * @param endRow   the row to end adding nodes.
    */
   private void removeNodesFromGrid(GridPane grid, int startRow, int endRow) {
     for (int i = startRow; i <= endRow; i++) {
       final int row = i;
-      grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row &&
-                                          GridPane.getColumnIndex(node) == 0);
+      grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row
+          && GridPane.getColumnIndex(node) == 0);
     }
   }
 
-  public ColorChoiceDialog getColorChoiceDialog(){
+  public ColorChoiceDialog getColorChoiceDialog() {
     return new ColorChoiceDialog();
+  }
+
+  /**
+   * Method for creating a file chooser dialog.
+   *
+   * @return the file chosen by the user.
+   */
+  public File readFromFileDialog() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Open Resource File");
+    return fileChooser.showOpenDialog(null);
+  }
+
+  /**
+   * Method for saving current fractal to file.
+   *
+   * @return the file chosen by the user.
+   */
+  public File saveToFileDialog() {
+    FileChooser fileChooser = new FileChooser();
+    fileChooser.setTitle("Save Resource File");
+    return fileChooser.showSaveDialog(null);
+  }
+
+  /**
+   * Method for creating a generic error dialog.
+   *
+   * @param message the message to display in the dialog.
+   */
+  public void genericErrorDialog(String message) {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.setContentText(message);
+    alert.showAndWait();
+  }
+
+  /**
+   * Method for setting the icon to the ChaosGame dialog.
+   *
+   * @param alert the alert to set the icon to.
+   * @throws ResourceNotFoundException if the icon for the dialog is not found.
+   */
+  private void setIconToCgDialog(Alert alert) {
+    final ImageView dialogHeaderIcon;
+    try {
+      dialogHeaderIcon = new ImageView(
+          Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
+              .toExternalForm());
+    } catch (NullPointerException e) {
+      throw new ResourceNotFoundException("Could not find the icon");
+    }
+    dialogHeaderIcon.setFitHeight(48);
+    dialogHeaderIcon.setFitWidth(48);
+    alert.getDialogPane().setGraphic(dialogHeaderIcon);
   }
 
   /**
@@ -251,58 +319,5 @@ public class ChaosGameDialogHandler {
       });
     }
 
-  }
-
-  /**
-   * Method for creating a file chooser dialog.
-   *
-   * @return the file chosen by the user.
-   */
-  public File readFromFileDialog(){
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Open Resource File");
-    return fileChooser.showOpenDialog(null);
-  }
-
-  /**
-   * Method for saving current fractal to file.
-   *
-   * @return the file chosen by the user.
-   */
-  public File saveToFileDialog(){
-    FileChooser fileChooser = new FileChooser();
-    fileChooser.setTitle("Save Resource File");
-    return fileChooser.showSaveDialog(null);
-  }
-
-  /**
-   * Method for creating a generic error dialog.
-   *
-   * @param message the message to display in the dialog.
-   */
-  public void genericErrorDialog(String message){
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.setContentText(message);
-    alert.showAndWait();
-  }
-
-  /**
-   * Method for setting the icon to the ChaosGame dialog.
-   *
-   * @param alert the alert to set the icon to.
-   * @throws ResourceNotFoundException if the icon for the dialog is not found.
-   */
-  private void setIconToCGDialog(Alert alert) {
-    final ImageView dialogHeaderIcon;
-    try {
-      dialogHeaderIcon = new ImageView(
-          Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
-                 .toExternalForm());
-    } catch (NullPointerException e) {
-      throw new ResourceNotFoundException("Could not find the icon");
-    }
-    dialogHeaderIcon.setFitHeight(48);
-    dialogHeaderIcon.setFitWidth(48);
-    alert.getDialogPane().setGraphic(dialogHeaderIcon);
   }
 }

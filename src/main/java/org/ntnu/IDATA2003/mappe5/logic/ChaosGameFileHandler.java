@@ -8,10 +8,10 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
-import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 import org.ntnu.IDATA2003.mappe5.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.FailedToWriteToFileException;
+import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 
 
 /**
@@ -37,15 +37,15 @@ public class ChaosGameFileHandler {
    *
    * @param path the path to the file to read.
    * @return the contents of the file as a chaosGameDescription object.
-    * @throws ResourceNotFoundException if the file could not be found.
-   * @throws NumberFormatException    if parsing doubles from string failed.
+   * @throws ResourceNotFoundException if the file could not be found.
+   * @throws NumberFormatException     if parsing doubles from string failed.
    */
   public ChaosGameDescription getcontentsOfFile(String path) throws ResourceNotFoundException {
     if (path == null) {
       throw new IllegalArgumentException("Path cannot be null");
     }
     Path pathOfFile = null;
-      pathOfFile = Path.of(path);
+    pathOfFile = Path.of(path);
 
     ArrayList<String> fileContent = new ArrayList<>();
     ArrayList<Transform2D> transforms;
@@ -68,11 +68,11 @@ public class ChaosGameFileHandler {
       transforms = new ArrayList<>(parser.getTransformsFromStrings(fileContent));
 
     } catch (IOException e) {
-     throw new ResourceNotFoundException("Could not read the file " + e.getMessage());
+      throw new ResourceNotFoundException("Could not read the file " + e.getMessage());
     } catch (NumberFormatException e) {
       throw new NumberFormatException("Could not parse doubles from string ");
     }
-      String name = path.split(".txt")[0];
+    String name = path.split(".txt")[0];
     ChaosGameDescription game = new ChaosGameDescription(transforms, minimumCoords, maximumCoords,
         name);
     this.chaosGames.add(game);
@@ -81,9 +81,10 @@ public class ChaosGameFileHandler {
 
   /**
    * Reads the contents of a file with a given fractal name.w
+   *
    * @param fractal the name of the fractal to read from file.
    * @return the chaos game description of the fractal.
-   * @throws ResourceNotFoundException
+   * @throws ResourceNotFoundException if the file could not be found.
    */
   //TODO Delete if not used by the end of the project.
   public ChaosGameDescription readFromFileWithFractalName(String fractal) {
@@ -95,8 +96,9 @@ public class ChaosGameFileHandler {
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the file" + e.getMessage());
     }
-      return getcontentsOfFile(filePath);
+    return getcontentsOfFile(filePath);
   }
+
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal but
    * if no name is given a new file name with a random number will be generated to avoid any file
@@ -105,8 +107,8 @@ public class ChaosGameFileHandler {
   public void writeToFile(String path, ChaosGameDescription description)
       throws FailedToWriteToFileException {
     if (description == null) {
-    throw new IllegalArgumentException("Description cannot be null");
-  }
+      throw new IllegalArgumentException("Description cannot be null");
+    }
     Path pathOfFile = Path.of(path + ".txt");
 
     try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
@@ -122,8 +124,6 @@ public class ChaosGameFileHandler {
     }
 
   }
-
-
 
 
 }
