@@ -41,9 +41,9 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private InputNode input; // The right pane with the input fields
   private final ChaosGameControllerGui controller; // The controller for the chaos game app
   private Scene scene; // The scene for the chaos game app
-  private final ScrollPane scrollPane = new ScrollPane();
-  private Color colorChoice = null;
-  private boolean zoomScroll = false;
+  private final ScrollPane scrollPane = new ScrollPane(); // The scroll pane for the right pane
+  private Color colorChoice = null; // The color choice for the canvas
+  private boolean zoomScroll = false; // The zoom scroll for the canvas
 
 
 
@@ -238,42 +238,42 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     MenuItem newFractal = new MenuItem("New fractal");
     newFractal.setOnAction(e -> {
-      controller.createNewFractal();
+      controller.createBlankFractal();
     });
     file.getItems().addAll(openFile, saveToFile,newFractal,new SeparatorMenuItem(),exit);
 
     Menu preMade = new Menu("Pre-made");
 
     MenuItem julia = new MenuItem("Julia");
-    julia.setOnAction(e -> controller.createFractal(
+    julia.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.JULIA));
 
     MenuItem sierpinski = new MenuItem("Sierpinski");
-    sierpinski.setOnAction(e -> controller.createFractal(
+    sierpinski.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.SIERPINSKI));
 
     MenuItem barnsleyFern = new MenuItem("Barnsley Fern");
-    barnsleyFern.setOnAction(e -> controller.createFractal(
+    barnsleyFern.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.BARNSLEY));
 
     MenuItem spiderweb = new MenuItem("Spiderweb");
-    spiderweb.setOnAction(e -> controller.createFractal(
+    spiderweb.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.SPIDERWEB));
 
     MenuItem square = new MenuItem("Square");
-    square.setOnAction(e -> controller.createFractal(
+    square.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.SQUARE));
 
     MenuItem pentagon = new MenuItem("Pentagon");
-    pentagon.setOnAction(e -> controller.createFractal(
+    pentagon.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.PENTAGON));
 
     MenuItem kochCurve = new MenuItem("Koch Curve");
-    kochCurve.setOnAction(e -> controller.createFractal(
+    kochCurve.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.KOCHCURVE));
 
     MenuItem dragonFire = new MenuItem("Dragon Fire");
-    dragonFire.setOnAction(e -> controller.createFractal(
+    dragonFire.setOnAction(e -> controller.createNewFractalDescription(
         ChaosGameDescriptionFactory.Fractals.DRAGONFIRE));
 
     preMade.getItems().addAll(julia,sierpinski,barnsleyFern,spiderweb,square,pentagon,kochCurve,
@@ -308,21 +308,21 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     help.getItems().add(about);
 
     Menu animations = new Menu("Animations");
-    MenuItem dance = new MenuItem("Dance");
+    MenuItem dance = new MenuItem("Dance Party");
     dance.setOnAction(e -> controller.danceParty());
     MenuItem juliaSlide = new MenuItem("Julia Slide");
     juliaSlide.setOnAction(e -> {
-      controller.createFractal(ChaosGameDescriptionFactory.Fractals.JULIA);
+      controller.createNewFractalDescription(ChaosGameDescriptionFactory.Fractals.JULIA);
       controller.slideIntoJuliaDMs();
     });
 
     MenuItem wackySlide = new MenuItem("Wacky Slide");
-wackySlide.setOnAction(e -> {
-      controller.createFractal(ChaosGameDescriptionFactory.Fractals.JULIA);
+    wackySlide.setOnAction(e -> {
+      controller.createNewFractalDescription(ChaosGameDescriptionFactory.Fractals.JULIA);
       controller.wackySliderAnimation();
     });
 
-    animations.getItems().addAll(dance, juliaSlide, wackySlide);
+    animations.getItems().addAll(dance,juliaSlide,wackySlide);
 
     menu.getMenus().addAll(file, edit, preMade, animations, help);
     menu.getStyleClass().add("menu-bar");
@@ -341,7 +341,7 @@ wackySlide.setOnAction(e -> {
     this.setZoomScrollEvent(this.canvasCenterPane);
     this.canvasCenterPane.getStyleClass().add("centerPane");
 
-    this.controller.createFractal(ChaosGameDescriptionFactory.Fractals.JULIA);
+    this.controller.createNewFractalDescription(ChaosGameDescriptionFactory.Fractals.JULIA);
 
     this.canvasCenterPane.setAlignment(Pos.CENTER);
     return canvasCenterPane;

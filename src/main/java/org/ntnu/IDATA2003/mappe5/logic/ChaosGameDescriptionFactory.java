@@ -70,12 +70,16 @@ public class ChaosGameDescriptionFactory {
         description = this.createBlankJulia();
         break;
 
-      case BLANKAFFINE:
-       // description = this.createBlankAffine(numberTransforms);
-        break;
-
       default:
         break;
+    }
+    return description;
+  }
+
+  public ChaosGameDescription createDescription(Fractals fractal, int numberTransforms){
+    ChaosGameDescription description = null;
+    if (fractal == Fractals.BLANKAFFINE){
+      description = this.createBlankAffine(numberTransforms);
     }
     return description;
   }

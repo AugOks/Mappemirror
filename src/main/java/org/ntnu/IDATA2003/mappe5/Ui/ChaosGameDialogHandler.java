@@ -1,17 +1,13 @@
 package org.ntnu.IDATA2003.mappe5.Ui;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
-import javafx.collections.FXCollections;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -19,7 +15,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -29,7 +24,6 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javax.sound.sampled.Line;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.ResourceNotFoundException;
 
 /**
@@ -144,6 +138,7 @@ public class ChaosGameDialogHandler {
                           + "The main objective was to show competence in newly learned knowledge "
                           + "such as design patterns,\n"
                           + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
+
     text1.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     text2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     text3.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
@@ -188,11 +183,9 @@ public class ChaosGameDialogHandler {
       if (radioButtonJulia.isSelected()) {
         if (grid.getChildren().contains(spinner)){
           removeNodesFromGrid(grid, 4, 7);
-          this.numberOfTransforms = 0;
         }
       }
     });
-
     radioButtonAffine.setOnAction(event -> {
       if (radioButtonAffine.isSelected()) {
         grid.add(new Label("  "), 0, 4);
@@ -201,21 +194,23 @@ public class ChaosGameDialogHandler {
         grid.add(spinner, 0, 7);
       }
     });
-
     createNewFractal.getDialogPane().setContent(grid);
     createNewFractal.showAndWait();
     if (radioButtonAffine.isSelected()){
       this.numberOfTransforms = (int) spinner.getValue();
+    } else if (radioButtonJulia.isSelected()){
+      this.numberOfTransforms = 0;
     }
     System.out.println(this.numberOfTransforms);
     return this.numberOfTransforms;
   }
 
   /**
+   * Method for removing the node for affine transformation from the grid in the dialog.
    *
-   * @param grid
-   * @param startRow
-   * @param endRow
+   * @param grid the grid to add the nodes to.
+   * @param startRow the row to start adding nodes.
+   * @param endRow the row to end adding nodes.
    */
   private void removeNodesFromGrid(GridPane grid, int startRow, int endRow) {
     for (int i = startRow; i <= endRow; i++) {
@@ -224,8 +219,6 @@ public class ChaosGameDialogHandler {
                                           GridPane.getColumnIndex(node) == 0);
     }
   }
-
-
 
   public ColorChoiceDialog getColorChoiceDialog(){
     return new ColorChoiceDialog();
@@ -293,6 +286,12 @@ public class ChaosGameDialogHandler {
     alert.showAndWait();
   }
 
+  /**
+   * Method for setting the icon to the ChaosGame dialog.
+   *
+   * @param alert the alert to set the icon to.
+   * @throws ResourceNotFoundException if the icon for the dialog is not found.
+   */
   private void setIconToCGDialog(Alert alert) {
     final ImageView dialogHeaderIcon;
     try {

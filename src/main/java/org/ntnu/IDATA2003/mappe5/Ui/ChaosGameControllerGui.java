@@ -17,8 +17,6 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
 
-
-
 /**
  * Controller for the ChaosGameGui in accordance with the MVC pattern.
  */
@@ -39,10 +37,8 @@ public class ChaosGameControllerGui {
   public ChaosGameControllerGui(ChaosGameGui gameGui) {
     factory = new ChaosGameDescriptionFactory();
     this.fileHandler = new ChaosGameFileHandler();
-    this.gameGui = gameGui;;
+    this.gameGui = gameGui;
     this.dialogHandler = ChaosGameDialogHandler.getInstance();
-
-
   }
 
   /**
@@ -59,6 +55,7 @@ public class ChaosGameControllerGui {
       }
     }
   }
+
   /**
    * FileChooser method for choosing a file.
    */
@@ -79,52 +76,27 @@ public class ChaosGameControllerGui {
    *
    * @param fractal the enum of the fractal to be created.
    */
-  public void createFractal(ChaosGameDescriptionFactory.Fractals fractal) {
-    ChaosGameDescription description =
-        factory.createDescription(fractal);
+  public void createNewFractalDescription(ChaosGameDescriptionFactory.Fractals fractal) {
+    ChaosGameDescription description = factory.createDescription(fractal);
+    this.createNewFractal(description);
+  }
+
+  /**
+   * Create a new fractal from a given description.
+   *
+   * @param description the description of the fractal to be created.
+   */
+  private void createNewFractal(ChaosGameDescription description) {
     theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
-    gameGui.createCanvas(theGame, 1000000);
-    gameGui.createInputNode(theGame.getDescription(),1000000);
+    gameGui.createCanvas(theGame, 1);
+    gameGui.createInputNode(theGame.getDescription(),1);
     this.chaosGameAnimations = new ChaosGameAnimations(theGame.getDescription(), this);
     theGame.addSubscriber(gameGui);
   }
 
-
-  /**
-   * Create a julia transform based on user input.
-   *
-   * @param name      the name of the transform if any.
-   * @param minCoords the maximum coordinates of the transform.
-   * @param maxCoords the minimum coordinates of the transform.
-   * @param complex   the Complex constant to be turned into transformations.
-   * @return the ChaosGame description containing all the values for the fractal.
-   */
-  public ChaosGameDescription createUserDefinedJulia(String name, Vector2D minCoords,
-                                                     Vector2D maxCoords, Complex complex) {
-    List<Transform2D> transform2DList = new ArrayList<>();
-
-    transform2DList.add(new JuliaTransform(complex, 1));
-    transform2DList.add(new JuliaTransform(complex, -1));
-    return new ChaosGameDescription(transform2DList, minCoords, maxCoords, name);
-  }
-
-  /**
-   * Create an affine transformation based on user input.
-   *
-   * @param name       the name of the fractal if any.
-   * @param minCoords  the minimum coordinates of the fractal.
-   * @param maxCoords  the maximum coordinates of the fractal.
-   * @param transforms The list of transforms for the fractal.
-   * @return the ChaosGame description containing all the values of the fractal.
-   */
-  public ChaosGameDescription createUserDefinedAffine(String name, Vector2D minCoords,
-                                                      Vector2D maxCoords,
-                                                      List<Transform2D> transforms) {
-    return new ChaosGameDescription(transforms, minCoords, maxCoords, name);
-  }
-
   /**
    * Change the description of the current game.
+   *
    * @param description the new description of the game.
    */
   public void changeDescription(ChaosGameDescription description) {
@@ -133,6 +105,7 @@ public class ChaosGameControllerGui {
 
   /**
    * Get the description of the current game.
+   *
    * @return the current description of the game.
    */
   public ChaosGameDescription getDescription() {
@@ -175,34 +148,20 @@ public class ChaosGameControllerGui {
     }
   }
 
-  public void createNewFractal(){
+  /**
+   * Create a new blank fractal based on the user input.
+   */
+  public void createBlankFractal(){
     int transforms = this.dialogHandler.createNewFractalDialog();
     if (transforms == 0){
-      this.createFractal(ChaosGameDescriptionFactory.Fractals.BLANKJULIA);
+      this.createNewFractalDescription(ChaosGameDescriptionFactory.Fractals.BLANKJULIA);
     } else {
-      this.createBlankAffineFractal(transforms);
+      this.changeDescription(this.factory.createDescription(
+          ChaosGameDescriptionFactory.Fractals.BLANKAFFINE, transforms));
+      this.createNewFractal(this.getDescription());
     }
   }
 
-  //TODO refactor this piece of absolute shit
-  private void createBlankAffineFractal(int numberTransforms) {
-    Vector2D minCoords = new Vector2D(0, 0);
-    Vector2D maxCoords = new Vector2D(0.1, 0.1);
-    List<Transform2D> transforms = new ArrayList<>();
-    for (int i = 0; i < numberTransforms; i++) {
-      Matrix2x2 Matrix = new Matrix2x2(0, 0, 0, 0);
-      Vector2D Vector = new Vector2D(0, 0);
-      transforms.add(new AffineTransform2D(Matrix, Vector));
-    }
-    ChaosGameDescription description = new ChaosGameDescription(transforms, minCoords, maxCoords,
-                                                                "BlankAffine");
-    theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
-    gameGui.createCanvas(theGame, 1);
-    gameGui.createInputNode(theGame.getDescription(),1);
-    this.chaosGameAnimations = new ChaosGameAnimations(theGame.getDescription(), this);
-    theGame.addSubscriber(gameGui);
-
-  }
   /**
    * Starts the dance party animation of the user presses "Yes" on the confirmation .
    */
@@ -234,7 +193,6 @@ public class ChaosGameControllerGui {
       dialogHandler.genericErrorDialog("Failed to animate the Julia set");
     }
   }
-
 
   /**
    * Get the current game.
