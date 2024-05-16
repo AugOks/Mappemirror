@@ -105,7 +105,7 @@ public class ChaosGameFileHandler {
    * reader issues.
    */
   public void writeToFile(String path, ChaosGameDescription description)
-    throws FailedToWriteToFileException {
+      throws FailedToWriteToFileException {
     if (description == null) {
       throw new IllegalArgumentException("Description cannot be null");
     }

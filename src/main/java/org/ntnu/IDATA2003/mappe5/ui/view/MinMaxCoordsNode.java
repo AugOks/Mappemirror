@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.ui;
+package org.ntnu.IDATA2003.mappe5.ui.view;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
@@ -6,6 +6,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.ui.controller.InputNodeController;
 
 /**
  * Class for creating a grid with text fields for min and max coordinates.
@@ -161,8 +162,8 @@ public class MinMaxCoordsNode {
    */
   private Slider createSlider(double startValue, TextField textField, String id) {
     Slider slider;
-    Double minvalue = -(startValue * 1.5);
-    Double maxvalue = (startValue * 1.5);
+    double minvalue = -(startValue * 1.5);
+    double maxvalue = (startValue * 1.5);
     if (Math.signum(startValue) == 1) {
       slider = new Slider(minvalue, maxvalue, startValue);
     } else if (Math.signum(startValue) == -1) {

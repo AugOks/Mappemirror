@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.ui;
+package org.ntnu.IDATA2003.mappe5.ui.controller;
 
 import java.io.File;
 import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
@@ -9,6 +9,10 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameFileHandler;
+import org.ntnu.IDATA2003.mappe5.ui.view.ChaosGameAnimations;
+import org.ntnu.IDATA2003.mappe5.ui.view.ChaosGameDialogHandler;
+import org.ntnu.IDATA2003.mappe5.ui.view.ChaosGameGui;
+
 
 /**
  * Controller for the ChaosGameGui in accordance with the MVC pattern.

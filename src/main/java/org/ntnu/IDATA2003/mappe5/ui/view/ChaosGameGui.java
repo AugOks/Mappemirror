@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.ui;
+package org.ntnu.IDATA2003.mappe5.ui.view;
 
 import java.util.Objects;
 import javafx.application.Application;
@@ -30,6 +30,7 @@ import org.ntnu.IDATA2003.mappe5.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameObserver;
+import org.ntnu.IDATA2003.mappe5.ui.controller.ChaosGameControllerGui;
 
 /**
  * The GUI for the chaos game app.

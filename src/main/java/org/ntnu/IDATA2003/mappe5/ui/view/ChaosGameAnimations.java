@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.ui;
+package org.ntnu.IDATA2003.mappe5.ui.view;
 
 import static org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory.Fractals.JULIA;
 
@@ -12,6 +12,7 @@ import org.ntnu.IDATA2003.mappe5.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.entity.exceptions.AnimationFailedException;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescriptionFactory;
+import org.ntnu.IDATA2003.mappe5.ui.controller.ChaosGameControllerGui;
 
 /**
  * Represents an animation class for the ChaosGameGui.

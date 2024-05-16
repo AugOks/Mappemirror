@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.ui;
+package org.ntnu.IDATA2003.mappe5.ui.view;
 
 import java.io.File;
 import java.util.Objects;

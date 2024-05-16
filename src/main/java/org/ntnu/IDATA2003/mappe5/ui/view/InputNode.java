@@ -1,4 +1,4 @@
-package org.ntnu.IDATA2003.mappe5.ui;
+package org.ntnu.IDATA2003.mappe5.ui.view;
 
 
 import javafx.geometry.Pos;
@@ -12,6 +12,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.ntnu.IDATA2003.mappe5.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.logic.ChaosGameDescription;
+import org.ntnu.IDATA2003.mappe5.ui.FractalInputNode;
+import org.ntnu.IDATA2003.mappe5.ui.controller.ChaosGameControllerGui;
+import org.ntnu.IDATA2003.mappe5.ui.controller.InputNodeController;
 
 /**
  * Represents the input box for the user interface regardless of what type of transform is active.
