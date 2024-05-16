@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
+import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
 /**
  * Tests the Vector2D class {@link Vector2D}..

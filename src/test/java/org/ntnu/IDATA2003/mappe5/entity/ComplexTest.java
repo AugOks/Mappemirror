@@ -3,6 +3,7 @@ package org.ntnu.IDATA2003.mappe5.entity;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
+import org.ntnu.IDATA2003.mappe5.model.entity.Complex;
 
 
 /**

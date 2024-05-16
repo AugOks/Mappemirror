@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
+import org.ntnu.IDATA2003.mappe5.model.entity.AffineTransform2D;
+import org.ntnu.IDATA2003.mappe5.model.entity.Matrix2x2;
+import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
 /**
  * This class tests the AffineTransform2D class.

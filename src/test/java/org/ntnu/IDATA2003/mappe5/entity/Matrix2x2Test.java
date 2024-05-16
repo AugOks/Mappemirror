@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
+import org.ntnu.IDATA2003.mappe5.model.entity.Matrix2x2;
+import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
 /**
  * A test class for the matrix2x2 Class.

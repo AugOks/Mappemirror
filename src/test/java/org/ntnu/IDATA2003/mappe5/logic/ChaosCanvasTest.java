@@ -6,7 +6,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.ntnu.IDATA2003.mappe5.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
+import org.ntnu.IDATA2003.mappe5.model.logic.ChaosCanvas;
+import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGame;
+import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
+import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory;
 
 /**
  * Tests the ChaosCanvas class {@link ChaosCanvas}.
