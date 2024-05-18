@@ -6,7 +6,11 @@ import java.util.Collection;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
 import org.ntnu.IDATA2003.mappe5.controller.ChaosGameControllerGui;
 import org.ntnu.IDATA2003.mappe5.model.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.model.entity.JuliaTransform;
@@ -21,10 +25,9 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory;
  * impacting performance.
  */
 public class ChaosGameAnimations {
-  private final ChaosGameControllerGui controller;
-  private final ChaosGameDescriptionFactory factory;
-  private ChaosGameDescription currentDescription;
-  private ChaosGameDescription startDescription;
+  private final ChaosGameControllerGui controller; //the controller for the ChaosGameGui.
+  private final ChaosGameDescriptionFactory factory;  //the factory for creating descriptions.
+  private ChaosGameDescription currentDescription; //the current description of the fractal.
 
   /**
    * Constructor for the ChaosGameAnimations class.
@@ -34,7 +37,6 @@ public class ChaosGameAnimations {
    */
   public ChaosGameAnimations(ChaosGameDescription description, ChaosGameControllerGui controller) {
     this.currentDescription = description;
-    this.startDescription = description;
     this.controller = controller;
     this.factory = new ChaosGameDescriptionFactory();
   }
@@ -48,22 +50,28 @@ public class ChaosGameAnimations {
   }
 
   //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
-
   /**
    * Animates the fractal by changing the min and max coordinates of the fractal.
    */
   private void danceAnimation() {
+    new Thread(() -> {
+      Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm().toString());
+      MediaPlayer mediaPlayer = new MediaPlayer(sound);
+      mediaPlayer.play();
+    }).start();
+
     Timeline timeLine = new Timeline();
     Collection<KeyFrame> frames = timeLine.getKeyFrames();
-    Duration frameGap = Duration.millis(500);
+    Duration frameGap = Duration.millis(250);
     Duration frameTime = Duration.ZERO;
-    for (int i = 1; i < 5; i++) {
+    for (int i = 1; i <= 15; i++) {
       frameTime = frameTime.add(frameGap);
       int finalI = i;
       frames.add(new KeyFrame(frameTime, e -> this.danceMoves(finalI)));
     }
     timeLine.setCycleCount(3);
     timeLine.play();
+    //mediaPlayer.stop();
   }
 
   /**
@@ -75,25 +83,88 @@ public class ChaosGameAnimations {
     switch (danceMove) {
       case 1:
         this.currentDescription = this.factory.createDescription(JULIA);
-        this.controller.changeDescription(this.currentDescription);
+        this.currentDescription.setMinCoords(new Complex(-6.0, -5.0));
+        this.currentDescription.setMaxCoords(new Complex(6.0, 5.0));
         break;
       case 2:
-        this.currentDescription.getMinCoords().setX0(-3.0);
-        this.controller.changeDescription(this.currentDescription);
+        this.currentDescription.setMinCoords(new Complex(-5.0, -4.0));
+        this.currentDescription.setMaxCoords(new Complex(5.0, 4.0));
         break;
       case 3:
-        this.currentDescription.getMinCoords().setY0(-3.0);
-        this.controller.changeDescription(this.currentDescription);
+        this.currentDescription.setMinCoords(new Complex(-4.0, -3.0));
+        this.currentDescription.setMaxCoords(new Complex(4.0, 3.0));
         break;
       case 4:
-        this.currentDescription.getMaxCoords().setX0(3.0);
-        this.controller.changeDescription(this.currentDescription);
+        this.currentDescription.setMinCoords(new Complex(-3.0, -2.0));
+        this.currentDescription.setMaxCoords(new Complex(3.0, 2.0));
         break;
       case 5:
-        this.currentDescription.getMaxCoords().setY0(3.0);
-        this.controller.changeDescription(this.currentDescription);
+        this.currentDescription.setMinCoords(new Complex(-2.0, -1.0));
+        this.currentDescription.setMaxCoords(new Complex(2.0, 1.0));
+        break;
+      case 6:
+        this.currentDescription.setMinCoords(new Complex(-1.6, -1.0));
+        this.currentDescription.setMaxCoords(new Complex(1.6, 1.0));
+        break;
+      case 7:
+        this.currentDescription.setMinCoords(new Complex(-2.5, -1));
+        break;
+      case 8:
+        this.currentDescription.setMinCoords(new Complex(-3.5, -1));
+        break;
+      case 9:
+        this.currentDescription.setMinCoords(new Complex(-4.5, -1));
+        break;
+      case 10:
+        this.currentDescription.setMinCoords(new Complex(-5, -1));
+        break;
+      case 11:
+        this.currentDescription.setMinCoords(new Complex(-5.5, -1));
+        break;
+      case 12:
+        this.currentDescription.setMinCoords(new Complex(-4.5, -1));
+        break;
+      case 13:
+        this.currentDescription.setMinCoords(new Complex(-3.5, -1));
+        break;
+      case 14:
+        this.currentDescription.setMinCoords(new Complex(-2.5, -1));
+      case 15:
+        this.currentDescription.setMinCoords(new Complex(-1.5, -1));
         break;
       default:
+        break;
+    }
+    this.setTheColor(danceMove);
+    controller.changeDescription(this.currentDescription);
+  }
+
+  private void setTheColor(int danceMove) {
+    int color = danceMove % 8;
+    switch (color) {
+      case 1:
+        this.controller.setColorChoiceC(Color.RED);
+        break;
+      case 2:
+        this.controller.setColorChoiceC(Color.ORANGE);
+        break;
+      case 3:
+        this.controller.setColorChoiceC(Color.ORANGE);
+        break;
+      case 4:
+        this.controller.setColorChoiceC(Color.YELLOW);
+        break;
+      case 5:
+        this.controller.setColorChoiceC(Color.GREEN);
+        break;
+      case 6:
+        this.controller.setColorChoiceC(Color.BLUE);
+        break;
+      case 7:
+        this.controller.setColorChoiceC(Color.PURPLE);
+        break;
+      default:
+        this.controller.setColorChoiceC(Color.HOTPINK);
         break;
     }
   }

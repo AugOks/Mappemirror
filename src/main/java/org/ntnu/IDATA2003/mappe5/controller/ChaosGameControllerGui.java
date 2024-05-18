@@ -1,6 +1,7 @@
 package org.ntnu.IDATA2003.mappe5.controller;
 
 import java.io.File;
+import javafx.scene.paint.Color;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.AnimationFailedException;
 import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.FailedToWriteToFileException;
@@ -115,6 +116,7 @@ public class ChaosGameControllerGui {
    *
    * @param steps the amount of steps to run the game.
    */
+  //TODO: Is this method needed?
   public void runGame(int steps) {
     theGame.runSteps(steps);
   }
@@ -211,6 +213,11 @@ public class ChaosGameControllerGui {
       dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
           + "about dialog");
     }
+  }
+
+
+  public void setColorChoiceC(Color colorChoice) {
+    this.gameGui.setColorChoice(colorChoice);
   }
 
 }
