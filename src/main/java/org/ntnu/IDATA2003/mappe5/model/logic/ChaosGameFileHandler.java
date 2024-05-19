@@ -87,6 +87,7 @@ public class ChaosGameFileHandler {
    * @throws ResourceNotFoundException if the file could not be found.
    */
   //TODO Delete if not used by the end of the project.
+  /*
   public ChaosGameDescription readFromFileWithFractalName(String fractal) {
     String filePath;
     try {
@@ -98,6 +99,8 @@ public class ChaosGameFileHandler {
     }
     return getcontentsOfFile(filePath);
   }
+
+   */
 
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal but
