@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.FailedToWriteToFileException;
@@ -99,6 +98,8 @@ public class ChaosGameFileHandler {
     }
     return getcontentsOfFile(filePath);
   }
+=======
+>>>>>>> Stashed changes
 
    */
 
@@ -123,7 +124,6 @@ public class ChaosGameFileHandler {
 
     } catch (IOException e) {
       throw new FailedToWriteToFileException("something went wrong when writing to file");
-      //TODO needs to be fixed?
     }
 
   }
