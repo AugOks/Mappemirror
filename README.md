@@ -66,3 +66,9 @@ that any class should not become overly large otherwise it risks compromising th
 Due to this mindset we continuously refactored parts of the main class out to their own classes, something we felt 
 gave a better overview. In hindsight, it is debatable whether this is helpful or not for future expansion of the 
 application. Our hope is that such refactoring is conducive for future features.
+## Instalation and execution
+To run our "chaos Game" application, Maven is required.  
+Explaning how to install Maven would be outside the scope of this application,  
+please refer to this link [!install Maven](https://maven.apache.org/install.html) 
+to find out how to install maven.  
+Once maven is installed you can run the "runApp" file or use the command "mvn javafx:run" in a command shell.
