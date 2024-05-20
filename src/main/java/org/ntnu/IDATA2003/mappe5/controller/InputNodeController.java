@@ -1,6 +1,11 @@
 package org.ntnu.IDATA2003.mappe5.controller;
 
+import java.util.Comparator;
 import java.util.List;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
+import org.ntnu.IDATA2003.mappe5.model.entity.Complex;
+import org.ntnu.IDATA2003.mappe5.model.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
@@ -16,7 +21,7 @@ import org.ntnu.IDATA2003.mappe5.view.MinMaxCoordsNode;
 public class InputNodeController {
 
   private final ChaosGameControllerGui controller;
-  private final ChaosGameDialogHandler dialogHandler = ChaosGameDialogHandler.getInstance();
+  private final ChaosGameDialogHandler textField = ChaosGameDialogHandler.getInstance();
   private ChaosGameDescription currentDescription;
 
   /**
@@ -42,12 +47,12 @@ public class InputNodeController {
    */
   public void run(MinMaxCoordsNode minMaxCoordsNode, FractalInputNode fractalInputNode) {
     if (!minMaxCoordsNode.isValueValid() && !fractalInputNode.isValueValid()) {
-      dialogHandler.genericErrorDialog("The values in the min/max coordinates and "
+      textField.genericErrorDialog("The values in the min/max coordinates and "
           + "fractal input are invalid");
     } else if (!minMaxCoordsNode.isValueValid()) {
-      dialogHandler.genericErrorDialog("One of the values in the min/max coordinates is invalid");
+      textField.genericErrorDialog("One of the values in the min/max coordinates is invalid");
     } else if (!fractalInputNode.isValueValid()) {
-      dialogHandler.genericErrorDialog("One of the values in the fractal input is invalid");
+      textField.genericErrorDialog("One of the values in the fractal input is invalid");
     }
 
     if (fractalInputNode.isValueValid() && minMaxCoordsNode.isValueValid()) {
@@ -85,6 +90,54 @@ public class InputNodeController {
    */
   public void changeMinMaxCoords(Vector2D minCoords, Vector2D maxCoords) {
     controller.changeCoords(minCoords, maxCoords);
+  }
+
+  /**
+   * Sets the value of a matrix element based on the name of the element.
+   *
+   * @param name     the name of the element.
+   * @param matrix   the matrix to update.
+   * @param newValue the new value of the element.
+   */
+
+  public void matrixConditionalSetValue(String name, Matrix2x2 matrix, String newValue) {
+    if (name.equals("a00")) {
+      matrix.setA(Double.parseDouble(newValue));
+    } else if (name.equals("a01")) {
+      matrix.setB(Double.parseDouble(newValue));
+    } else if (name.equals("a10")) {
+      matrix.setC(Double.parseDouble(newValue));
+    } else {
+      matrix.setD(Double.parseDouble(newValue));
+    }
+  }
+
+  public void vectorConditionalSetValue(String name, Vector2D vector, String newValue){
+   if (name.equals("b0")) {
+     vector.setX0(Double.parseDouble(newValue));
+    } else {
+    vector.setY0(Double.parseDouble(newValue));
+    }
+  }
+
+  public void complexSetValue(String newValue, TextField field, Slider realSlider,
+                            Slider imaginarySlider, Complex complex) {
+    double value = Double.parseDouble(newValue);
+    if (field.getId().equalsIgnoreCase("real")) {
+     complex.setX0(Double.parseDouble(newValue));
+     realSlider.setValue(Double.parseDouble(newValue));
+    } else {
+     complex.setY0(value);
+     imaginarySlider.setValue(value);
+   }
+  }
+  public void sliderSetComplexValue(Slider slider, TextField textField, Number newValue, Complex complex){
+    if (slider.getId().equalsIgnoreCase("real")) {
+      complex.setX0((double) newValue);
+    } else {
+      complex.setY0((double) newValue);
+    }
+    textField.setText(String.valueOf(newValue));
   }
 
 }

@@ -140,7 +140,7 @@ public class InputNode {
 
   private void findInstance(ChaosGameDescription description) {
     if (description.getTransform(0) instanceof AffineTransform2D) {
-      this.fractalInputNode = new AffineTransformNode(description);
+      this.fractalInputNode = new AffineTransformNode(description, this.controller);
     } else {
       this.fractalInputNode = new JuliaTransformNode(description, this.controller);
     }

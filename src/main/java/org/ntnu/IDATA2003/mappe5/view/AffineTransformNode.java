@@ -6,6 +6,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import org.ntnu.IDATA2003.mappe5.controller.InputNodeController;
 import org.ntnu.IDATA2003.mappe5.model.entity.AffineTransform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
@@ -21,16 +22,18 @@ public class AffineTransformNode implements FractalInputNode {
 
   private List<AffineTransform2D> transforms;
   private boolean valueChanged = true;
+  private InputNodeController controller;
 
   /**
    * Constructor for the TransformBox class.
    * Takes in a matrix and a Vector and creates the various text fields that correspond to their
    * values.
    */
-  public AffineTransformNode(ChaosGameDescription description) {
+  public AffineTransformNode(ChaosGameDescription description, InputNodeController controller) {
     if (description == null) {
       throw new IllegalArgumentException("Description cannot be null");
     }
+    this.controller = controller;
     if (description.getTransform(0) instanceof AffineTransform2D) {
       this.transforms = new ArrayList<>();
       for (Transform2D transform : description.getAllTransforms()) {
@@ -55,7 +58,7 @@ public class AffineTransformNode implements FractalInputNode {
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
         field.setText(newValue);
-        this.conditionalSetValue(name, matrix, newValue);
+        this.controller.matrixConditionalSetValue(name, matrix, newValue);
         this.valueChanged = true;
       } catch (Exception e) {
         this.valueChanged = false;
@@ -82,15 +85,10 @@ public class AffineTransformNode implements FractalInputNode {
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
         field.setText(newValue);
-        if (name.equals("b0")) {
-          vector.setX0(Double.parseDouble(newValue));
-        } else {
-          vector.setY0(Double.parseDouble(newValue));
-        }
+        controller.vectorConditionalSetValue(name, vector, newValue);
         this.valueChanged = true;
       } catch (Exception e) {
         this.valueChanged = false;
-        ;//TODO Fix this
       }
 
     });
@@ -161,23 +159,5 @@ public class AffineTransformNode implements FractalInputNode {
     return this.valueChanged;
   }
 
-  /**
-   * Sets the value of a matrix element based on the name of the element.
-   *
-   * @param name     the name of the element.
-   * @param matrix   the matrix to update.
-   * @param newValue the new value of the element.
-   */
 
-  private void conditionalSetValue(String name, Matrix2x2 matrix, String newValue) {
-    if (name.equals("a00")) {
-      matrix.setA(Double.parseDouble(newValue));
-    } else if (name.equals("a01")) {
-      matrix.setB(Double.parseDouble(newValue));
-    } else if (name.equals("a10")) {
-      matrix.setC(Double.parseDouble(newValue));
-    } else {
-      matrix.setD(Double.parseDouble(newValue));
-    }
-  }
 }
