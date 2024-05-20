@@ -39,7 +39,6 @@ public class ChaosGameDescriptionFactory {
    * @return a complete chaos game description for the given fractal.
    */
   public ChaosGameDescription createDescription(Fractals fractal) {
-
     ChaosGameDescription description = null;
     switch (fractal) {
       case BARNSLEY:
