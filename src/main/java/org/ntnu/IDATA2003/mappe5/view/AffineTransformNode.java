@@ -17,6 +17,7 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
 /**
  * Represents the input boxes for a single matrix, and a single vector.
  * This class allows easy access and manipulation of the values in the matrix and vector.
+ *
  */
 public class AffineTransformNode implements FractalInputNode {
 

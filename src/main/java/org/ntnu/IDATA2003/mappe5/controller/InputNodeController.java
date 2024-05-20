@@ -99,7 +99,6 @@ public class InputNodeController {
    * @param matrix   the matrix to update.
    * @param newValue the new value of the element.
    */
-
   public void matrixConditionalSetValue(String name, Matrix2x2 matrix, String newValue) {
     if (name.equals("a00")) {
       matrix.setA(Double.parseDouble(newValue));
@@ -112,6 +111,12 @@ public class InputNodeController {
     }
   }
 
+  /**
+   * Sets the value of a vector element based on the name of the element.
+   * @param name the name of the element.
+   * @param vector the vector to update.
+   * @param newValue the new value of the element.
+   */
   public void vectorConditionalSetValue(String name, Vector2D vector, String newValue){
    if (name.equals("b0")) {
      vector.setX0(Double.parseDouble(newValue));
@@ -120,6 +125,14 @@ public class InputNodeController {
     }
   }
 
+  /**
+   * Sets the value of a complex number element based on the name of the element.
+   * @param newValue the new value of the element.
+   * @param field the text field to update.
+   * @param realSlider the real slider to update.
+   * @param imaginarySlider the imaginary slider to update.
+   * @param complex  the complex number to update.
+   */
   public void complexSetValue(String newValue, TextField field, Slider realSlider,
                             Slider imaginarySlider, Complex complex) {
     double value = Double.parseDouble(newValue);
@@ -131,6 +144,14 @@ public class InputNodeController {
      imaginarySlider.setValue(value);
    }
   }
+
+  /**
+   * Sets the value of a complex number element based on the name of the element.
+   * @param slider the slider to update.
+   * @param textField the text field to update.
+   * @param newValue the new value of the element.
+   * @param complex the complex number to update.
+   */
   public void sliderSetComplexValue(Slider slider, TextField textField, Number newValue, Complex complex){
     if (slider.getId().equalsIgnoreCase("real")) {
       complex.setX0((double) newValue);

@@ -15,6 +15,11 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
 
 /**
  * Represents the input field for a Julia transformation.
+ * Contains a slider for the real and imaginary part of a complex number.
+ * The user can change the values of the complex number by either using the slider or the text field.
+ * The user can also see the current value of the complex number in the text field.
+ *
+ *
  */
 public class JuliaTransformNode implements FractalInputNode {
   private final Slider imaginarySlider;
