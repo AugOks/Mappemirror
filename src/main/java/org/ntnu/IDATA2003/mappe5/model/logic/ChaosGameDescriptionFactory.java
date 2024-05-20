@@ -9,8 +9,6 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
-//TODO wright javadoc for this chaos game description factory
-
 /**
  * A factory implementation for creating pre-defined fractals for the chaos game.
  * The factory can create a fractal based on the name given.

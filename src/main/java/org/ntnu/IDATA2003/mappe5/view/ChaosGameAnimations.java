@@ -16,6 +16,7 @@ import org.ntnu.IDATA2003.mappe5.model.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.AnimationFailedException;
 import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory;
+import org.ntnu.IDATA2003.mappe5.model.logic.DancePartyFactory;
 
 /**
  * Represents an animation class for the ChaosGameGui.
@@ -25,9 +26,9 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory;
  */
 public class ChaosGameAnimations {
   private final ChaosGameControllerGui controller; //the controller for the ChaosGameGui.
-  private final ChaosGameDescriptionFactory factory;  //the factory for creating descriptions.
+  private final DancePartyFactory factory;  //the factory for creating descriptions.
   private ChaosGameDescription currentDescription; //the current description of the fractal.
-
+  private MediaPlayer mediaPlayer;
   /**
    * Constructor for the ChaosGameAnimations class.
    *
@@ -37,7 +38,7 @@ public class ChaosGameAnimations {
   public ChaosGameAnimations(ChaosGameDescription description, ChaosGameControllerGui controller) {
     this.currentDescription = description;
     this.controller = controller;
-    this.factory = new ChaosGameDescriptionFactory();
+    this.factory = new DancePartyFactory();
   }
 
   /**
@@ -54,13 +55,6 @@ public class ChaosGameAnimations {
    * Animates the fractal by changing the min and max coordinates of the fractal.
    */
   private void danceAnimation() {
-    new Thread(() -> {
-      Media sound =
-          new Media((getClass().getResource("/danceParty.mp3")).toExternalForm().toString());
-      MediaPlayer mediaPlayer = new MediaPlayer(sound);
-      mediaPlayer.play();
-    }).start();
-
     Timeline timeLine = new Timeline();
     Collection<KeyFrame> frames = timeLine.getKeyFrames();
     Duration frameGap = Duration.millis(250);
@@ -70,9 +64,15 @@ public class ChaosGameAnimations {
       int finalI = i;
       frames.add(new KeyFrame(frameTime, e -> this.danceMoves(finalI)));
     }
-    timeLine.setCycleCount(3);
+    int cycleCount = 3;
+    timeLine.setCycleCount(cycleCount);
     timeLine.play();
-    //mediaPlayer.stop();
+
+    Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm().toString());
+    mediaPlayer = new MediaPlayer(sound);
+    mediaPlayer.setVolume(0.5);
+    mediaPlayer.setStopTime(timeLine.getCycleDuration().multiply(cycleCount));
+    mediaPlayer.play();
   }
 
   /**
@@ -81,61 +81,7 @@ public class ChaosGameAnimations {
    * @param danceMove the dance move to be performed.
    */
   private void danceMoves(int danceMove) {
-    switch (danceMove) {
-      case 1:
-        this.currentDescription = this.factory.createDescription(JULIA);
-        this.currentDescription.setMinCoords(new Complex(-6.0, -5.0));
-        this.currentDescription.setMaxCoords(new Complex(6.0, 5.0));
-        break;
-      case 2:
-        this.currentDescription.setMinCoords(new Complex(-5.0, -4.0));
-        this.currentDescription.setMaxCoords(new Complex(5.0, 4.0));
-        break;
-      case 3:
-        this.currentDescription.setMinCoords(new Complex(-4.0, -3.0));
-        this.currentDescription.setMaxCoords(new Complex(4.0, 3.0));
-        break;
-      case 4:
-        this.currentDescription.setMinCoords(new Complex(-3.0, -2.0));
-        this.currentDescription.setMaxCoords(new Complex(3.0, 2.0));
-        break;
-      case 5:
-        this.currentDescription.setMinCoords(new Complex(-2.0, -1.0));
-        this.currentDescription.setMaxCoords(new Complex(2.0, 1.0));
-        break;
-      case 6:
-        this.currentDescription.setMinCoords(new Complex(-1.6, -1.0));
-        this.currentDescription.setMaxCoords(new Complex(1.6, 1.0));
-        break;
-      case 7:
-        this.currentDescription.setMinCoords(new Complex(-2.5, -1));
-        break;
-      case 8:
-        this.currentDescription.setMinCoords(new Complex(-3.5, -1));
-        break;
-      case 9:
-        this.currentDescription.setMinCoords(new Complex(-4.5, -1));
-        break;
-      case 10:
-        this.currentDescription.setMinCoords(new Complex(-5, -1));
-        break;
-      case 11:
-        this.currentDescription.setMinCoords(new Complex(-5.5, -1));
-        break;
-      case 12:
-        this.currentDescription.setMinCoords(new Complex(-4.5, -1));
-        break;
-      case 13:
-        this.currentDescription.setMinCoords(new Complex(-3.5, -1));
-        break;
-      case 14:
-        this.currentDescription.setMinCoords(new Complex(-2.5, -1));
-      case 15:
-        this.currentDescription.setMinCoords(new Complex(-1.5, -1));
-        break;
-      default:
-        break;
-    }
+    this.currentDescription = this.factory.createDanceMoves(danceMove, this.currentDescription);
     this.setTheColor(danceMove);
     controller.changeDescription(this.currentDescription);
   }
@@ -231,3 +177,4 @@ public class ChaosGameAnimations {
   }
 
 }
+
