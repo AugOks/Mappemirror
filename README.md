@@ -65,8 +65,7 @@ become better at finding other errors later on, most of them taking less than an
 When creating the main class for our application we struggled keeping it to a reasonable size. It is our opinion 
 that any class should not become overly large otherwise it risks compromising the cohesion of our application. 
 Due to this mindset we continuously refactored parts of the main class out to their own classes, something we felt 
-gave a better overview. In hindsight, it is debatable whether this is helpful or not for future expansion of the 
-application. Our hope is that such refactoring is conducive for future features.
+gave a better overview. 
 ## Instalation and execution
 To run our "chaos Game" application, Maven is required.  
 Explaning how to install Maven would be outside the scope of this application,  

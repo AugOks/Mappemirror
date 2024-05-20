@@ -1,0 +1,3 @@
+Julia           # type of transform
+-1.6, -1.0           # lower left coordinates
+1.6, 1.0           # upper right coordinates
