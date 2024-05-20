@@ -18,8 +18,6 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
  * Contains a slider for the real and imaginary part of a complex number.
  * The user can change the values of the complex number by either using the slider or the text field.
  * The user can also see the current value of the complex number in the text field.
- *
- *
  */
 public class JuliaTransformNode implements FractalInputNode {
   private final Slider imaginarySlider;
@@ -101,7 +99,8 @@ public class JuliaTransformNode implements FractalInputNode {
   private void textFieldListener(TextField field) {
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
-       controller.complexSetValue(newValue, field, this.realSlider, this.imaginarySlider, this.complex);
+        controller.complexSetValue(newValue, field, this.realSlider, this.imaginarySlider,
+            this.complex);
         this.isValueValid = true;
       } catch (Exception e) {
         this.isValueValid = false;

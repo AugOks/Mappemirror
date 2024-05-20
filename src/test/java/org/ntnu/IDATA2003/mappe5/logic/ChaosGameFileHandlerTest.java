@@ -1,6 +1,5 @@
 package org.ntnu.IDATA2003.mappe5.logic;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -14,7 +13,6 @@ import org.ntnu.IDATA2003.mappe5.model.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.FailedToWriteToFileException;
-import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGame;
 import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
 import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameFileHandler;
 

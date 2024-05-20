@@ -86,9 +86,10 @@ public class ChaosGameControllerGui {
    */
   private void createNewFractal(ChaosGameDescription description) {
     try {
-      theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
-    } catch (IllegalArgumentException e ) {
-     dialogHandler.genericErrorDialog(e.getMessage());
+      theGame =
+          new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
+    } catch (IllegalArgumentException e) {
+      dialogHandler.genericErrorDialog(e.getMessage());
     }
     gameGui.createCanvas(theGame, 1000000);
     gameGui.createInputNode(theGame.getDescription(), 1000000);
@@ -113,7 +114,6 @@ public class ChaosGameControllerGui {
   public ChaosGameDescription getDescription() {
     return theGame.getDescription();
   }
-
 
 
   /**

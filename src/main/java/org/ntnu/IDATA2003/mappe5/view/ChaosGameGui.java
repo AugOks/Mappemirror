@@ -48,7 +48,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private InputNode input; // The right pane with the input fields
   private Scene scene; // The scene for the chaos game app
   private Color colorChoice = null; // The color choice for the canvas
-  private boolean zoomScroll = true; // The zoom scroll for the canvas
+  private boolean zoomScrollOnOff = true; // The zoom scroll for the canvas
 
 
   /**
@@ -302,7 +302,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     CheckMenuItem zoomScroll = new CheckMenuItem("Zoom scroll");
     zoomScroll.setOnAction(e -> {
-      this.zoomScroll = zoomScroll.isSelected();
+      this.zoomScrollOnOff = zoomScroll.isSelected();
     });
     Menu edit = new Menu("Edit");
     edit.getItems().addAll(showSliders, zoomScroll, colorPicker);
@@ -362,7 +362,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    */
   private void setZoomScrollEvent(Node node) {
     node.setOnScroll(event -> {
-      if (!zoomScroll) {
+      if (!zoomScrollOnOff) {
         return;
       }
       double mouseYaxisCoords = event.getY() / (getHeightForCanvas());
@@ -458,7 +458,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   public void setColorChoice(Color colorChoice) {
     this.colorChoice = colorChoice;
   }
-
 
 
 }

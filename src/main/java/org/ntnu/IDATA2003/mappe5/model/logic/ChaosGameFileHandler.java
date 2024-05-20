@@ -82,7 +82,7 @@ public class ChaosGameFileHandler {
   /**
    * Writes the details of the chaos game to a file, the file will have the name of the fractal.
    *
-   * @param path the path to the file to write to.
+   * @param path        the path to the file to write to.
    * @param description the description of the chaos game to write to file.
    */
   public void writeToFile(String path, ChaosGameDescription description)

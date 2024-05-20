@@ -6,11 +6,10 @@ import java.util.Collection;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
-import java.io.File;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import org.ntnu.IDATA2003.mappe5.controller.ChaosGameControllerGui;
 import org.ntnu.IDATA2003.mappe5.model.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.model.entity.JuliaTransform;
@@ -50,12 +49,14 @@ public class ChaosGameAnimations {
   }
 
   //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
+
   /**
    * Animates the fractal by changing the min and max coordinates of the fractal.
    */
   private void danceAnimation() {
     new Thread(() -> {
-      Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm().toString());
+      Media sound =
+          new Media((getClass().getResource("/danceParty.mp3")).toExternalForm().toString());
       MediaPlayer mediaPlayer = new MediaPlayer(sound);
       mediaPlayer.play();
     }).start();

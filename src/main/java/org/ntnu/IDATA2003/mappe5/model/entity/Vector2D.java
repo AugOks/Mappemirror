@@ -71,11 +71,11 @@ public class Vector2D {
   /**
    * Sets the Y value of the vector.
    *
-   * @param x1 the X1 value of the vector.
+   * @param y1 the X1 value of the vector.
    */
-  public void setY0(double x1) {
+  public void setY0(double y1) {
 
-    this.y0 = x1;
+    this.y0 = y1;
   }
 
   public String toString() {

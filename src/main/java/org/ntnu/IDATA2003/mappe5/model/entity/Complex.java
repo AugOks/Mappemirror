@@ -35,14 +35,4 @@ public class Complex extends Vector2D {
     return new Complex(firstOperation, secondOperation);
   }
 
-  /**
-   * Sets the Y0 value (imaginary value) of the vector.
-   *
-   * @param y0 the Y0 value of the vector.
-   */
-  public void setY0(double y0) {
-
-    super.setY0(y0);
-  }
-
 }

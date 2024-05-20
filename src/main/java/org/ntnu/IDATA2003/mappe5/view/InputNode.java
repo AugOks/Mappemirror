@@ -22,7 +22,7 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
 public class InputNode {
 
   private final InputNodeController controller;
-  private GridPane inputNode; // The input node for the user interface.
+  private final GridPane inputNode; // The input node for the user interface.
   private ChaosGameDescription currentDescription; // The current description of the fractal.
   private MinMaxCoordsNode minMaxCoordsNode; // The min and max coordinates of the fractal.
   private FractalInputNode fractalInputNode; // The fractal input node.

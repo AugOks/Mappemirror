@@ -11,11 +11,11 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
  * It's responsible for creating an instance of the description and canvas needed.
  */
 public class ChaosGame {
+  private final Random random;
+  private final ArrayList<ChaosGameObserver> subscribers;
   private ChaosCanvas canvas; // The canvas for the fractals in the app.
   private ChaosGameDescription description; //The description of the chaosGame.
   private Vector2D currentPoint; //The current point
-  private Random random;
-  private ArrayList<ChaosGameObserver> subscribers;
   private int currentHeight;
   private int currentWidth;
 

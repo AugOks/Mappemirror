@@ -15,15 +15,14 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 public class MinMaxCoordsNode {
 
 
+  private final TextField minX;  // The text field for the minimum x coordinate
+  private final TextField minY; // The text field for the minimum y coordinate
+  private final TextField maxX; // The text field for the maximum x coordinate
+  private final TextField maxY; // The text field for the maximum y coordinate
+  private final Vector2D minCoords; // The vector for the minimum coordinates
+  private final Vector2D maxCoords; // The vector for the maximum coordinates
+  private final InputNodeController controller;
   private boolean isValueValid = true;
-
-  private TextField minX;  // The text field for the minimum x coordinate
-  private TextField minY; // The text field for the minimum y coordinate
-  private TextField maxX; // The text field for the maximum x coordinate
-  private TextField maxY; // The text field for the maximum y coordinate
-  private Vector2D minCoords; // The vector for the minimum coordinates
-  private Vector2D maxCoords; // The vector for the maximum coordinates
-  private InputNodeController controller;
 
   /**
    * Constructor for the MinMaxCoordsBox class.

@@ -9,6 +9,8 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
+//TODO wright javadoc for this chaos game description factory
+
 /**
  * A factory implementation for creating pre-defined fractals for the chaos game.
  * The factory can create a fractal based on the name given.
@@ -26,7 +28,6 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
  *   <li>Blank Julia set</li>
  *   <li>Blank Affine</li>
  * </ul>
- *
  */
 
 public class ChaosGameDescriptionFactory {
@@ -75,10 +76,6 @@ public class ChaosGameDescriptionFactory {
 
       case BLANKJULIA:
         description = this.createBlankJulia();
-        break;
-
-      case BLANKAFFINE:
-       // description = this.createBlankAffine(numberTransforms);
         break;
 
       default:
@@ -315,14 +312,14 @@ public class ChaosGameDescriptionFactory {
    * @return the complete chaos game description for the BlankAffine.
    */
 
-  private ChaosGameDescription createBlankAffine(int numberTransforms){
+  private ChaosGameDescription createBlankAffine(int numberTransforms) {
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(0.1, 0.1);
     List<Transform2D> transforms = new ArrayList<>();
-    for (int i=0; i< numberTransforms; i++){
-      Matrix2x2 Matrix = new Matrix2x2(0, 0, 0, 0);
-      Vector2D Vector = new Vector2D(0, 0);
-      transforms.add(new AffineTransform2D(Matrix, Vector));
+    for (int i = 0; i < numberTransforms; i++) {
+      Matrix2x2 matrix = new Matrix2x2(0, 0, 0, 0);
+      Vector2D vector = new Vector2D(0, 0);
+      transforms.add(new AffineTransform2D(matrix, vector));
     }
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "BlankAffine");
   }

@@ -160,8 +160,6 @@ public class TransformsParser {
     String transform =
         description.getTransform(0).getClass().getSimpleName()
             .replace("Transform", "");
-    String compare = transform;
-    transform += "           # type of transform" + '\n';
     String minCoords =
         description.getMinCoords().getX0() + ", " + description.getMinCoords().getY0();
     minCoords += "           # lower left coordinates" + '\n';
@@ -169,7 +167,8 @@ public class TransformsParser {
         description.getMaxCoords().getX0() + ", " + description.getMaxCoords().getY0();
     maxCoords += "           # upper right coordinates" + '\n';
     ArrayList<String> transformInfo = new ArrayList<>();
-
+    String compare = transform;
+    transform += "           # type of transform" + '\n';
     transformInfo.add(compare);
     transformInfo.add(transform);
     transformInfo.add(minCoords);

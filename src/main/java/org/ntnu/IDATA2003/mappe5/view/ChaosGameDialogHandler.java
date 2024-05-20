@@ -2,7 +2,6 @@ package org.ntnu.IDATA2003.mappe5.view;
 
 import java.io.File;
 import java.util.Objects;
-import java.util.Optional;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -28,8 +27,13 @@ import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.ResourceNotFoundExcepti
 
 /**
  * Class for creating dialogs in the ChaosGameGui class.
- * Made this is a singleton class to avoid creating multiple instances of the class but unsure
- * if it is necessary.
+ * <p>
+ * Made this is a singleton class to avoid creating multiple instances of the class.
+ * Some would say Singletons should be avoided for anything but the most niche
+ * use cases. from what we can see If we were to adhere to the concerns of others there would be no
+ * class in this project that would qualify by the strictest definition as a singleton.
+ * Despite all this we still wanted to show that we can implement a singleton,
+ * even though it might not be the most ideal situation.
  */
 public class ChaosGameDialogHandler {
 
@@ -69,7 +73,7 @@ public class ChaosGameDialogHandler {
         yes,
         no);
     exitAlert.setHeaderText("Are you sure you want to exit the application?");
-    Optional<ButtonType> result = exitAlert.showAndWait();
+    exitAlert.showAndWait();
     if (exitAlert.getResult() == yes) {
       exitConfirmation = true;
     }
@@ -97,8 +101,7 @@ public class ChaosGameDialogHandler {
       dialogHeaderIcon.setFitHeight(48);
       dialogHeaderIcon.setFitWidth(48);
       alertDanceParty.getDialogPane().setGraphic(dialogHeaderIcon);
-
-      Optional<ButtonType> result = alertDanceParty.showAndWait();
+      alertDanceParty.showAndWait();
 
       if (alertDanceParty.getResult() == yesD) {
         dancePartyConfirmation = true;
@@ -188,16 +191,14 @@ public class ChaosGameDialogHandler {
     grid.add(radioButtonJulia, 0, 2);
     grid.add(radioButtonAffine, 0, 3);
 
-
-    Spinner spinner = new Spinner();
+    Spinner<Integer> spinner = new Spinner<>();
     spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20));
     spinner.setEditable(true);
 
     radioButtonJulia.setOnAction(event -> {
-      if (radioButtonJulia.isSelected()) {
-        if (grid.getChildren().contains(spinner)) {
-          removeNodesFromGrid(grid, 4, 7);
-        }
+      if (radioButtonJulia.isSelected() && (grid.getChildren().contains(spinner))) {
+        removeNodesFromGrid(grid);
+
       }
     });
     Separator line = new Separator(Orientation.HORIZONTAL);
@@ -212,23 +213,20 @@ public class ChaosGameDialogHandler {
     createNewFractal.getDialogPane().setContent(grid);
     createNewFractal.showAndWait();
     if (radioButtonAffine.isSelected()) {
-      this.numberOfTransforms = (int) spinner.getValue();
+      this.numberOfTransforms = spinner.getValue();
     } else if (radioButtonJulia.isSelected()) {
       this.numberOfTransforms = 0;
     }
-    System.out.println(this.numberOfTransforms);
     return this.numberOfTransforms;
   }
 
   /**
    * Method for removing the node for affine transformation from the grid in the dialog.
    *
-   * @param grid     the grid to add the nodes to.
-   * @param startRow the row to start adding nodes.
-   * @param endRow   the row to end adding nodes.
+   * @param grid the grid to add the nodes to.
    */
-  private void removeNodesFromGrid(GridPane grid, int startRow, int endRow) {
-    for (int i = startRow; i <= endRow; i++) {
+  private void removeNodesFromGrid(GridPane grid) {
+    for (int i = 4; i <= 7; i++) {
       final int row = i;
       grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row
           && GridPane.getColumnIndex(node) == 0);

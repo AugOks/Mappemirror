@@ -17,13 +17,12 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
 /**
  * Represents the input boxes for a single matrix, and a single vector.
  * This class allows easy access and manipulation of the values in the matrix and vector.
- *
  */
 public class AffineTransformNode implements FractalInputNode {
 
+  private final InputNodeController controller;
   private List<AffineTransform2D> transforms;
   private boolean valueChanged = true;
-  private InputNodeController controller;
 
   /**
    * Constructor for the TransformBox class.
@@ -63,7 +62,6 @@ public class AffineTransformNode implements FractalInputNode {
         this.valueChanged = true;
       } catch (Exception e) {
         this.valueChanged = false;
-        ;//TODO Fix this
       }
     });
     return field;
@@ -103,13 +101,14 @@ public class AffineTransformNode implements FractalInputNode {
    */
   @Override
   public Node getFractalNode() {
+    String inputStyle = "input-title";
     GridPane gridPane = new GridPane();
     for (int i = 0; i < transforms.size(); i++) {
 
       GridPane entireTransform = new GridPane();
       int transfNumber = i + 1;
       Label transformLabel = new Label("Transform " + transfNumber + ": ");
-      transformLabel.getStyleClass().add("input-title");
+      transformLabel.getStyleClass().add(inputStyle);
       entireTransform.add(transformLabel, 0, 0);
       entireTransform.add(new Label(""), 0, 1);
 
@@ -119,7 +118,7 @@ public class AffineTransformNode implements FractalInputNode {
 
       GridPane firstMatrix = new GridPane();
       Label matrixLabel = new Label("Matrix:");
-      matrixLabel.getStyleClass().add("input-title");
+      matrixLabel.getStyleClass().add(inputStyle);
       firstMatrix.add(matrixLabel, 0, 0);
 
       firstMatrix.add(createMatrixTextField("a00", matrix.getA(), matrix), 0, 1);
@@ -130,7 +129,7 @@ public class AffineTransformNode implements FractalInputNode {
       GridPane firstVector = new GridPane();
       Label vectorLabel = new Label("Vector :");
       Vector2D vector = transform.getVector();
-      vectorLabel.getStyleClass().add("input-title");
+      vectorLabel.getStyleClass().add(inputStyle);
       firstVector.add(vectorLabel, 0, 0);
       firstVector.add(createVectorTextField("b0", vector.getX0(), vector), 0, 1);
       firstVector.add(createVectorTextField("b1", vector.getY0(), vector), 0, 2);
