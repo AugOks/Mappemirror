@@ -54,63 +54,6 @@ class ChaosGameFileHandlerTest {
     }
   }
 
-  /**
-   * Tests reading a fractal from a file and printing that fractal if it was found.
-   */
-  //TODO this test is not working as intended
-  /*
-  @Test
-  @Order(2)
-  void testReadFromFile() {
-    ChaosGameDescription description = null;
-    try {
-      description = this.handler.readFromFileWithFractalName("julia_set");
-      assertNotNull(description);
-      ChaosGame game = new ChaosGame(description, 100, 300);
-      game.runSteps(1000);
-      int index_i = game.getCanvas().getHeight();
-      int index_j = game.getCanvas().getWidth();
-      int[][] canvas = game.getCanvas().getCanvasArray();
-      ArrayList<String> canvasConsole = new ArrayList<>();
-      StringBuilder line = new StringBuilder();
-
-      for (int i = 0; i < index_i; i++) {
-        for (int j = 0; j < index_j; j++) {
-          if (canvas[i][j] == 0) {
-            line.append("-");
-          } else {
-            line.append("X");
-          }
-        }
-        canvasConsole.add(line.toString());
-        line = new StringBuilder();
-      }
-      for (String s : canvasConsole) {
-        System.out.println(s);
-      }
-    } catch (Exception e) {
-      fail();
-    }
-
-  }
-
-   */
-
-  /**
-   * Tests reading from a file that does not exist.
-   */
-  /*
-  @Test
-  void testReadFromFileWithNegativeParameters() {
-    try {
-      this.handler.readFromFileWithFractalName("negativeValue");
-      fail();
-    } catch (Exception e) {
-      assertTrue(true);
-    }
-  }
-  
-   */
 
   /**
    * Tests writing to a file with negative parameters.

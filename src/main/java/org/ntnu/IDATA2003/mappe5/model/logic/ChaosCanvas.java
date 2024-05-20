@@ -42,7 +42,6 @@ public class ChaosCanvas {
    * @return the pixel at the coordinates.
    */
   public int getPixel(Vector2D point) {
-    //TODO: What should this do?.
     return 0;
   }
 
@@ -60,6 +59,7 @@ public class ChaosCanvas {
    * Sets the Width of the canvas.
    *
    * @param width the width of the canvas.
+   * @throws IllegalArgumentException if the width is less than 0.
    */
   private void setWidth(int width) {
     if (width < 0) {
@@ -82,9 +82,10 @@ public class ChaosCanvas {
    * Sets the height of the canvas.
    *
    * @param height height of canvas
+   * @throws IllegalArgumentException if the height is less than 0.
    */
   private void setHeight(int height) {
-    if (height < 0) { //TODO: Should have a lower bound.
+    if (height < 0) {
       throw new IllegalArgumentException("height cannot be less than 0");
     }
     this.height = height;
@@ -140,23 +141,6 @@ public class ChaosCanvas {
     this.transformCoordsToIndices = new AffineTransform2D(matrixA, vectorB);
   }
 
-  /**
-   * TODO question if we should remove this method.
-   * Takes in a Vector2D containing coordinates and returns the pixel position of those coordinates.
-   *
-   * @param coordinates the coordinates of the pixel as a Vector2D.
-   * @return the indices of the pixel as an int array.
-   */
-  public int[] transformCoordsToIndices(Vector2D coordinates) {
-    int[] xy = new int[2];
-    System.out.println(coordinates.getX0() + "coords");
-    Vector2D indices = this.transformCoordsToIndices.transform(coordinates);
-    xy[0] = (int) Math.round(indices.getX0());
-    xy[1] = (int) Math.round(indices.getY0());
-    // System.out.println(xy[0] + "index");
-
-    return xy;
-  }
 
   /**
    * Sets the max coordinates of the transform to the given coordinates.

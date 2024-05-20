@@ -89,7 +89,6 @@ public class JuliaTransformNode implements FractalInputNode {
             controller.changeTransform(this.getTransforms());
           } catch (Exception e) {
             this.isValueValid = false;
-            ;//TODO Maybe fix this
           }
         });
   }

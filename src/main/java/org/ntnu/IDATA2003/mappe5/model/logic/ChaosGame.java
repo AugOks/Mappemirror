@@ -35,7 +35,6 @@ public class ChaosGame {
       throw new IllegalArgumentException("The canvas cannot have size smaller than 1x1");
     }
     this.random = new Random();
-    //TODO refactor this to gui when making canvas dynamic
     this.currentHeight = height;
     this.currentWidth = width;
     this.subscribers = new ArrayList<>();
@@ -43,8 +42,6 @@ public class ChaosGame {
     Vector2D maxCoords = this.description.getMaxCoords();
     Vector2D minCoords = this.description.getMinCoords();
     this.canvas = new ChaosCanvas(height, width, minCoords, maxCoords);
-
-    //TODO consider to make this an parameter, so user can change the starting point
     this.currentPoint = new Vector2D(0, 0);
 
   }
@@ -59,6 +56,9 @@ public class ChaosGame {
     return this.canvas;
   }
 
+  /**
+   * Sets the canvas of the game.
+   */
   private void setCanvas() {
     this.canvas =
         new ChaosCanvas(this.currentHeight, this.currentWidth, this.description.getMinCoords(),

@@ -1,6 +1,10 @@
 package org.ntnu.IDATA2003.mappe5.view;
 
 import java.util.Objects;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
@@ -137,8 +141,11 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("failed to fetch a resource");
     } catch (Exception e) {
-      e.printStackTrace();
-      //TODO fix me!
+      Handler handler = new FileHandler("ChaosGame.log");
+      Logger logger = Logger.getLogger("ChaosGame");
+      Logger.getLogger("ChaosGame").addHandler(handler);
+      logger.log(Level.SEVERE, e.getMessage());
+
     }
   }
 
@@ -220,8 +227,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @return the menu bar for the chaos game app.
    */
   private MenuBar createMenuBar() {
-    //TODO style the menu bar better than this...
-
 
     MenuItem openFile = new MenuItem("Open file");
     openFile.setOnAction(e -> controller.openFromFile());

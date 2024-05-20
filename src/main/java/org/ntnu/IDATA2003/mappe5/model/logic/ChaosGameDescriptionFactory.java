@@ -9,9 +9,24 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Matrix2x2;
 import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
-//TODO wright javadoc for this chaos game description factory
 /**
  * A factory implementation for creating pre-defined fractals for the chaos game.
+ * The factory can create a fractal based on the name given.
+ * The factory can also create a fractal based on the name given and the number of transforms.
+ * The factory can create the following fractals:
+ * <ul>
+ *   <li>Barnsley Fern</li>
+ *   <li>Julia set</li>
+ *   <li>Sierpinski</li>
+ *   <li>Spiderweb</li>
+ *   <li>Square</li>
+ *   <li>Pentagon</li>
+ *   <li>Koch Curve</li>
+ *   <li>Dragon Fire</li>
+ *   <li>Blank Julia set</li>
+ *   <li>Blank Affine</li>
+ * </ul>
+ *
  */
 
 public class ChaosGameDescriptionFactory {

@@ -73,7 +73,6 @@ public class MinMaxCoordsNode {
         this.isValueValid = true;
       } catch (Exception e) {
         this.isValueValid = false;
-        ;//TODO Maybe fix this
       }
     });
   }

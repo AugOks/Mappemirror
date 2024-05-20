@@ -78,35 +78,12 @@ public class ChaosGameFileHandler {
     return game;
   }
 
+
   /**
-   * Reads the contents of a file with a given fractal name.w
+   * Writes the details of the chaos game to a file, the file will have the name of the fractal.
    *
-   * @param fractal the name of the fractal to read from file.
-   * @return the chaos game description of the fractal.
-   * @throws ResourceNotFoundException if the file could not be found.
-   */
-  //TODO Delete if not used by the end of the project.
-  /*
-  public ChaosGameDescription readFromFileWithFractalName(String fractal) {
-    String filePath;
-    try {
-      filePath = (Objects.requireNonNull(
-          getClass().getClassLoader().getResource(fractal + ".txt")))
-          .toExternalForm().replace("file:/", "");
-    } catch (NullPointerException e) {
-      throw new ResourceNotFoundException("Could not find the file" + e.getMessage());
-    }
-    return getcontentsOfFile(filePath);
-  }
-=======
->>>>>>> Stashed changes
-
-   */
-
-  /**
-   * Writes the details of the chaos game to a file, the file will have the name of the fractal but
-   * if no name is given a new file name with a random number will be generated to avoid any file
-   * reader issues.
+   * @param path the path to the file to write to.
+   * @param description the description of the chaos game to write to file.
    */
   public void writeToFile(String path, ChaosGameDescription description)
       throws FailedToWriteToFileException {

@@ -85,7 +85,11 @@ public class ChaosGameControllerGui {
    * @param description the description of the fractal to be created.
    */
   private void createNewFractal(ChaosGameDescription description) {
-    theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
+    try {
+      theGame = new ChaosGame(description, gameGui.getHeightForCanvas(), gameGui.getWidthForCanvas());
+    } catch (IllegalArgumentException e ) {
+     dialogHandler.genericErrorDialog(e.getMessage());
+    }
     gameGui.createCanvas(theGame, 1000000);
     gameGui.createInputNode(theGame.getDescription(), 1000000);
     this.chaosGameAnimations = new ChaosGameAnimations(theGame.getDescription(), this);
@@ -111,15 +115,6 @@ public class ChaosGameControllerGui {
   }
 
 
-  /**
-   * Run the game for a given amount of steps.
-   *
-   * @param steps the amount of steps to run the game.
-   */
-  //TODO: Is this method needed?
-  public void runGame(int steps) {
-    theGame.runSteps(steps);
-  }
 
   /**
    * Change the coordinates of the current game.
