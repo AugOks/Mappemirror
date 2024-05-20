@@ -10,12 +10,12 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
 import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
 //TODO wright javadoc for this chaos game description factory
-
 /**
  * A factory implementation for creating pre-defined fractals for the chaos game.
  */
 
 public class ChaosGameDescriptionFactory {
+
   /**
    * Takes an input and creates a fractal based on the name given.
    *
@@ -62,6 +62,10 @@ public class ChaosGameDescriptionFactory {
         description = this.createBlankJulia();
         break;
 
+      case BLANKAFFINE:
+       // description = this.createBlankAffine(numberTransforms);
+        break;
+
       default:
         break;
     }
@@ -76,7 +80,6 @@ public class ChaosGameDescriptionFactory {
    * @return a complete chaos game description for the given fractal.
    */
   public ChaosGameDescription createDescription(Fractals fractal, int numberTransforms) {
-
     ChaosGameDescription description = null;
     if (fractal == Fractals.BLANKAFFINE) {
       description = this.createBlankAffine(numberTransforms);
@@ -162,12 +165,13 @@ public class ChaosGameDescriptionFactory {
 
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(firstMatrix, firstVector));
-    transforms.add(new AffineTransform2D(new Matrix2x2(firstMatrix), secondVector));
+    transforms.add(new AffineTransform2D(firstMatrix, secondVector));
     transforms.add(new AffineTransform2D(secondMatrix, thirdVector));
     transforms.add(new AffineTransform2D(thirdMatrix, new Vector2D(thirdVector)));
     Vector2D minCoords = new Vector2D(-150, -150);
     Vector2D maxCoords = new Vector2D(150, 150);
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "SpiderNet");
+
   }
 
   /**
@@ -243,7 +247,7 @@ public class ChaosGameDescriptionFactory {
 
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(firstMatrix, firstVector));
-    transforms.add(new AffineTransform2D(new Matrix2x2(firstMatrix), secondVector));
+    transforms.add(new AffineTransform2D(firstMatrix, secondVector));
     transforms.add(new AffineTransform2D(secondMatrix, thirdVector));
     transforms.add(new AffineTransform2D(thirdMatrix, fourthVector));
     Vector2D minCoords = new Vector2D(-200, -200);
@@ -295,16 +299,16 @@ public class ChaosGameDescriptionFactory {
    * @param numberTransforms the number of transforms to create.
    * @return the complete chaos game description for the BlankAffine.
    */
-  private ChaosGameDescription createBlankAffine(int numberTransforms) {
 
-    List<Transform2D> transforms = new ArrayList<>();
-    for (int i = 0; i < numberTransforms; i++) {
-      Matrix2x2 matrix = new Matrix2x2(0, 0, 0, 0);
-      Vector2D vector = new Vector2D(0, 0);
-      transforms.add(new AffineTransform2D(new Matrix2x2(matrix), new Vector2D(vector)));
-    }
+  private ChaosGameDescription createBlankAffine(int numberTransforms){
     Vector2D minCoords = new Vector2D(0, 0);
     Vector2D maxCoords = new Vector2D(0.1, 0.1);
+    List<Transform2D> transforms = new ArrayList<>();
+    for (int i=0; i< numberTransforms; i++){
+      Matrix2x2 Matrix = new Matrix2x2(0, 0, 0, 0);
+      Vector2D Vector = new Vector2D(0, 0);
+      transforms.add(new AffineTransform2D(Matrix, Vector));
+    }
     return new ChaosGameDescription(transforms, minCoords, maxCoords, "BlankAffine");
   }
 
