@@ -138,6 +138,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       throw new ResourceNotFoundException("failed to fetch a resource");
     } catch (Exception e) {
       e.printStackTrace();
+      //TODO fix me!
     }
   }
 
