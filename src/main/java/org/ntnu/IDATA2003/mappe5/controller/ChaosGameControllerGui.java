@@ -210,6 +210,15 @@ public class ChaosGameControllerGui {
     }
   }
 
+  public void showHelp() {
+    try {
+      this.dialogHandler.showHelpDialog();
+    } catch (ResourceNotFoundException e) {
+      dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
+          + "help dialog");
+    }
+  }
+
 
   public void setColorChoiceC(Color colorChoice) {
     this.gameGui.setColorChoice(colorChoice);

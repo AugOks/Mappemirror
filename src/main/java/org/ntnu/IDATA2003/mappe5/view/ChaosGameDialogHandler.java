@@ -94,9 +94,11 @@ public class ChaosGameDialogHandler {
       Alert alertDanceParty = new Alert(Alert.AlertType.CONFIRMATION, "  ", yesD, noD);
       alertDanceParty.setTitle("Dance party");
       alertDanceParty.setHeaderText("Do you want to have a dance party?");
+      alertDanceParty.setContentText("Warning: This dance party contain flashing lights and catchy"
+                                     +" music!");
       final ImageView dialogHeaderIcon;
       dialogHeaderIcon = new ImageView(Objects.requireNonNull(getClass()
-              .getResource("/discoBall.png"))
+              .getResource("/images/discoBall.png"))
           .toExternalForm());
       dialogHeaderIcon.setFitHeight(48);
       dialogHeaderIcon.setFitWidth(48);
@@ -160,6 +162,75 @@ public class ChaosGameDialogHandler {
     dialogPaneContent.getChildren().add(grid);
     about.getDialogPane().setContent(dialogPaneContent);
     about.showAndWait();
+  }
+
+  public void showHelpDialog() {
+    Alert help = new Alert(Alert.AlertType.INFORMATION);
+    help.setTitle("FAQ");
+    help.setHeaderText("FAQ to Chaos Game");
+    setIconToCgDialog(help);
+    help.getDialogPane().setMinSize(700, 400);
+
+    Text question1 = new Text("What is Julia Transform? \n");
+    Text question2 = new Text("What is Affine Transform? \n");
+    Text question3 = new Text("How does transforming a point work? \n");
+
+    Text answer1 =new Text("Julia set in one of the types of fractals chaos game can generate.\n"
+                         + "The inputs values required for the Julia set is a complex number,"
+                         + " which consist of a real and imaginary number.\nThe complex number is "
+                         + "defined as Z in the formula.\nJulia has the total of two types of"
+                         + " transformation, where the difference is sign of the start of "
+                         + "the formula:");
+
+    Text answer2 = new Text("Affine transformation is another type of fractal this chaos game"
+                          + " can generate.\nOne transformation is defined by the multiplication"
+                          + " of a matrix with 2x2 values and one 2D vector as shown \non the"
+                          + " formula below and then the addition of the current point.\n");
+
+    Text answer3 = new Text("For each steps we run, one point will be transformed to another"
+                          + " point based on one of different transforms defined. \n"
+                          + "These transformations can be both be affine and Julia."
+                          + " This will iterate as many times as run steps is defined by the "
+                          + "user.");
+
+    question1.setFont(Font.font("open sans", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 16));
+    question2.setFont(Font.font("open sans", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 16));
+    question3.setFont(Font.font("open sans", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 16));
+    answer1.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
+    answer2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
+    answer3.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
+
+    ImageView juliaImage = new ImageView(Objects.requireNonNull(getClass()
+            .getResource("/images/JuliaTransform.png")).toExternalForm());
+    ImageView affineImage1 = new ImageView(Objects.requireNonNull(getClass()
+            .getResource("/images/AffineTransform.png")).toExternalForm());
+    ImageView affineImage2 = new ImageView(Objects.requireNonNull(getClass()
+            .getResource("/images/AffineTransform2.png")).toExternalForm());
+
+    String header = "FQA!";
+    help.setHeaderText(header);
+
+    GridPane grid = new GridPane();
+    grid.add(question1, 0, 1);
+    grid.add(answer1, 0, 2);
+    grid.add(juliaImage, 0, 3);
+
+    grid.add(new Separator(Orientation.HORIZONTAL), 0,4);
+    grid.add(question2, 0, 5);
+    grid.add(answer2, 0, 6);
+    GridPane affineGrid = new GridPane();
+    affineGrid.add(affineImage1, 0, 0);
+    affineGrid.add(affineImage2,0,1);
+    grid.add(affineGrid, 0, 7);
+
+    grid.add(new Separator(Orientation.HORIZONTAL), 0,8);
+    grid.add(question3, 0, 9);
+    grid.add(answer3, 0, 10);
+
+    VBox dialogPaneContent = new VBox();
+    dialogPaneContent.getChildren().add(grid);
+    help.getDialogPane().setContent(dialogPaneContent);
+    help.showAndWait();
   }
 
   /**
@@ -280,7 +351,7 @@ public class ChaosGameDialogHandler {
     final ImageView dialogHeaderIcon;
     try {
       dialogHeaderIcon = new ImageView(
-          Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
+          Objects.requireNonNull(getClass().getResource("/images/iconChaosGame.png"))
               .toExternalForm());
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the icon");

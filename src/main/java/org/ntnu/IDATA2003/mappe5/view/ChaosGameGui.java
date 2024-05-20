@@ -135,7 +135,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       primaryStage.setMaximized(true);
       primaryStage.setScene(scene);
       primaryStage.getIcons().add(new Image(
-          Objects.requireNonNull(getClass().getResource("/iconChaosGame.png"))
+          Objects.requireNonNull(getClass().getResource("/images/iconChaosGame.png"))
               .toExternalForm()));
       primaryStage.show();
     } catch (NullPointerException e) {
@@ -206,7 +206,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Image banner = null;
     try {
       banner = new Image(Objects.requireNonNull(getClass()
-          .getResource("/header.png")).toExternalForm());
+          .getResource("/images/header.png")).toExternalForm());
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the banner");
     }
@@ -308,11 +308,13 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     edit.getItems().addAll(showSliders, zoomScroll, colorPicker);
 
 
+    MenuItem help = new MenuItem("FAQ");
+    help.setOnAction(e -> controller.showHelp());
     MenuItem about = new MenuItem("About");
     about.setOnAction(e -> controller.showAbout());
-    Menu help = new Menu("Help");
-    help.getItems().add(about);
 
+    Menu info = new Menu("Info");
+    info.getItems().addAll(help, about);
 
     MenuItem dance = new MenuItem("Dance Party");
     dance.setOnAction(e -> controller.danceParty());
@@ -330,7 +332,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     Menu animations = new Menu("Animations");
     animations.getItems().addAll(dance, juliaSlide, wackySlide);
     MenuBar menu = new MenuBar();
-    menu.getMenus().addAll(file, edit, preMade, animations, help);
+    menu.getMenus().addAll(file, edit, preMade, animations, info);
     menu.getStyleClass().add("menu-bar");
     return menu;
   }
