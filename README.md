@@ -26,8 +26,9 @@ have been using the last semester.
 
 ## How to run the application
 The application uses Maven as a build automation tool to ensure that the user can run it across integrated development
-environments. Therefore, anyone with Maven can run it by either using “mvn javafx:run” or running the starter
-application “ChaosGameMainApp”.
+environments. Therefore, anyone with Maven can run it by either using “mvn javafx:run” or by running the “runApp” file.
+Explaning how to install Maven would be outside the scope of this application,  
+please refer to this link [!install Maven](https://maven.apache.org/install.html) 
 
 ## Features 
 This is a feature rich application that allows a lot of freedom and manipulation of a fractals. Current implemented 

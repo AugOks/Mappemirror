@@ -1,0 +1,1 @@
+powershell -command "mvn javafx:run"
