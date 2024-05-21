@@ -27,13 +27,14 @@ public class ChaosGameAnimations {
   private final DancePartyFactory factory;  //the factory for creating descriptions.
   private ChaosGameDescription currentDescription; //the current description of the fractal.
   private MediaPlayer mediaPlayer;
+
   /**
    * Constructor for the ChaosGameAnimations class.
    *
    * @param description the description of the fractal.
    * @param controller  the controller for the ChaosGameGui.
    */
-  public ChaosGameAnimations (ChaosGameDescription description, ChaosGameControllerGui controller) {
+  public ChaosGameAnimations(ChaosGameDescription description, ChaosGameControllerGui controller) {
     this.currentDescription = description;
     this.controller = controller;
     this.factory = new DancePartyFactory();
@@ -48,6 +49,7 @@ public class ChaosGameAnimations {
   }
 
   //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
+
   /**
    * Animates the fractal by changing the min and max coordinates of the fractal.
    */
@@ -65,7 +67,8 @@ public class ChaosGameAnimations {
     timeLine.setCycleCount(cycleCount);
     timeLine.play();
 
-    Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm().toString());
+    Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm()
+                                                                       .toString());
     mediaPlayer = new MediaPlayer(sound);
     mediaPlayer.setVolume(0.8);
     mediaPlayer.setStopTime(timeLine.getCycleDuration().multiply(cycleCount));
@@ -122,7 +125,7 @@ public class ChaosGameAnimations {
         break;
       case "wacky":
         this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
-            false, true);
+                                  false, true);
         break;
       default:
         break;
@@ -134,7 +137,7 @@ public class ChaosGameAnimations {
    *
    * @param description the description of the Julia set.
    * @throws AnimationFailedException if the animation fails.
-   * source [1]
+   *                                  source [1]
    */
   private void juliaSliderAnimation(ChaosGameDescription description, double x0, double y0,
                                     boolean deltaX, boolean deltaY) {

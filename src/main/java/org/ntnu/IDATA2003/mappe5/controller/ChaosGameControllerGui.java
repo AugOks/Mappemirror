@@ -207,16 +207,19 @@ public class ChaosGameControllerGui {
       this.dialogHandler.showAboutDialog();
     } catch (ResourceNotFoundException e) {
       dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
-          + "about dialog");
+                                       + "about dialog");
     }
   }
 
+  /**
+   * Show the 'help' dialog.
+   */
   public void showHelp() {
     try {
       this.dialogHandler.showHelpDialog();
     } catch (ResourceNotFoundException e) {
       dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
-          + "help dialog");
+                                       + "help dialog");
     }
   }
 

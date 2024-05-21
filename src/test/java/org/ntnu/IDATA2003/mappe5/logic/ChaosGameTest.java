@@ -48,7 +48,7 @@ class ChaosGameTest {
     this.listOfTransformation.add(new AffineTransform2D(matrix, minCoords));
     this.listOfTransformation.add(new AffineTransform2D(matrix, maxCoords));
     this.chaosGameDescription = new ChaosGameDescription(listOfTransformation,
-        minCoords, maxCoords, "test");
+                                                         minCoords, maxCoords, "test");
   }
 
 

@@ -26,8 +26,7 @@ import javafx.stage.FileChooser;
 import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.ResourceNotFoundException;
 
 /**
- * Class for creating dialogs in the ChaosGameGui class.
- * <p>
+ * Class for creating dialogs in the ChaosGameGui class.<p>
  * Made this is a singleton class to avoid creating multiple instances of the class.
  * Some would say Singletons should be avoided for anything but the most niche
  * use cases. from what we can see If we were to adhere to the concerns of others there would be no
@@ -69,9 +68,9 @@ public class ChaosGameDialogHandler {
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No", ButtonBar.ButtonData.CANCEL_CLOSE);
     Alert exitAlert = new Alert(Alert.AlertType.CONFIRMATION,
-        "  ",
-        yes,
-        no);
+                                "  ",
+                                yes,
+                                no);
     exitAlert.setHeaderText("Are you sure you want to exit the application?");
     exitAlert.showAndWait();
     if (exitAlert.getResult() == yes) {
@@ -95,11 +94,12 @@ public class ChaosGameDialogHandler {
       alertDanceParty.setTitle("Dance party");
       alertDanceParty.setHeaderText("Do you want to have a dance party?");
       alertDanceParty.setContentText("Warning: This dance party contain flashing lights and catchy"
-                                     +" music!");
+                                     + " music!");
       final ImageView dialogHeaderIcon;
       dialogHeaderIcon = new ImageView(Objects.requireNonNull(getClass()
-              .getResource("/images/discoBall.png"))
-          .toExternalForm());
+                                                                  .getResource(
+                                                                      "/images/discoBall.png"))
+                                              .toExternalForm());
       dialogHeaderIcon.setFitHeight(48);
       dialogHeaderIcon.setFitWidth(48);
       alertDanceParty.getDialogPane().setGraphic(dialogHeaderIcon);
@@ -129,23 +129,23 @@ public class ChaosGameDialogHandler {
 
 
     Text text1 = new Text("Chaos game is one of many established methods for generating fractals "
-        + "online.\n"
-        + "A fractal can be defined as complex pattern that are self-similar "
-        + "across different scales. In other word, beautiful figure \n"
-        + "that will repeat the same pattern "
-        + "regardless of how much you zoom and your viewpoint.\n");
+                          + "online.\n"
+                          + "A fractal can be defined as complex pattern that are self-similar "
+                          + "across different scales. In other word, beautiful figure \n"
+                          + "that will repeat the same pattern "
+                          + "regardless of how much you zoom and your viewpoint.\n");
     Text text2 = new Text("The application creates fractals choosing a initial starting point, "
-        + "and so transforming that point using \n"
-        + " a predefined mathematical operation."
-        + "Iteratively creating a long sequence of points later on drawn on a "
-        + "canvas to create a fractal.\n"
-        + "The most known fractals includes the "
-        + "Julia set and the Sierpinski triangle. \n");
+                          + "and so transforming that point using \n"
+                          + " a predefined mathematical operation."
+                          + "Iteratively creating a long sequence of points later on drawn on a "
+                          + "canvas to create a fractal.\n"
+                          + "The most known fractals includes the "
+                          + "Julia set and the Sierpinski triangle. \n");
     Text text3 = new Text("This particular Chaos Game was created by students as NTNU as a part "
-        + " of their exam for the course IDATx2024. \n"
-        + "The main objective was to show competence in newly learned knowledge "
-        + "such as design patterns,\n"
-        + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
+                          + " of their exam for the course IDATx2024. \n"
+                          + "The main objective was to show competence in newly learned knowledge "
+                          + "such as design patterns,\n"
+                          + " Java inheritance and polymorphism, and creating a GUI using JavaFX.");
 
     text1.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     text2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
@@ -164,6 +164,10 @@ public class ChaosGameDialogHandler {
     about.showAndWait();
   }
 
+  /**
+   * Method for creating a help dialog.
+   *
+   */
   public void showHelpDialog() {
     Alert help = new Alert(Alert.AlertType.INFORMATION);
     help.setTitle("FAQ");
@@ -174,56 +178,55 @@ public class ChaosGameDialogHandler {
     Text question1 = new Text("What is Julia Transform? \n");
     Text question2 = new Text("What is Affine Transform? \n");
     Text question3 = new Text("How does transforming a point work? \n");
-
-    Text answer1 =new Text("Julia set in one of the types of fractals chaos game can generate.\n"
-                         + "The inputs values required for the Julia set is a complex number,"
-                         + " which consist of a real and imaginary number.\nThe complex number is "
-                         + "defined as Z in the formula.\nJulia has the total of two types of"
-                         + " transformation, where the difference is sign of the start of "
-                         + "the formula:");
-
-    Text answer2 = new Text("Affine transformation is another type of fractal this chaos game"
-                          + " can generate.\nOne transformation is defined by the multiplication"
-                          + " of a matrix with 2x2 values and one 2D vector as shown \non the"
-                          + " formula below and then the addition of the current point.\n");
-
-    Text answer3 = new Text("For each steps we run, one point will be transformed to another"
-                          + " point based on one of different transforms defined. \n"
-                          + "These transformations can be both be affine and Julia."
-                          + " This will iterate as many times as run steps is defined by the "
-                          + "user.");
-
     question1.setFont(Font.font("open sans", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 16));
     question2.setFont(Font.font("open sans", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 16));
     question3.setFont(Font.font("open sans", FontWeight.SEMI_BOLD, FontPosture.REGULAR, 16));
+
+    Text answer1 = new Text("Julia set in one of the types of fractals chaos game can generate.\n"
+                            + "The inputs values required for the Julia set is a complex number,"
+                            +
+                            " which consist of a real and imaginary number.\nThe complex number is "
+                            + "defined as Z in the formula.\nJulia has the total of two types of"
+                            + " transformation, where the difference is sign of the start of "
+                            + "the formula:");
+
+    Text answer2 = new Text("Affine transformation is another type of fractal this chaos game"
+                            + " can generate.\nOne transformation is defined by the multiplication"
+                            + " of a matrix with 2x2 values and one 2D vector as shown \non the"
+                            + " formula below and then the addition of the current point.\n");
+
+    Text answer3 = new Text("For each steps we run, one point will be transformed to another"
+                            + " point based on one of different transforms defined. \n"
+                            + "These transformations can be both be affine and Julia."
+                            + " This will iterate as many times as run steps is defined by the "
+                            + "user.");
     answer1.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     answer2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     answer3.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
 
-    ImageView juliaImage = new ImageView(Objects.requireNonNull(getClass()
-            .getResource("/images/JuliaTransform.png")).toExternalForm());
-    ImageView affineImage1 = new ImageView(Objects.requireNonNull(getClass()
-            .getResource("/images/AffineTransform.png")).toExternalForm());
-    ImageView affineImage2 = new ImageView(Objects.requireNonNull(getClass()
-            .getResource("/images/AffineTransform2.png")).toExternalForm());
-
-    String header = "FQA!";
+    String header = "Frequently Asked Questions to Chaos Game";
     help.setHeaderText(header);
 
     GridPane grid = new GridPane();
     grid.add(question1, 0, 1);
     grid.add(answer1, 0, 2);
+    ImageView juliaImage = new ImageView(Objects.requireNonNull(getClass().getResource(
+        "/images/JuliaTransform.png")).toExternalForm());
     grid.add(juliaImage, 0, 3);
 
-    grid.add(new Separator(Orientation.HORIZONTAL), 0,4);
+    grid.add(new Separator(Orientation.HORIZONTAL), 0, 4);
     grid.add(question2, 0, 5);
     grid.add(answer2, 0, 6);
     GridPane affineGrid = new GridPane();
+    ImageView affineImage1 = new ImageView(Objects.requireNonNull(getClass().getResource(
+        "/images/AffineTransform.png")).toExternalForm());
     affineGrid.add(affineImage1, 0, 0);
-    affineGrid.add(affineImage2,0,1);
+    ImageView affineImage2 = new ImageView(Objects.requireNonNull(getClass().getResource(
+        "/images/AffineTransform2.png")).toExternalForm());
+    affineGrid.add(affineImage2, 0, 1);
     grid.add(affineGrid, 0, 7);
 
-    grid.add(new Separator(Orientation.HORIZONTAL), 0,8);
+    grid.add(new Separator(Orientation.HORIZONTAL), 0, 8);
     grid.add(question3, 0, 9);
     grid.add(answer3, 0, 10);
 
@@ -300,7 +303,7 @@ public class ChaosGameDialogHandler {
     for (int i = 4; i <= 7; i++) {
       final int row = i;
       grid.getChildren().removeIf(node -> GridPane.getRowIndex(node) == row
-          && GridPane.getColumnIndex(node) == 0);
+                                          && GridPane.getColumnIndex(node) == 0);
     }
   }
 
@@ -352,7 +355,7 @@ public class ChaosGameDialogHandler {
     try {
       dialogHeaderIcon = new ImageView(
           Objects.requireNonNull(getClass().getResource("/images/iconChaosGame.png"))
-              .toExternalForm());
+                 .toExternalForm());
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the icon");
     }
