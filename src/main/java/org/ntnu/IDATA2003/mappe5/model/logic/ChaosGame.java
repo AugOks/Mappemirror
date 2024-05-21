@@ -62,7 +62,7 @@ public class ChaosGame {
   private void setCanvas() {
     this.canvas =
         new ChaosCanvas(this.currentHeight, this.currentWidth, this.description.getMinCoords(),
-                        this.description.getMaxCoords());
+            this.description.getMaxCoords());
   }
 
   /**

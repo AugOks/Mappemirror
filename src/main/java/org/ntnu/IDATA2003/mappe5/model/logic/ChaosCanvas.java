@@ -133,9 +133,9 @@ public class ChaosCanvas {
     Matrix2x2 matrixA = new Matrix2x2(0, matrixValueB, matrixValueC, 0);
 
     double vectorValueX = ((this.height - 1) * this.maxCoords.getY0()) / (this.maxCoords.getY0()
-                                                                          - this.minCoords.getY0());
+        - this.minCoords.getY0());
     double vectorValueY = ((this.width - 1) * this.minCoords.getX0()) / (this.minCoords.getX0()
-                                                                         - this.maxCoords.getX0());
+        - this.maxCoords.getX0());
     Vector2D vectorB = new Vector2D(vectorValueX, vectorValueY);
 
     this.transformCoordsToIndices = new AffineTransform2D(matrixA, vectorB);

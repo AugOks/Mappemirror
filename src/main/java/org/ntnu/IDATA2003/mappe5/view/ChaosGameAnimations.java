@@ -50,28 +50,29 @@ public class ChaosGameAnimations {
   }
 
   //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
+
   /**
    * Animates the fractal by changing the min and max coordinates of the fractal.
    */
   private void danceAnimation() {
-      Timeline timeLine = new Timeline();
-      Collection<KeyFrame> frames = timeLine.getKeyFrames();
-      Duration frameGap = Duration.millis(300);
-      Duration frameTime = Duration.ZERO;
-      for (int i = 1; i <= 35; i++) {
-        frameTime = frameTime.add(frameGap);
-        int finalI = i;
-        frames.add(new KeyFrame(frameTime, e -> this.danceMoves(finalI)));
-      }
-      int cycleCount = 2;
-      timeLine.setCycleCount(cycleCount);
-      timeLine.play();
-      Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm()
-                                                                         .toString());
-      mediaPlayer = new MediaPlayer(sound);
-      mediaPlayer.setVolume(0.8);
-      mediaPlayer.setStopTime(timeLine.getCycleDuration().multiply(cycleCount));
-      mediaPlayer.play();
+    Timeline timeLine = new Timeline();
+    Collection<KeyFrame> frames = timeLine.getKeyFrames();
+    Duration frameGap = Duration.millis(300);
+    Duration frameTime = Duration.ZERO;
+    for (int i = 1; i <= 35; i++) {
+      frameTime = frameTime.add(frameGap);
+      int finalI = i;
+      frames.add(new KeyFrame(frameTime, e -> this.danceMoves(finalI)));
+    }
+    int cycleCount = 2;
+    timeLine.setCycleCount(cycleCount);
+    timeLine.play();
+    Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm()
+        .toString());
+    mediaPlayer = new MediaPlayer(sound);
+    mediaPlayer.setVolume(0.8);
+    mediaPlayer.setStopTime(timeLine.getCycleDuration().multiply(cycleCount));
+    mediaPlayer.play();
 
   }
 
@@ -120,17 +121,17 @@ public class ChaosGameAnimations {
    */
   public void chooseJuliaAnimation(String choice) {
 
-      switch (choice) {
-        case "normal":
-         this.juliaSliderAnimation(this.currentDescription, -1, -1, true, true);
-          break;
-        case "wacky":
-          this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
-              false, true);
-          break;
-        default:
-          break;
-      }
+    switch (choice) {
+      case "normal":
+        this.juliaSliderAnimation(this.currentDescription, -1, -1, true, true);
+        break;
+      case "wacky":
+        this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
+            false, true);
+        break;
+      default:
+        break;
+    }
 
 
   }
@@ -139,46 +140,46 @@ public class ChaosGameAnimations {
    * Animates the Julia set by changing the complex number of the JuliaTransform.
    *
    * @param description the description of the Julia set.
+   * @return true if the animation is successful.
    * @throws AnimationFailedException if the animation fails.
    *                                  source [1]
-   * @return true if the animation is successful.
    */
   private void juliaSliderAnimation(ChaosGameDescription description, double x0, double y0,
                                     boolean deltaX, boolean deltaY) {
-      Thread slideThread = new Thread(() -> { //creates a new thread to perform the animation on
-        JuliaTransform transform1 = (JuliaTransform) description.getTransform(0);
-        JuliaTransform transform2 = (JuliaTransform) description.getTransform(1);
-        Complex complex1 = transform1.getComplex();
-        complex1.setX0(x0);
-        complex1.setY0(y0);
-        Complex complex2 = transform2.getComplex();
-        complex2.setX0(x0);
-        complex2.setY0(y0);
-        AtomicInteger colorChoice = new AtomicInteger();
-        while (complex1.getX0() < 1 && complex1.getY0() < 1) { //looping while the values are not
-          try {                                             // at the max
-            Thread.sleep(100);         //pauses the animation at set intervals to give
-          } catch (InterruptedException e) { // a smooth transition
-            throw new AnimationFailedException("Failed to animate the Julia set");
-            //throws a new exception if the animation fails
-          }
-          Platform.runLater(() -> { //Updates the values in the complex incrementally.
-            // Controls the thread that is changing the values.
-            if (deltaY) {
-              complex1.setY0(complex1.getY0() + 0.05);
-              complex2.setY0(complex2.getY0() + 0.05);
-            }
-            if (deltaX) {
-              complex1.setX0(complex1.getX0() + 0.05);
-              complex2.setX0(complex2.getX0() + 0.05);
-            }
-            colorChoice.getAndIncrement();
-            setTheColor(colorChoice.get());
-            controller.changeDescription(currentDescription);
-          });
+    Thread slideThread = new Thread(() -> { //creates a new thread to perform the animation on
+      JuliaTransform transform1 = (JuliaTransform) description.getTransform(0);
+      JuliaTransform transform2 = (JuliaTransform) description.getTransform(1);
+      Complex complex1 = transform1.getComplex();
+      complex1.setX0(x0);
+      complex1.setY0(y0);
+      Complex complex2 = transform2.getComplex();
+      complex2.setX0(x0);
+      complex2.setY0(y0);
+      AtomicInteger colorChoice = new AtomicInteger();
+      while (complex1.getX0() < 1 && complex1.getY0() < 1) { //looping while the values are not
+        try {                                             // at the max
+          Thread.sleep(100);         //pauses the animation at set intervals to give
+        } catch (InterruptedException e) { // a smooth transition
+          throw new AnimationFailedException("Failed to animate the Julia set");
+          //throws a new exception if the animation fails
         }
+        Platform.runLater(() -> { //Updates the values in the complex incrementally.
+          // Controls the thread that is changing the values.
+          if (deltaY) {
+            complex1.setY0(complex1.getY0() + 0.05);
+            complex2.setY0(complex2.getY0() + 0.05);
+          }
+          if (deltaX) {
+            complex1.setX0(complex1.getX0() + 0.05);
+            complex2.setX0(complex2.getX0() + 0.05);
+          }
+          colorChoice.getAndIncrement();
+          setTheColor(colorChoice.get());
+          controller.changeDescription(currentDescription);
+        });
+      }
     });
     slideThread.start();            //starts the animation.
-    }
+  }
 }
 

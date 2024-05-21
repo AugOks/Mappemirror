@@ -173,7 +173,7 @@ public class ChaosGameControllerGui {
    */
   public void slideIntoJuliaDms() {
     try {
-     chaosGameAnimations.chooseJuliaAnimation("normal");
+      chaosGameAnimations.chooseJuliaAnimation("normal");
 
     } catch (AnimationFailedException e) {
       dialogHandler.genericErrorDialog("Failed to animate the Julia set");
@@ -208,7 +208,7 @@ public class ChaosGameControllerGui {
       this.dialogHandler.showAboutDialog();
     } catch (ResourceNotFoundException e) {
       dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
-                                       + "about dialog");
+          + "about dialog");
     }
   }
 
@@ -220,7 +220,7 @@ public class ChaosGameControllerGui {
       this.dialogHandler.showHelpDialog();
     } catch (ResourceNotFoundException e) {
       dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
-                                       + "help dialog");
+          + "help dialog");
     }
   }
 

@@ -100,7 +100,7 @@ public class JuliaTransformNode implements FractalInputNode {
     field.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
         controller.complexSetValue(newValue, field, this.realSlider, this.imaginarySlider,
-                                   this.complex);
+            this.complex);
         this.isValueValid = true;
       } catch (Exception e) {
         this.isValueValid = false;

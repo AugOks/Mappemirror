@@ -62,7 +62,7 @@ public class InputNode {
     steps.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
         int value = Integer.parseInt(newValue);
-        if (value > 10000000){
+        if (value > 10000000) {
           throw new NumberFormatException();
         }
         this.currentSteps = Integer.parseInt(newValue);
@@ -98,7 +98,7 @@ public class InputNode {
   public void createInputNode(ChaosGameDescription description, boolean slidersOnOff) {
     this.sliders = slidersOnOff;
     this.minMaxCoordsNode = new MinMaxCoordsNode(description.getMinCoords(),
-                                                 description.getMaxCoords(), controller);
+        description.getMaxCoords(), controller);
     this.inputNode.getChildren().removeIf(node -> node instanceof GridPane);
     this.inputNode.add(minMaxCoordsNode.getMinMaxNode(this.sliders), 0, 3);
     this.inputNode.add(fractalInputNode.getFractalNode(), 0, 4);

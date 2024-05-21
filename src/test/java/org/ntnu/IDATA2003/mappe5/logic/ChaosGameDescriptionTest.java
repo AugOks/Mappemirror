@@ -38,7 +38,7 @@ class ChaosGameDescriptionTest {
     transforms.add(new AffineTransform2D(matrix, minCoords));
     transforms.add(new AffineTransform2D(matrix, maxCoords));
     ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-                                                                         maxCoords, "test");
+        maxCoords, "test");
 
     assertNotNull(chaosGameDescription);
     assertEquals(chaosGameDescription.getMinCoords(), minCoords);
@@ -60,7 +60,7 @@ class ChaosGameDescriptionTest {
     Vector2D maxCoords = new Vector2D(2, 2);
     ;
     assertThrows(IllegalArgumentException.class,
-                 () -> new ChaosGameDescription(null, minCoords, maxCoords, "test"));
+        () -> new ChaosGameDescription(null, minCoords, maxCoords, "test"));
   }
 
   /**
@@ -76,7 +76,7 @@ class ChaosGameDescriptionTest {
     List<Transform2D> transforms = new ArrayList<>();
     transforms.add(new AffineTransform2D(matrixTransform, vectorTest));
     ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-                                                                         maxCoords, "test");
+        maxCoords, "test");
 
     assertThrows(IndexOutOfBoundsException.class, () -> chaosGameDescription.getTransform(2));
   }
@@ -98,7 +98,7 @@ class ChaosGameDescriptionTest {
     transforms.add(new AffineTransform2D(new Matrix2x2(matrixTransform), new Vector2D(vectorTest)));
     transforms.add(new AffineTransform2D(new Matrix2x2(matrixTransform), new Vector2D(vectorTest)));
     ChaosGameDescription chaosGameDescription = new ChaosGameDescription(transforms, minCoords,
-                                                                         maxCoords, "test");
+        maxCoords, "test");
 
     assertEquals(chaosGameDescription.getTransformSize(), 4);
   }
