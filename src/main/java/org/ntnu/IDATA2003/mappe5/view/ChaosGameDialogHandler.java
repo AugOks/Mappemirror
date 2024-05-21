@@ -2,6 +2,7 @@ package org.ntnu.IDATA2003.mappe5.view;
 
 import java.io.File;
 import java.util.Objects;
+import java.util.Scanner;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
@@ -10,6 +11,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -204,7 +206,7 @@ public class ChaosGameDialogHandler {
     answer2.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
     answer3.setFont(Font.font("open sans", FontWeight.MEDIUM, FontPosture.REGULAR, 14));
 
-    String header = "Frequently Asked Questions to Chaos Game";
+    String header = "Frequently Asked Questions - Chaos Game";
     help.setHeaderText(header);
 
     GridPane grid = new GridPane();
@@ -212,6 +214,7 @@ public class ChaosGameDialogHandler {
     grid.add(answer1, 0, 2);
     ImageView juliaImage = new ImageView(Objects.requireNonNull(getClass().getResource(
         "/images/JuliaTransform.png")).toExternalForm());
+    juliaImage.setFitWidth(250);
     grid.add(juliaImage, 0, 3);
 
     grid.add(new Separator(Orientation.HORIZONTAL), 0, 4);
@@ -220,9 +223,11 @@ public class ChaosGameDialogHandler {
     GridPane affineGrid = new GridPane();
     ImageView affineImage1 = new ImageView(Objects.requireNonNull(getClass().getResource(
         "/images/AffineTransform.png")).toExternalForm());
+    affineImage1.setFitWidth(250);
     affineGrid.add(affineImage1, 0, 0);
     ImageView affineImage2 = new ImageView(Objects.requireNonNull(getClass().getResource(
         "/images/AffineTransform2.png")).toExternalForm());
+    affineImage2.setFitWidth(200);
     affineGrid.add(affineImage2, 0, 1);
     grid.add(affineGrid, 0, 7);
 
@@ -230,8 +235,12 @@ public class ChaosGameDialogHandler {
     grid.add(question3, 0, 9);
     grid.add(answer3, 0, 10);
 
-    VBox dialogPaneContent = new VBox();
-    dialogPaneContent.getChildren().add(grid);
+    ScrollPane contentScroll = new ScrollPane();
+    contentScroll.setContent(grid);
+    contentScroll.setStyle("-fx-background-color: transparent;");
+    contentScroll.setMinHeight(600);
+    contentScroll.setMinWidth(400);
+    VBox dialogPaneContent = new VBox(contentScroll);
     help.getDialogPane().setContent(dialogPaneContent);
     help.showAndWait();
   }
