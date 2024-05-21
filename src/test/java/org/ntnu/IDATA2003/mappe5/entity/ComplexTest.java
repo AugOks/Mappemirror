@@ -8,6 +8,11 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Complex;
 
 /**
  * This class tests the Complex class.
+ * This class tests the following methods:
+ * <ul>
+ *   <li> {@link Complex#sqrt()}
+ *   <li> {@link Complex#Complex(double, double)}
+ * </ul>
  */
 
 class ComplexTest {
@@ -38,5 +43,6 @@ class ComplexTest {
     assertEquals(resultTest.getX0(), 0.455, 0.001);
     assertEquals(resultTest.getY0(), -1.098, 0.001);
   }
+
 
 }

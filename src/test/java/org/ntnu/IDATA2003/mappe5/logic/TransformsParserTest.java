@@ -15,6 +15,14 @@ import org.ntnu.IDATA2003.mappe5.model.logic.TransformsParser;
 
 /**
  * Tests the TransformsParser class.
+ * Tests the following methods:
+ * <ul>
+ *   <li> {@link TransformsParser#parseAffineTransforms(List)}
+ *   <li> {@link TransformsParser#cleanString(String)}
+ *   <li> {@link TransformsParser#parseJuliaTransforms(String)}
+ *   <li> {@link TransformsParser#getVectorFromString(String)}
+ *   <li> {@link TransformsParser#parseAffineTransforms(List)}
+ * </ul>
  */
 
 class TransformsParserTest {
@@ -59,7 +67,7 @@ class TransformsParserTest {
   }
 
   /**
-   * tests {@link TransformsParser#parseJuliaTransforms(String)}
+   * Tests {@link TransformsParser#parseJuliaTransforms(String)}
    * Tests parsing julia transforms with invalid input.
    *
    * @

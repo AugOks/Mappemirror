@@ -61,6 +61,7 @@ public class Matrix2x2 {
   }
 
   public String matrixToString() {
+
     return this.a + ", " + this.b + ", " + this.c + ", " + this.d;
   }
 

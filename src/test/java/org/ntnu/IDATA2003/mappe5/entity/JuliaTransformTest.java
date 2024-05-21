@@ -12,6 +12,14 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
 /**
  * This class tests the JuliaTransform class.
+ * This class tests the following methods:
+ * <ul>
+ *   <li> {@link JuliaTransform#JuliaTransform(Complex, int)}
+ *   <li> {@link JuliaTransform#transform(Vector2D)}
+ *   <li> {@link JuliaTransform#transformToString()}
+ *   <li> {@link JuliaTransform#getComplex()}
+ *   <li> {@link JuliaTransform#JuliaTransform(Complex, int)}
+ * </ul>
  */
 
 class JuliaTransformTest {
@@ -55,7 +63,9 @@ class JuliaTransformTest {
   }
 
   /**
+   * Test the method {@link JuliaTransform(Complex, int)}.
    * Tests that the constructor performs as expected when passed a null object.
+   * Expected to throw an {@link IllegalArgumentException}
    */
   @Test
   public void testJuliaTransformConstructorWithNullComplex() {
@@ -71,6 +81,7 @@ class JuliaTransformTest {
 
   /**
    * Tests that the constructor performs as expected when passed an invalid sign value.
+   * Expected to throw an {@link IllegalArgumentException}
    */
   @Test
   public void testJuliaTransformWithInvalidSign() {
@@ -102,5 +113,29 @@ class JuliaTransformTest {
     }
   }
 
+  /**
+   * Test the method {@link JuliaTransform#transformToString()}.
+   * This test is for a positive test of julia transform with positive numbers and sign.
+   */
+  @Test
+  public void testTransformToString() {
+    Complex complexTest = new Complex(0.3, 0.6);
+
+    JuliaTransform juliaTest = new JuliaTransform(complexTest, 1);
+    assertEquals("0.3, 0.6", juliaTest.transformToString());
+  }
+
+  /**
+   * Test the method {@link JuliaTransform#getComplex()}.
+   * This test is for a positive test of julia transform with positive numbers and sign.
+   */
+  @Test
+  public void testGetComplex() {
+    Complex complexTest = new Complex(.3, .6);
+
+    JuliaTransform juliaTest = new JuliaTransform(complexTest, 1);
+    assertEquals(complexTest.getX0(), juliaTest.getComplex().getX0());
+    assertEquals(complexTest.getY0(), juliaTest.getComplex().getY0());
+  }
 
 }

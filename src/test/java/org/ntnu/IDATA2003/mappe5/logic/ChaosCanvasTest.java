@@ -14,10 +14,16 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory;
 
 /**
  * Tests the ChaosCanvas class {@link ChaosCanvas}.
+ * This class tests the following methods:
+ * <ul>
+ *   <li> {@link ChaosCanvas#ChaosCanvas(int, int, Vector2D, Vector2D)}
+ *   <li> {@link ChaosCanvas#putPixel(Vector2D)}
+ * </ul>
  */
 class ChaosCanvasTest {
   int height;
   int width;
+
   /**
    * Test the instance method of class {@link ChaosCanvas}.
    */
@@ -85,6 +91,9 @@ class ChaosCanvasTest {
     assertEquals(canvas[8][1], 10);
   }
 
+  /**
+   * Test the getHeight method of class {@link ChaosCanvas#putPixel(Vector2D)}.
+   */
   @Test
   void testPutPixelWithJuliaTransform() {
     ChaosGameDescriptionFactory factory = new ChaosGameDescriptionFactory();
@@ -97,4 +106,6 @@ class ChaosCanvasTest {
     int[][] canvasArray = canvas.getCanvasArray();
     assertEquals(canvasArray[9][0], 10);
   }
+
+
 }

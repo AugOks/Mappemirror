@@ -9,11 +9,27 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
 /**
  * Tests the Vector2D class {@link Vector2D}..
- * This class currently does not have any constraints as any valid double number
- * would be acceptable, perhaps an upper or lower bound is necessary at some point.
+ * Tests the following methods:
+ * <ul>
+ *   <li> {@link Vector2D#Vector2D(double, double)}
+ *   <li> {@link Vector2D#sub(Vector2D)}
+ *   <li> {@link Vector2D#add(Vector2D)}
+ *   <li> {@link Vector2D#scalar(int)}
+ * </ul>
  */
 
 class Vector2DTest {
+
+  /**
+   * Test the method {@link Vector2D#Vector2D(double, double)}.
+   * Test for the Vector2D constructor with positive parameters.
+   */
+  @Test
+  public void testVector2DConstructorWithPositiveParameters() {
+    Vector2D testVector = new Vector2D(1, 2);
+    assertEquals(1, testVector.getX0());
+    assertEquals(2, testVector.getY0());
+  }
 
   /**
    * Test the method {@link Vector2D#add(Vector2D)}.
@@ -103,6 +119,18 @@ class Vector2DTest {
     } catch (NullPointerException e) {
       assertTrue(true);
     }
+  }
+
+  /**
+   * Test the method {@link Vector2D#scalar(int)}.
+   * Test for the Vector2D scalar method.
+   */
+  @Test
+  public void testVector2DScalar() {
+    Vector2D testVector = new Vector2D(4, 4);
+    testVector.scalar(2);
+    assertEquals(8, testVector.getX0());
+    assertEquals(8, testVector.getY0());
   }
 
 }

@@ -12,6 +12,11 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Vector2D;
 
 /**
  * This class tests the AffineTransform2D class.
+ * This class tests the following methods:
+ * <ul>
+ *   <li> {@link AffineTransform2D#AffineTransform2D(Matrix2x2, Vector2D)}
+ *   <li> {@link AffineTransform2D#transform(Vector2D)}
+ * </ul>
  */
 
 class AffineTransform2DTest {
@@ -59,7 +64,6 @@ class AffineTransform2DTest {
     }
   }
 
-
   /**
    * Test the method {@link AffineTransform2D#transform(Vector2D)}.
    * Expected to multiply the matrix with the vector and add the result to the vector.
@@ -74,6 +78,10 @@ class AffineTransform2DTest {
     assertEquals(3, transformedVector.getY0());
   }
 
+  /**
+   * Test the method {@link AffineTransform2D#transform(Vector2D)}.
+   * Negative test where the vector is Null.
+   */
   @Test
   public void testTransformWithNullVector() {
     Matrix2x2 matrix = new Matrix2x2(1, 1, 1, 1);

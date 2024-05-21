@@ -17,6 +17,11 @@ import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
 
 /**
  * This class tests the class {@link ChaosGame}.
+ * This class tests the following methods:
+ * <ul>
+ *   <li> {@link ChaosGame#ChaosGame(ChaosGameDescription, int, int)}
+ *   <li> {@link ChaosGame#runSteps(int)}
+ * </ul>
  */
 class ChaosGameTest {
 
@@ -85,7 +90,5 @@ class ChaosGameTest {
       assertTrue(true);
     }
   }
-
-  //The method runSteps is checked in other test classes.
 
 }

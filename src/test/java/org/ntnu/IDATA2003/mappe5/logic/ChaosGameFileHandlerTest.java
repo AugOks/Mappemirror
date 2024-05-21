@@ -22,10 +22,19 @@ class ChaosGameFileHandlerTest {
   /**
    * A test class that tests that the file handler is able to parse lines of text as expected.
    * This class does not test file handling itself.
+   * This class tests the following methods:
+   * <ul>
+   *   <li> {@link ChaosGameFileHandler#ChaosGameFileHandler()}
+   *   <li> {@link ChaosGameFileHandler#writeToFile(String, ChaosGameDescription)}
+   * </ul>
    */
   private ChaosGameFileHandler handler;
   private ChaosGameDescription description;
 
+  /**
+   * Initializes the instance variables for the tests.
+   * This method is run before each test.
+   */
   @BeforeEach
   void init() {
     this.handler = new ChaosGameFileHandler();
@@ -42,7 +51,9 @@ class ChaosGameFileHandlerTest {
   }
 
   /**
+   * Test the method {@link ChaosGameFileHandler#writeToFile(String, ChaosGameDescription)}.
    * Tests creating a file and storing fractal data in that file.
+   * This is the first test to run.
    */
   @Test
   @Order(1)
@@ -56,8 +67,8 @@ class ChaosGameFileHandlerTest {
     }
   }
 
-
   /**
+   * Test the method {@link ChaosGameFileHandler#writeToFile(String, ChaosGameDescription)}.
    * Tests writing to a file with negative parameters.
    */
   @Test
