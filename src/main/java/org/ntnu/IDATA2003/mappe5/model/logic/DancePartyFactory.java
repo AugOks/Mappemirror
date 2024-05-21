@@ -1,6 +1,9 @@
 package org.ntnu.IDATA2003.mappe5.model.logic;
 
-import static org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory.Fractals.*;
+import static org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory.Fractals.JULIA;
+import static org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory.Fractals.PENTAGON;
+import static org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory.Fractals.SIERPINSKI;
+
 import org.ntnu.IDATA2003.mappe5.model.entity.Complex;
 
 /**
@@ -13,13 +16,13 @@ public class DancePartyFactory {
   /**
    * Creates a dance move based on the dance index.
    *
-   * @param danceIndex the index of the dance move.
+   * @param danceIndex  the index of the dance move.
    * @param description the description of the fractal.
    * @return the description of the fractal.
    */
-  public ChaosGameDescription createDanceMoves(int danceIndex, ChaosGameDescription description){
+  public ChaosGameDescription createDanceMoves(int danceIndex, ChaosGameDescription description) {
     switch (danceIndex) {
-      case 1,35:
+      case 1, 35:
         description = this.factory.createDescription(JULIA);
         description.setMinCoords(new Complex(-6.0, -5.0));
         description.setMaxCoords(new Complex(6.0, 5.0));
@@ -88,18 +91,18 @@ public class DancePartyFactory {
       case 24:
         description.setMinCoords(new Complex(-3.0, 0.0));
         break;
-      case 26,34:
+      case 26, 34:
         description = factory.createDescription(PENTAGON);
         break;
-      case 27,33:
+      case 27, 33:
         description.setMinCoords(new Complex(-150.0, -150.0));
         description.setMaxCoords(new Complex(150.0, 150.0));
         break;
-      case 28,32:
+      case 28, 32:
         description.setMinCoords(new Complex(-125.0, -125.0));
         description.setMaxCoords(new Complex(125.0, 125.0));
         break;
-      case 29,31:
+      case 29, 31:
         description.setMinCoords(new Complex(-100.0, -100.0));
         description.setMaxCoords(new Complex(100.0, 100.0));
         break;
@@ -112,7 +115,6 @@ public class DancePartyFactory {
     }
     return description;
   }
-
 
 
 }

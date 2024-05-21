@@ -73,7 +73,7 @@ public class ChaosGameFileHandler {
     }
     String name = path.split(".txt")[0];
     ChaosGameDescription game = new ChaosGameDescription(transforms, minimumCoords, maximumCoords,
-        name);
+                                                         name);
     this.chaosGames.add(game);
     return game;
   }
@@ -86,21 +86,21 @@ public class ChaosGameFileHandler {
    * @param description the description of the chaos game to write to file.
    */
   public void writeToFile(String path, ChaosGameDescription description)
-      throws FailedToWriteToFileException {
-    if (description == null) {
-      throw new IllegalArgumentException("Description cannot be null");
-    }
-    Path pathOfFile = Path.of(path + ".txt");
+    throws FailedToWriteToFileException {
+      if (description == null) {
+        throw new IllegalArgumentException("Description cannot be null");
+      }
+      Path pathOfFile = Path.of(path + ".txt");
 
-    try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
-      List<String> chaosGameInfo = parser.getChaosGameInfoAsString(description);
-      output.write(
-          chaosGameInfo.get(1) + chaosGameInfo.get(2) + chaosGameInfo.get(3)
-              + chaosGameInfo.get(4));
+      try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
+        List<String> chaosGameInfo = parser.getChaosGameInfoAsString(description);
+        output.write(
+            chaosGameInfo.get(1) + chaosGameInfo.get(2) + chaosGameInfo.get(3)
+            + chaosGameInfo.get(4));
 
-    } catch (IOException e) {
-      throw new FailedToWriteToFileException("something went wrong when writing to file");
-    }
+      } catch (IOException e) {
+        throw new FailedToWriteToFileException("something went wrong when writing to file");
+      }
 
   }
 
