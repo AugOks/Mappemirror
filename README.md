@@ -73,3 +73,12 @@ When creating the main class for our application we struggled keeping it to a re
 that any class should not become overly large otherwise it risks compromising the cohesion of our application.
 Due to this mindset we continuously refactored parts of the main class out to their own classes, something we felt
 gave a better overview.
+
+## Future improvements 
+things we would like to add or improve: 
+- more animations to the application.  
+- fractals that use multiple different types of transforms or transforms we don't currently have.
+- the zoom functionality doesn't zoom in on the mouse pointer, which would be a nice feature to add. 
+- 3D fractals.
+## Sources
+[1] https://jenkov.com/tutorials/javafx/concurrency.html

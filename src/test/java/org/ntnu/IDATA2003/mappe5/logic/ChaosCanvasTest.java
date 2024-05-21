@@ -94,7 +94,6 @@ class ChaosCanvasTest {
     ChaosCanvas canvas = game.getCanvas();
     Vector2D testPoint = new Vector2D(-1.59, -0.95);
     canvas.putPixel(testPoint);
-    canvas.transformCoordsToIndices(testPoint);
     int[][] canvasArray = canvas.getCanvasArray();
     assertEquals(canvasArray[9][0], 10);
   }

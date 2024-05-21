@@ -194,6 +194,7 @@ public class ChaosGameAnimations {
    *
    * @param description the description of the Julia set.
    * @throws AnimationFailedException if the animation fails.
+   * source [1]
    */
   private void juliaSliderAnimation(ChaosGameDescription description, double x0, double y0,
                                     boolean deltaX, boolean deltaY) {
