@@ -94,7 +94,6 @@ public class ChaosGameFileHandler {
 
     try (BufferedWriter output = Files.newBufferedWriter(pathOfFile)) {
       List<String> chaosGameInfo = parser.getChaosGameInfoAsString(description);
-
       output.write(
           chaosGameInfo.get(1) + chaosGameInfo.get(2) + chaosGameInfo.get(3)
               + chaosGameInfo.get(4));

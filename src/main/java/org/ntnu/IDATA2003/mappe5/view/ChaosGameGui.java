@@ -48,7 +48,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
   private InputNode input; // The right pane with the input fields
   private Scene scene; // The scene for the chaos game app
   private Color colorChoice = null; // The color choice for the canvas
-  private boolean zoomScrollOnOff = true; // The zoom scroll for the canvas
+  private boolean zoomScrollOnOff = false; // The zoom scroll for the canvas
 
 
   /**

@@ -29,9 +29,8 @@ have been using the last semester.
 ## How to run the application
 
 The application uses Maven as a build automation tool to ensure that the user can run it across integrated development
-environments. Therefore, anyone with Maven can run it by either using “mvn javafx:run” or by running the “runApp” file.
-Explaning how to install Maven would be outside the scope of this application,  
-please refer to this link [!install Maven](https://maven.apache.org/install.html)
+environments. Therefore, anyone with Maven can run it by either using “mvn javafx:run” or by running the “runApp” file.  
+Explaining how to install Maven would be outside the scope of this application, please refer to this link [!install Maven](https://maven.apache.org/install.html)
 
 ## Features
 
@@ -75,10 +74,11 @@ that any class should not become overly large otherwise it risks compromising th
 Due to this mindset we continuously refactored parts of the main class out to their own classes, something we felt
 gave a better overview.
 
-## Instalation and execution
-
-To run our "chaos Game" application, Maven is required.  
-Explaning how to install Maven would be outside the scope of this application,  
-please refer to this link [!install Maven](https://maven.apache.org/install.html)
-to find out how to install maven.  
-Once maven is installed you can run the "runApp" file or use the command "mvn javafx:run" in a command shell.
+## Future improvements 
+things we would like to add or improve: 
+- more animations to the application.  
+- fractals that use multiple different types of transforms or transforms we don't currently have.
+- the zoom functionality doesn't zoom in on the mouse pointer, which would be a nice feature to add. 
+- 3D fractals.
+## Sources
+[1] https://jenkov.com/tutorials/javafx/concurrency.html

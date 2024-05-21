@@ -19,9 +19,6 @@ public class Vector2D {
    * @param y1 the X1 value for the 2D vector.
    */
   public Vector2D(double x1, double y1) {
-    //if (Double.isNaN(x1) || Double.isNaN(y1)) {
-     // throw new ArithmeticException("One of the parameters is not a number");
-    //}
     this.x0 = x1;
     this.y0 = y1;
   }
