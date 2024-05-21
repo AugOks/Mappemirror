@@ -35,9 +35,9 @@ public class TransformsParser {
 
       affineTransf.add(new AffineTransform2D(
           new Matrix2x2(transfValues.get(0), transfValues.get(1), transfValues.get(2),
-              transfValues.get(3)), // first four values contain the matrix
+                        transfValues.get(3)), // first four values contain the matrix
           new Vector2D(transfValues.get(4),
-              transfValues.get(5))));  // last two values contain the vector.
+                       transfValues.get(5))));  // last two values contain the vector.
       transfValues.clear();
     }
     return affineTransf;
@@ -50,6 +50,7 @@ public class TransformsParser {
    * @return the clean string.
    */
   public String cleanString(String dirtyString) {
+
     return dirtyString.replaceAll("\\s", "");
   }
 
@@ -159,7 +160,7 @@ public class TransformsParser {
 
     String transform =
         description.getTransform(0).getClass().getSimpleName()
-            .replace("Transform", "");
+                   .replace("Transform", "");
     String minCoords =
         description.getMinCoords().getX0() + ", " + description.getMinCoords().getY0();
     minCoords += "           # lower left coordinates" + '\n';
@@ -179,7 +180,7 @@ public class TransformsParser {
       transformsAsStrings = this.writeAffineToString(description.getAllTransforms());
     } else if (compare.equals("Julia")) {
       transformsAsStrings = description.getTransform(0).transformToString()
-          + " # real and imaginary part of constant c";
+                            + " # real and imaginary part of constant c";
     }
     transformInfo.add(transformsAsStrings);
     return transformInfo;

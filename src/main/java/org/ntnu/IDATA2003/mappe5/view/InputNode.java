@@ -98,7 +98,7 @@ public class InputNode {
   public void createInputNode(ChaosGameDescription description, boolean slidersOnOff) {
     this.sliders = slidersOnOff;
     this.minMaxCoordsNode = new MinMaxCoordsNode(description.getMinCoords(),
-        description.getMaxCoords(), controller);
+                                                 description.getMaxCoords(), controller);
     this.inputNode.getChildren().removeIf(node -> node instanceof GridPane);
     this.inputNode.add(minMaxCoordsNode.getMinMaxNode(this.sliders), 0, 3);
     this.inputNode.add(fractalInputNode.getFractalNode(), 0, 4);
@@ -111,6 +111,7 @@ public class InputNode {
    * @return GridPane: the input node.
    */
   public VBox getInputNode() {
+
     return new VBox(this.inputNode);
   }
 
@@ -150,6 +151,10 @@ public class InputNode {
     }
   }
 
+  /**
+   * Creates the run button for the user interface.
+   * Runs the fractal when the button is pressed.
+   */
   private void createRunButton() {
     Button runButton = new Button("Run");
     runButton.getStyleClass().add("button-rightPane");

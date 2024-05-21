@@ -18,17 +18,16 @@ import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.ResourceNotFoundExcepti
  */
 public class ChaosGameFileHandler {
 
-  ArrayList<ChaosGameDescription> chaosGames;
-
-  TransformsParser parser;
+  ArrayList<ChaosGameDescription> chaosGames; // List of chaos games
+  TransformsParser parser; // Parser for the transforms
 
   /**
-   * Empty constructor.
+   * Constructs a new ChaosGameFileHandler object.
+   * Initializes the chaosGames list and the parser.
    */
   public ChaosGameFileHandler() {
     chaosGames = new ArrayList<>();
     parser = new TransformsParser();
-
   }
 
   /**
@@ -73,7 +72,7 @@ public class ChaosGameFileHandler {
     }
     String name = path.split(".txt")[0];
     ChaosGameDescription game = new ChaosGameDescription(transforms, minimumCoords, maximumCoords,
-        name);
+                                                         name);
     this.chaosGames.add(game);
     return game;
   }
@@ -96,7 +95,7 @@ public class ChaosGameFileHandler {
       List<String> chaosGameInfo = parser.getChaosGameInfoAsString(description);
       output.write(
           chaosGameInfo.get(1) + chaosGameInfo.get(2) + chaosGameInfo.get(3)
-              + chaosGameInfo.get(4));
+          + chaosGameInfo.get(4));
 
     } catch (IOException e) {
       throw new FailedToWriteToFileException("something went wrong when writing to file");

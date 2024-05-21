@@ -208,7 +208,7 @@ public class ChaosGameControllerGui {
       this.dialogHandler.showAboutDialog();
     } catch (ResourceNotFoundException e) {
       dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
-          + "about dialog");
+                                       + "about dialog");
     }
   }
 
@@ -220,12 +220,17 @@ public class ChaosGameControllerGui {
       this.dialogHandler.showHelpDialog();
     } catch (ResourceNotFoundException e) {
       dialogHandler.genericErrorDialog("sorry, something went wrong when trying to create the"
-          + "help dialog");
+                                       + "help dialog");
     }
   }
 
-
+  /**
+   * Set the color choice for the game.
+   *
+   * @param colorChoice the color choice to be set.
+   */
   public void setColorChoiceC(Color colorChoice) {
+
     this.gameGui.setColorChoice(colorChoice);
   }
 

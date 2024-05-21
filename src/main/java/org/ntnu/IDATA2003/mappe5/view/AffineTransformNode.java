@@ -22,7 +22,7 @@ public class AffineTransformNode implements FractalInputNode {
 
   private final InputNodeController controller;
   private List<AffineTransform2D> transforms;
-  private boolean valueChanged = true;
+  private boolean valueValid = true;
 
   /**
    * Constructor for the TransformBox class.
@@ -48,7 +48,7 @@ public class AffineTransformNode implements FractalInputNode {
    * checks what element in the matrix is being changed and updates the matrix accordingly.
    *
    * @param name  the prompt text.
-   * @param value the value of the textfield.
+   * @param value the value of the text field.
    */
   private TextField createMatrixTextField(String name, double value, Matrix2x2 matrix) {
     TextField field = new TextField();
@@ -59,9 +59,9 @@ public class AffineTransformNode implements FractalInputNode {
       try {
         field.setText(newValue);
         this.controller.matrixConditionalSetValue(name, matrix, newValue);
-        this.valueChanged = true;
+        this.valueValid = true;
       } catch (Exception e) {
-        this.valueChanged = false;
+        this.valueValid = false;
       }
     });
     return field;
@@ -85,9 +85,9 @@ public class AffineTransformNode implements FractalInputNode {
       try {
         field.setText(newValue);
         controller.vectorConditionalSetValue(name, vector, newValue);
-        this.valueChanged = true;
+        this.valueValid = true;
       } catch (Exception e) {
-        this.valueChanged = false;
+        this.valueValid = false;
       }
 
     });
@@ -151,12 +151,19 @@ public class AffineTransformNode implements FractalInputNode {
    */
   @Override
   public List<Transform2D> getTransforms() {
+
     return new ArrayList<>(this.transforms);
   }
 
+  /**
+   * Returns whether the value is valid or not.
+   *
+   * @return true if the value is valid, false otherwise.
+   */
   @Override
   public boolean isValueValid() {
-    return this.valueChanged;
+
+    return this.valueValid;
   }
 
 

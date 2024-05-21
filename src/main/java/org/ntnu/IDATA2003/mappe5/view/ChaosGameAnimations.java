@@ -27,7 +27,6 @@ public class ChaosGameAnimations {
   private final DancePartyFactory factory;  //the factory for creating descriptions.
   private ChaosGameDescription currentDescription; //the current description of the fractal.
   private MediaPlayer mediaPlayer; //the media player for playing music.
-  private boolean isDancing = false; //a boolean to check if the fractal is dancing.
 
   /**
    * Constructor for the ChaosGameAnimations class.
@@ -49,10 +48,9 @@ public class ChaosGameAnimations {
     this.danceAnimation();
   }
 
-  //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
-
   /**
    * Animates the fractal by changing the min and max coordinates of the fractal.
+   * Source [2]
    */
   private void danceAnimation() {
     Timeline timeLine = new Timeline();
@@ -68,7 +66,7 @@ public class ChaosGameAnimations {
     timeLine.setCycleCount(cycleCount);
     timeLine.play();
     Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm()
-        .toString());
+                                                                       .toString());
     mediaPlayer = new MediaPlayer(sound);
     mediaPlayer.setVolume(0.8);
     mediaPlayer.setStopTime(timeLine.getCycleDuration().multiply(cycleCount));
@@ -87,6 +85,11 @@ public class ChaosGameAnimations {
     controller.changeDescription(this.currentDescription);
   }
 
+  /**
+   * Sets the color of the fractal based on the dance move.
+   *
+   * @param danceMove the dance move to be performed.
+   */
   private void setTheColor(int danceMove) {
     int color = danceMove % 7;
     switch (color) {
@@ -127,13 +130,11 @@ public class ChaosGameAnimations {
         break;
       case "wacky":
         this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
-            false, true);
+                                  false, true);
         break;
       default:
         break;
     }
-
-
   }
 
   /**
@@ -142,7 +143,7 @@ public class ChaosGameAnimations {
    * @param description the description of the Julia set.
    * @return true if the animation is successful.
    * @throws AnimationFailedException if the animation fails.
-   *                                  source [1]
+   *                                  Source [1]
    */
   private void juliaSliderAnimation(ChaosGameDescription description, double x0, double y0,
                                     boolean deltaX, boolean deltaY) {

@@ -130,7 +130,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
       scene.getStylesheets().add(
           Objects.requireNonNull(getClass().getResource("/css/stylesheet.css"))
-              .toExternalForm());
+                 .toExternalForm());
 
       scene.setCursor(Cursor.DEFAULT);
       primaryStage.setTitle("Chaos Game");
@@ -138,7 +138,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
       primaryStage.setScene(scene);
       primaryStage.getIcons().add(new Image(
           Objects.requireNonNull(getClass().getResource("/images/iconChaosGame.png"))
-              .toExternalForm()));
+                 .toExternalForm()));
       primaryStage.show();
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("failed to fetch a resource");
@@ -202,15 +202,14 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * @return the VBox containing the banner.
    * @throws ResourceNotFoundException if the banner is not found.
    */
-
   private VBox createTopPane() {
 
 
     Image banner = null;
     try {
       banner = new Image(Objects.requireNonNull(getClass()
-              .getResource("/images/header.png"))
-          .toExternalForm());
+                                                    .getResource("/images/header.png"))
+                                .toExternalForm());
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("Could not find the banner");
     }
@@ -284,13 +283,13 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
 
     Menu preMade = new Menu("Pre-made");
     preMade.getItems()
-        .addAll(julia, sierpinski, barnsleyFern, spiderweb, square, pentagon, kochCurve,
-            dragonFire);
+           .addAll(julia, sierpinski, barnsleyFern, spiderweb, square, pentagon, kochCurve,
+                   dragonFire);
 
 
     CheckMenuItem showSliders = new CheckMenuItem("Show coords slider");
     showSliders.setOnAction(e -> input.createInputNode(controller.getDescription(),
-        showSliders.isSelected()));
+                                                       showSliders.isSelected()));
 
     MenuItem colorPicker = new MenuItem("Color picker");
     colorPicker.setOnAction(e -> {
@@ -347,7 +346,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    *
    * @return the HBox containing the main canvas.
    */
-
   private HBox createCenterPane() {
     this.canvasCenterPane = new HBox();
     this.setZoomScrollEvent(this.canvasCenterPane);
@@ -363,6 +361,7 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
    * Sets the zoom scroll event for the canvas.
    * The zoom scroll event will zoom in and out of the canvas in the four quadrants (-1,1), (-1,-1)
    * (1,-1), (1,1) in an x-y plane with the origin in the middle.
+   * Disclaimer: This method was helped written by Copilot.
    *
    * @param node the node to set the zoom scroll event for.
    */
@@ -399,7 +398,6 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
         minCoords.setX0(
             minCoords.getX0() + (maxCoords.getX0() - minCoords.getX0()) * (1 - zoomFactor));
       }
-
 
       controller.changeCoords(minCoords, maxCoords);
     });
@@ -455,13 +453,18 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
         }
       }
     }
-
     ImageView fractal = new ImageView(writableImage);
     this.canvasCenterPane.getChildren().clear();
     this.canvasCenterPane.getChildren().add(new HBox(fractal));
   }
 
+  /**
+   * Sets the color choice for the canvas.
+   *
+   * @param colorChoice the color choice for the canvas.
+   */
   public void setColorChoice(Color colorChoice) {
+
     this.colorChoice = colorChoice;
   }
 

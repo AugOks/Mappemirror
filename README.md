@@ -89,3 +89,4 @@ Things we would like to add or improve:
 ## Sources
 
 [1] https://jenkov.com/tutorials/javafx/concurrency.html
+[2] https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work

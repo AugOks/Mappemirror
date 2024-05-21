@@ -6,7 +6,7 @@ package org.ntnu.IDATA2003.mappe5.model.entity;
  */
 
 public class JuliaTransform implements Transform2D {
-  Complex julia;
+  Complex julia; // the complex number of the julia transformation.
   int sign; // the sign of the complex number. Determines if it is the Conjugate.
 
 

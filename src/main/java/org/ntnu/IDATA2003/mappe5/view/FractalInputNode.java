@@ -8,7 +8,6 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Transform2D;
  * Interface for the input nodes for the fractal. This is used to get the node and the transforms
  * without the program knowing what kind of fractal it is.
  */
-
 public interface FractalInputNode {
   /**
    * Returns the fractal node.

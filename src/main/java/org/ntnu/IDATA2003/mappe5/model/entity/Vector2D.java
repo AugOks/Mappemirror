@@ -75,6 +75,11 @@ public class Vector2D {
     this.y0 = y1;
   }
 
+  /**
+   * Converts the vector to a string.
+   *
+   * @return the vector as a string.
+   */
   public String toString() {
 
     return this.x0 + ", " + this.y0;
@@ -111,8 +116,13 @@ public class Vector2D {
 
   }
 
-  public void scalar(int n) {
-    this.y0 = this.y0 * n;
-    this.x0 = this.x0 * n;
+  /**
+   * Multiplies the vector with a scalar.
+   *
+   * @param scalarValue the scalar to multiply the vector with.
+   */
+  public void scalar(int scalarValue) {
+    this.y0 = this.y0 * scalarValue;
+    this.x0 = this.x0 * scalarValue;
   }
 }

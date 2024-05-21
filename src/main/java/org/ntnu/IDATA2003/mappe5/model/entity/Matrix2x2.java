@@ -60,12 +60,23 @@ public class Matrix2x2 {
     return matrixProduct;
   }
 
+  /**
+   * Converts the matrix to a string.
+   *
+   * @return the matrix as a string.
+   */
   public String matrixToString() {
 
     return this.a + ", " + this.b + ", " + this.c + ", " + this.d;
   }
 
+  /**
+   * Gets the value of the top left element in the matrix.
+   *
+   * @return the value of the top left element in the matrix.
+   */
   public double getA() {
+
     return a;
   }
 
@@ -79,7 +90,13 @@ public class Matrix2x2 {
     this.a = value;
   }
 
+  /**
+   * Gets the value of the top right element in the matrix.
+   *
+   * @return the value of the top right element in the matrix.
+   */
   public double getB() {
+
     return b;
   }
 
@@ -93,7 +110,13 @@ public class Matrix2x2 {
     this.b = value;
   }
 
+  /**
+   * Gets the value of the bottom left element in the matrix.
+   *
+   * @return the value of the bottom left element in the matrix.
+   */
   public double getC() {
+
     return c;
   }
 
@@ -107,7 +130,13 @@ public class Matrix2x2 {
     this.c = value;
   }
 
+  /**
+   * Gets the value of the bottom right element in the matrix.
+   *
+   * @return the value of the bottom right element in the matrix.
+   */
   public double getD() {
+
     return d;
   }
 
