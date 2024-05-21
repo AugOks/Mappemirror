@@ -164,6 +164,7 @@ public class ChaosGameControllerGui {
     if (this.dialogHandler.dancePartyDialog()) {
       this.chaosGameAnimations = new ChaosGameAnimations(startDescription, this);
       this.chaosGameAnimations.danceParty();
+      gameGui.createInputNode(theGame.getDescription(), 1000000);
     }
   }
 

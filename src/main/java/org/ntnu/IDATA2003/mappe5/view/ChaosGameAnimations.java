@@ -1,8 +1,7 @@
 package org.ntnu.IDATA2003.mappe5.view;
 
-import static org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory.Fractals.JULIA;
-
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -15,7 +14,6 @@ import org.ntnu.IDATA2003.mappe5.model.entity.Complex;
 import org.ntnu.IDATA2003.mappe5.model.entity.JuliaTransform;
 import org.ntnu.IDATA2003.mappe5.model.entity.exceptions.AnimationFailedException;
 import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescription;
-import org.ntnu.IDATA2003.mappe5.model.logic.ChaosGameDescriptionFactory;
 import org.ntnu.IDATA2003.mappe5.model.logic.DancePartyFactory;
 
 /**
@@ -35,7 +33,7 @@ public class ChaosGameAnimations {
    * @param description the description of the fractal.
    * @param controller  the controller for the ChaosGameGui.
    */
-  public ChaosGameAnimations(ChaosGameDescription description, ChaosGameControllerGui controller) {
+  public ChaosGameAnimations (ChaosGameDescription description, ChaosGameControllerGui controller) {
     this.currentDescription = description;
     this.controller = controller;
     this.factory = new DancePartyFactory();
@@ -50,27 +48,26 @@ public class ChaosGameAnimations {
   }
 
   //https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
-
   /**
    * Animates the fractal by changing the min and max coordinates of the fractal.
    */
   private void danceAnimation() {
     Timeline timeLine = new Timeline();
     Collection<KeyFrame> frames = timeLine.getKeyFrames();
-    Duration frameGap = Duration.millis(250);
+    Duration frameGap = Duration.millis(300);
     Duration frameTime = Duration.ZERO;
-    for (int i = 1; i <= 15; i++) {
+    for (int i = 1; i <= 35; i++) {
       frameTime = frameTime.add(frameGap);
       int finalI = i;
       frames.add(new KeyFrame(frameTime, e -> this.danceMoves(finalI)));
     }
-    int cycleCount = 3;
+    int cycleCount = 2;
     timeLine.setCycleCount(cycleCount);
     timeLine.play();
 
     Media sound = new Media((getClass().getResource("/danceParty.mp3")).toExternalForm().toString());
     mediaPlayer = new MediaPlayer(sound);
-    mediaPlayer.setVolume(0.5);
+    mediaPlayer.setVolume(0.8);
     mediaPlayer.setStopTime(timeLine.getCycleDuration().multiply(cycleCount));
     mediaPlayer.play();
   }
@@ -87,7 +84,7 @@ public class ChaosGameAnimations {
   }
 
   private void setTheColor(int danceMove) {
-    int color = danceMove % 8;
+    int color = danceMove % 7;
     switch (color) {
       case 1:
         this.controller.setColorChoiceC(Color.RED);
@@ -96,22 +93,19 @@ public class ChaosGameAnimations {
         this.controller.setColorChoiceC(Color.ORANGE);
         break;
       case 3:
-        this.controller.setColorChoiceC(Color.ORANGE);
-        break;
-      case 4:
         this.controller.setColorChoiceC(Color.YELLOW);
         break;
-      case 5:
+      case 4:
         this.controller.setColorChoiceC(Color.GREEN);
         break;
-      case 6:
+      case 5:
         this.controller.setColorChoiceC(Color.BLUE);
         break;
-      case 7:
-        this.controller.setColorChoiceC(Color.PURPLE);
+      case 6:
+        this.controller.setColorChoiceC(Color.INDIGO);
         break;
       default:
-        this.controller.setColorChoiceC(Color.HOTPINK);
+        this.controller.setColorChoiceC(Color.VIOLET);
         break;
     }
   }
@@ -152,6 +146,7 @@ public class ChaosGameAnimations {
       Complex complex2 = transform2.getComplex();
       complex2.setX0(x0);
       complex2.setY0(y0);
+      AtomicInteger colorChoice = new AtomicInteger();
       while (complex1.getX0() < 1 && complex1.getY0() < 1) { //looping while the values are not
         try {                                             // at the max
           Thread.sleep(100);         //pauses the animation at set intervals to give
@@ -169,6 +164,8 @@ public class ChaosGameAnimations {
             complex1.setX0(complex1.getX0() + 0.05);
             complex2.setX0(complex2.getX0() + 0.05);
           }
+          colorChoice.getAndIncrement();
+          setTheColor(colorChoice.get());
           controller.changeDescription(currentDescription);
         });
       }
