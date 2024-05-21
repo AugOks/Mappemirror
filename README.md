@@ -78,7 +78,7 @@ gave a better overview.
 
 ## Future improvements
 
-things we would like to add or improve:
+Things we would like to add or improve:
 
 - more animations to the application.
 - fractals that use multiple different types of transforms or transforms we don't currently have.
