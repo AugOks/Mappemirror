@@ -1,5 +1,7 @@
 package org.ntnu.IDATA2003.mappe5.view;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -141,7 +143,8 @@ public class ChaosGameGui extends Application implements ChaosGameObserver {
     } catch (NullPointerException e) {
       throw new ResourceNotFoundException("failed to fetch a resource");
     } catch (Exception e) {
-      Handler handler = new FileHandler("ChaosGame.log");
+      Files.createDirectories(Path.of("logs"));
+      Handler handler = new FileHandler("logs/ChaosGame.log");
       Logger logger = Logger.getLogger("ChaosGame");
       Logger.getLogger("ChaosGame").addHandler(handler);
       logger.log(Level.SEVERE, e.getMessage());

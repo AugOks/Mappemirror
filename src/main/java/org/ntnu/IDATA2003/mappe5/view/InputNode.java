@@ -46,7 +46,7 @@ public class InputNode {
     this.inputNode.getStyleClass().add("inputNode");
     TextField steps = new TextField();
     steps.setPromptText("Steps");
-    steps.setText(String.valueOf(stepsInt));
+    steps.setText(String.valueOf(stepsInt).substring(0, 10));
     steps.setMaxWidth(275);
     steps.setMinWidth(275);
     Label runStepsLabel = new Label("Run steps:");
@@ -61,6 +61,10 @@ public class InputNode {
 
     steps.textProperty().addListener((observable, oldValue, newValue) -> {
       try {
+        int value = Integer.parseInt(newValue);
+        if (value > 10000000){
+          throw new NumberFormatException();
+        }
         this.currentSteps = Integer.parseInt(newValue);
       } catch (NumberFormatException e) {
         steps.setText(oldValue);
