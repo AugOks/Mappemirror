@@ -173,7 +173,8 @@ public class ChaosGameControllerGui {
    */
   public void slideIntoJuliaDms() {
     try {
-      chaosGameAnimations.chooseJuliaAnimation("normal");
+     chaosGameAnimations.chooseJuliaAnimation("normal");
+
     } catch (AnimationFailedException e) {
       dialogHandler.genericErrorDialog("Failed to animate the Julia set");
     }

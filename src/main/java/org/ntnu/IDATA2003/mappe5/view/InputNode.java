@@ -46,7 +46,7 @@ public class InputNode {
     this.inputNode.getStyleClass().add("inputNode");
     TextField steps = new TextField();
     steps.setPromptText("Steps");
-    steps.setText(String.valueOf(stepsInt).substring(0, 10));
+    steps.setText(String.valueOf(stepsInt));
     steps.setMaxWidth(275);
     steps.setMinWidth(275);
     Label runStepsLabel = new Label("Run steps:");

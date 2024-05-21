@@ -3,11 +3,8 @@ package org.ntnu.IDATA2003.mappe5.view;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.animation.KeyFrame;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
@@ -122,17 +119,20 @@ public class ChaosGameAnimations {
    * @param choice the type of animation to be chosen.
    */
   public void chooseJuliaAnimation(String choice) {
-    switch (choice) {
-      case "normal":
-        this.juliaSliderAnimation(this.currentDescription, -1, -1, true, true);
-        break;
-      case "wacky":
-        this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
-                                  false, true);
-        break;
-      default:
-        break;
-    }
+
+      switch (choice) {
+        case "normal":
+         this.juliaSliderAnimation(this.currentDescription, -1, -1, true, true);
+          break;
+        case "wacky":
+          this.juliaSliderAnimation(this.currentDescription, 0.39, -1.0,
+              false, true);
+          break;
+        default:
+          break;
+      }
+
+
   }
 
   /**
@@ -141,6 +141,7 @@ public class ChaosGameAnimations {
    * @param description the description of the Julia set.
    * @throws AnimationFailedException if the animation fails.
    *                                  source [1]
+   * @return true if the animation is successful.
    */
   private void juliaSliderAnimation(ChaosGameDescription description, double x0, double y0,
                                     boolean deltaX, boolean deltaY) {

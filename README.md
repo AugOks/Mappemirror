@@ -80,5 +80,6 @@ things we would like to add or improve:
 - fractals that use multiple different types of transforms or transforms we don't currently have.
 - the zoom functionality doesn't zoom in on the mouse pointer, which would be a nice feature to add. 
 - 3D fractals.
+- Fix the animations so only one animation can be run at the same time.
 ## Sources
 [1] https://jenkov.com/tutorials/javafx/concurrency.html
