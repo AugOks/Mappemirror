@@ -90,3 +90,5 @@ Things we would like to add or improve:
 
 [1] https://jenkov.com/tutorials/javafx/concurrency.html
 [2] https://stackoverflow.com/questions/46570494/javafx-changing-the-image-of-an-imageview-using-timeline-doesnt-work
+[3] Song for dance party: Disco High - UltraCat. Downloaded from FMA website
+    https://freemusicarchive.org/music/UltraCat/
